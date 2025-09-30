@@ -1,0 +1,31 @@
+question,response,year
+Can Databricks handle streaming data ingestion at scale?,"Yes. Databricks uses Structured Streaming with Delta Lake to process streaming data at scale, ensuring low latency and exactly-once guarantees.",2025
+Does Unity Catalog support fine-grained access control?,"Yes. Unity Catalog provides fine-grained access control down to the table, column, and row level, with centralized governance across workspaces.",2024
+How does Databricks manage model versioning?,"Databricks integrates with MLflow to provide built-in model versioning, allowing you to register, compare, and roll back models easily.",2025
+Can I deploy Databricks apps across multiple workspaces?,"Yes. With Databricks Asset Bundles, you can define resources as code and deploy apps consistently across multiple workspaces.",2024
+Does Databricks support Delta Lake time travel queries?,"Yes. Delta Lake supports time travel, allowing you to query historical versions of a table using either version numbers or timestamps.",2024
+How can I use Databricks with Snowflake or BigQuery?,"Databricks can integrate with Snowflake or BigQuery via connectors and federated queries, enabling cross-platform analytics.",2025
+Is it possible to set up CI/CD for Databricks workflows?,"Yes. CI/CD can be achieved using Databricks Asset Bundles, Git integration, and orchestration tools like GitHub Actions or Azure DevOps.",2025
+Does Databricks provide automated cluster scaling?,Yes. Databricks supports auto-scaling clusters that add or remove workers based on workload demand.,2025
+Can I run R code on Databricks?,Yes. Databricks supports R through SparkR and allows running R code in notebooks alongside Python and SQL.,2024
+How does Databricks handle data lineage tracking?,"Unity Catalog automatically captures data lineage across queries, jobs, and dashboards, helping with governance and auditing.",2024
+Can I use Databricks for real-time ML inference?,Yes. Databricks offers model serving to deploy ML models as REST endpoints for low-latency real-time inference.,2025
+Is there an API for managing Databricks jobs?,"Yes. The Databricks REST API allows you to programmatically create, schedule, and monitor jobs.",2025
+Does Databricks support serverless SQL warehouses?,Yes. Serverless SQL warehouses are available for elastic scaling of BI workloads with minimal management overhead.,2024
+Can I integrate Tableau or Power BI with Databricks?,Yes. Tableau and Power BI connect to Databricks using JDBC/ODBC drivers or the Databricks SQL connector.,2025
+How does Databricks secure data in transit and at rest?,All data is encrypted in transit with TLS and at rest with AES-256 encryption. Additional security includes IAM integration and compliance certifications.,2024
+Can Databricks be used for geospatial analytics?,Yes. Databricks supports libraries like Apache Sedona and Mosaic for large-scale geospatial analytics.,2025
+Does Databricks provide built-in feature stores for ML?,"Yes. Databricks Feature Store lets teams create, share, and reuse features consistently across training and inference.",2025
+Is Databricks suitable for high-concurrency BI queries?,Yes. Databricks SQL warehouses scale to handle high concurrency and provide result caching for BI dashboards.,2025
+How does Databricks handle schema evolution in Delta tables?,"Delta Lake supports schema evolution with options like mergeSchema and enforceSchema, letting you add new fields safely.",2025
+Can I manage secrets securely in Databricks?,Yes. Secrets can be stored in Databricks secret scopes or integrated with external secret managers like Azure Key Vault or AWS Secrets Manager.,2025
+Does Databricks support GPU clusters for deep learning?,Yes. Databricks provides GPU-accelerated clusters for training deep learning models with frameworks like TensorFlow and PyTorch.,2025
+Can I deploy ML models to REST endpoints with Databricks?,Yes. Databricks Model Serving allows you to deploy models as REST APIs for real-time scoring.,2025
+How does Databricks pricing work for SQL vs ML workloads?,"Pricing is based on Databricks Units (DBUs), with different rates for SQL warehouses, all-purpose compute, and model serving.",2025
+Does Databricks integrate with GitHub Actions?,"Yes. Databricks workflows can be automated with GitHub Actions, enabling CI/CD pipelines for code and data workflows.",2025
+Can I use Databricks notebooks for production pipelines?,Yes. Notebooks can be scheduled as jobs or orchestrated with Workflows for production use.,2025
+How does Databricks support data governance at scale?,"Unity Catalog centralizes governance, enabling consistent security, auditing, and lineage across all workspaces and data assets.",2025
+Is it possible to run SparkR in Databricks?,"Yes. SparkR is supported in Databricks, enabling distributed R workloads on top of Spark clusters.",2024
+Can Databricks clusters connect to on-prem databases?,"Yes. Databricks clusters can securely connect to on-prem databases using private links, VPN, or direct peering.",2024
+Does Databricks offer built-in monitoring and alerting?,"Yes. Monitoring is available via the observability stack, including metrics, audit logs, and integration with Prometheus or Datadog.",2025
+Can I enforce row-level security in Unity Catalog?,Yes. Unity Catalog supports row- and column-level security policies to restrict access dynamically based on user attributes.,2025

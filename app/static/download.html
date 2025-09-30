@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download Results - ARIA</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/static/images/icons/databricks-ARIA-icon-full-color.svg">
+    <link rel="alternate icon" href="/static/images/icons/databricks-ARIA-icon-full-color.svg">
+    <link rel="mask-icon" href="/static/images/icons/databricks-ARIA-icon-full-color.svg" color="#FF3621">
+    
+    <link rel="stylesheet" href="/static/css/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Formatted answer styling */
+        .answer-content p, .formatted-answer p {
+            margin-top: 0;
+            margin-bottom: 12px;
+        }
+        
+        .answer-content p:last-child, .formatted-answer p:last-child {
+            margin-bottom: 0;
+        }
+        
+        .formatted-answer {
+            background: #fafafa;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid #f0f0f0;
+        }
+        
+        .view-full-btn {
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            cursor: pointer;
+            font-size: 12px;
+            padding: 4px 0;
+            margin-top: 8px;
+            text-decoration: underline;
+            display: block;
+        }
+        
+        .view-full-btn:hover {
+            color: var(--secondary-color);
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <img src="/static/images/logos/databricks-ARIA-lockup-full-color-stacked.svg" alt="ARIA Logo" style="height: 50px;">
+                <h1>Analyst Relations Intelligent Assistant</h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Mode Navigation -->
+        <div class="nav-tabs">
+            <a href="/" class="nav-tab active">📄 RFI Processor</a>
+            <a href="/chat" class="nav-tab">💬 Chat</a>
+            <a href="/audit" class="nav-tab">🔍 Document Audit</a>
+        </div>
+
+        <div class="main-content">
+            <div class="content-area">
+                <!-- Progress Stepper -->
+                <div class="stepper">
+                    <div class="step completed">
+                        <div class="step-circle">✓</div>
+                        <div class="step-label">Upload</div>
+                    </div>
+                    <div class="step completed">
+                        <div class="step-circle">✓</div>
+                        <div class="step-label">Extract</div>
+                    </div>
+                    <div class="step completed">
+                        <div class="step-circle">✓</div>
+                        <div class="step-label">Generate</div>
+                    </div>
+                    <div class="step active">
+                        <div class="step-circle">4</div>
+                        <div class="step-label">Download</div>
+                    </div>
+                </div>
+
+                <h2>📥 Download Results</h2>
+                <p>Your RFI responses are ready! Choose your preferred format and download the completed document.</p>
+
+                <!-- Results Status -->
+                <div id="resultsStatus" class="form-section">
+                    <div class="alert alert-info">
+                        <span class="loading"></span> Loading generated results...
+                    </div>
+                </div>
+
+                <!-- Download Options -->
+                <div id="downloadOptions" style="display: none;">
+                    <div class="alert alert-success">
+                        ✅ Processing complete! Your RFI responses have been generated successfully.
+                    </div>
+                </div>
+
+                <!-- Download Options -->
+                <div id="downloadFormats" class="form-section" style="display: none;">
+                    <h3>📄 Download Formats</h3>
+                    
+                    <div class="checkbox-group" style="flex-direction: column; gap: 15px;">
+                        <div class="checkbox-item" style="background: #f8f9fa; padding: 15px; border-radius: 8px;">
+                            <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
+                                <div>
+                                    <div class="checkbox-title">📊 Excel/CSV Format</div>
+                                    <div class="checkbox-description">Structured Q&A format, easy to edit and review</div>
+                                </div>
+                                <button class="btn btn-primary" onclick="downloadFile('csv')">
+                                    📥 Download CSV
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="checkbox-item" style="background: #f8f9fa; padding: 15px; border-radius: 8px;">
+                            <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
+                                <div>
+                                    <div class="checkbox-title">📝 Word Document</div>
+                                    <div class="checkbox-description">Professional formatted document ready for submission</div>
+                                </div>
+                                <button class="btn btn-primary" onclick="downloadFile('docx')">
+                                    📥 Download Word
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="checkbox-item" style="background: #f8f9fa; padding: 15px; border-radius: 8px;">
+                            <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
+                                <div>
+                                    <div class="checkbox-title">📄 PDF Report</div>
+                                    <div class="checkbox-description">Final formatted report with professional layout</div>
+                                </div>
+                                <button class="btn btn-primary" onclick="downloadFile('pdf')">
+                                    📥 Download PDF
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="checkbox-item" style="background: #f8f9fa; padding: 15px; border-radius: 8px;">
+                            <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
+                                <div>
+                                    <div class="checkbox-title">🌐 HTML Preview</div>
+                                    <div class="checkbox-description">Web-friendly format for online sharing</div>
+                                </div>
+                                <button class="btn btn-secondary" onclick="previewHTML()">
+                                    👁️ Preview HTML
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Generation Summary -->
+                <div class="form-section">
+                    <h3>📊 Processing Summary</h3>
+                    <div style="background: #f8f9fa; padding: 20px; border-radius: 8px;">
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+                            <div>
+                                <div style="font-weight: 600; color: var(--text-dark);">Document Name</div>
+                                <div id="docName">Loading...</div>
+                            </div>
+                            <div>
+                                <div style="font-weight: 600; color: var(--text-dark);">Questions Processed</div>
+                                <div id="questionCount">Loading...</div>
+                            </div>
+                            <div>
+                                <div style="font-weight: 600; color: var(--text-dark);">Processing Time</div>
+                                <div id="processingTime">Loading...</div>
+                            </div>
+                            <div>
+                                <div style="font-weight: 600; color: var(--text-dark);">Generated</div>
+                                <div id="generatedTime">Loading...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Answers Table -->
+                <div class="form-section">
+                    <h3>📝 Generated Answers Table</h3>
+                    <div style="background: white; border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden; max-height: 600px; overflow-y: auto; margin-bottom: 15px;">
+                        <table id="finalAnswersTable" style="width: 100%; border-collapse: collapse;">
+                            <thead style="background: #f8f9fa; position: sticky; top: 0; z-index: 10;">
+                                <tr>
+                                    <th style="padding: 12px; text-align: left; border-bottom: 2px solid #e0e0e0; font-weight: 600; width: 100px;">Question ID</th>
+                                    <th style="padding: 12px; text-align: left; border-bottom: 2px solid #e0e0e0; font-weight: 600; width: 150px;">Topic</th>
+                                    <th style="padding: 12px; text-align: left; border-bottom: 2px solid #e0e0e0; font-weight: 600; width: 250px;">Question</th>
+                                    <th style="padding: 12px; text-align: left; border-bottom: 2px solid #e0e0e0; font-weight: 600;">Answer</th>
+                                    <th style="padding: 12px; text-align: left; border-bottom: 2px solid #e0e0e0; font-weight: 600; width: 150px;">References</th>
+                                </tr>
+                            </thead>
+                            <tbody id="finalAnswersTableBody">
+                                <!-- Table rows will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <!-- Table Actions -->
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px;">
+                        <button class="btn btn-secondary" onclick="copyTableToClipboard()" style="display: flex; align-items: center; gap: 8px;">
+                            📋 Copy Table
+                            <span style="font-size: 12px; opacity: 0.8;">Tab-separated</span>
+                        </button>
+                        <button class="btn btn-secondary" onclick="selectAllTableText()" style="display: flex; align-items: center; gap: 8px;">
+                            🎯 Select All
+                            <span style="font-size: 12px; opacity: 0.8;">For manual copy</span>
+                        </button>
+                        <button class="btn btn-secondary" onclick="previewHTML()" style="display: flex; align-items: center; gap: 8px;">
+                            👁️ Preview HTML
+                            <span style="font-size: 12px; opacity: 0.8;">Before download</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Export Options -->
+                <div class="form-section">
+                    <h3>📥 Export Options</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin-bottom: 20px;">
+                        <button class="btn btn-primary" onclick="downloadCSV()" style="display: flex; align-items: center; gap: 8px;">
+                            📊 Download CSV
+                            <span style="font-size: 12px; opacity: 0.8;">Excel compatible</span>
+                        </button>
+                        <button class="btn btn-primary" onclick="downloadHTML()" style="display: flex; align-items: center; gap: 8px;">
+                            🌐 Download HTML
+                            <span style="font-size: 12px; opacity: 0.8;">Web format</span>
+                        </button>
+                        <button class="btn btn-primary" onclick="downloadPDF()" style="display: flex; align-items: center; gap: 8px;">
+                            📄 Download PDF
+                            <span style="font-size: 12px; opacity: 0.8;">Professional report</span>
+                        </button>
+                    </div>
+                    
+                    <!-- Navigation -->
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap; border-top: 1px solid #e0e0e0; padding-top: 15px;">
+                        <button class="btn btn-secondary" onclick="window.location.href='/generate'">
+                            ← Back to Generate
+                        </button>
+                        <button class="btn btn-secondary" onclick="startNew()">
+                            🆕 Start New RFI
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <h3>📥 Download Options</h3>
+                <p>Choose the format that best suits your needs:</p>
+                
+                <h4>📊 CSV/Excel</h4>
+                <ul>
+                    <li>Easy to edit and review</li>
+                    <li>Import into spreadsheet tools</li>
+                    <li>Structured Q&A format</li>
+                    <li>Good for collaborative editing</li>
+                </ul>
+                
+                <h4>📝 Word Document</h4>
+                <ul>
+                    <li>Professional formatting</li>
+                    <li>Ready for submission</li>
+                    <li>Easy to customize</li>
+                    <li>Widely compatible</li>
+                </ul>
+
+                <h4>📄 PDF Report</h4>
+                <ul>
+                    <li>Final presentation format</li>
+                    <li>Preserves formatting</li>
+                    <li>Easy to share</li>
+                    <li>Professional appearance</li>
+                </ul>
+
+                <h4>🌐 HTML Preview</h4>
+                <ul>
+                    <li>Web-friendly format</li>
+                    <li>Easy online sharing</li>
+                    <li>Interactive elements</li>
+                    <li>Responsive design</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/app.js"></script>
+    <script src="/static/js/analytics.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script>
+        let generatedAnswers = [];
+        
+        // Function to format answer text with proper paragraphs
+        function formatAnswerText(text, truncate = 0) {
+            if (!text) return 'No answer provided';
+            
+            // Replace multiple newlines with paragraph breaks
+            let formatted = text
+                .replace(/\n{3,}/g, '\n\n')  // Normalize multiple newlines to max 2
+                .replace(/\n\n/g, '</p><p>') // Convert double newlines to paragraphs
+                .replace(/\n/g, '<br>');     // Convert single newlines to line breaks
+            
+            // Wrap in paragraph tags if not already
+            if (!formatted.startsWith('<p>')) {
+                formatted = '<p>' + formatted;
+            }
+            if (!formatted.endsWith('</p>')) {
+                formatted = formatted + '</p>';
+            }
+            
+            // Truncate if needed
+            if (truncate > 0 && text.length > truncate) {
+                // Find a good breaking point
+                const truncated = text.substring(0, truncate);
+                // Try to end at a sentence or paragraph
+                const lastPeriod = truncated.lastIndexOf('.');
+                const lastBreak = truncated.lastIndexOf('\n');
+                const breakPoint = Math.max(lastPeriod, lastBreak);
+                
+                if (breakPoint > truncate * 0.7) { // Only use breakpoint if it's far enough
+                    formatted = formatAnswerText(text.substring(0, breakPoint + 1), 0);
+                } else {
+                    formatted = formatAnswerText(truncated, 0);
+                }
+                
+                // Add ellipsis to show truncation
+                formatted = formatted.replace(/<\/p>$/, '...</p>');
+                return formatted;
+            }
+            
+            return formatted;
+        }
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            console.log('Download page loading...');
+            
+            // Load session and check if we have generated answers
+            const session = await getSession();
+            console.log('Session loaded:', session);
+            
+            if (!session.generatedAnswers || session.generatedAnswers.length === 0) {
+                console.log('No generated answers found in session');
+                document.getElementById('resultsStatus').innerHTML = `
+                    <div class="alert alert-error">
+                        No generated results found. Please <a href="/generate">generate answers</a> first.
+                    </div>
+                `;
+                return;
+            }
+
+            generatedAnswers = session.generatedAnswers;
+            console.log('Generated answers:', generatedAnswers);
+
+            // Show success status
+            document.getElementById('resultsStatus').innerHTML = `
+                <div class="alert alert-success">
+                    <strong>✅ Processing complete!</strong> Generated ${generatedAnswers.length} answers for ${session.documentName}<br>
+                    <small>Generated: ${new Date().toLocaleString()}</small>
+                </div>
+            `;
+
+            // Populate answers table
+            console.log('Populating answers table...');
+            populateAnswersTable(generatedAnswers);
+
+            // Update summary with actual session data
+            console.log('Updating summary...');
+            updateSummary(session);
+        });
+
+        function populateAnswersTable(answers) {
+            console.log('populateAnswersTable called with:', answers);
+            const tableBody = document.getElementById('finalAnswersTableBody');
+            
+            if (!answers || answers.length === 0) {
+                console.log('No answers to display');
+                tableBody.innerHTML = `
+                    <tr>
+                        <td colspan="5" style="text-align: center; color: #666; padding: 40px;">
+                            No answers available to display.
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            // Sort answers by Question ID ascending (same logic as generate page)
+            const sortedAnswers = [...answers].sort((a, b) => {
+                const idA = a.question_id || `Q${answers.indexOf(a) + 1}`;
+                const idB = b.question_id || `Q${answers.indexOf(b) + 1}`;
+                
+                // Extract numeric parts for proper sorting (e.g., "1.01" vs "1.1")
+                const parseId = (id) => {
+                    const parts = id.replace(/[^0-9.]/g, '').split('.');
+                    return parts.map(part => parseInt(part) || 0);
+                };
+                
+                const partsA = parseId(idA);
+                const partsB = parseId(idB);
+                
+                // Compare each part numerically
+                for (let i = 0; i < Math.max(partsA.length, partsB.length); i++) {
+                    const partA = partsA[i] || 0;
+                    const partB = partsB[i] || 0;
+                    if (partA !== partB) {
+                        return partA - partB;
+                    }
+                }
+                return 0;
+            });
+            
+            let tableRows = '';
+            sortedAnswers.forEach((answer, index) => {
+                const questionId = answer.question_id || `Q${index + 1}`;
+                const topic = answer.topic || 'General';
+                const questionText = answer.question_text || answer.question || 'No question text';
+                const answerText = answer.answer || 'No answer provided';
+                
+                const references = answer.references || [];
+                const referencesHtml = references.length > 0 
+                    ? references.map((ref, index) => `<a href="${ref}" target="_blank" style="color: var(--primary-color); text-decoration: none; font-size: 12px; display: block; margin-bottom: 4px;">[${index + 1}] ${ref.length > 60 ? ref.substring(0, 60) + '...' : ref}</a>`).join('')
+                    : '<span style="color: #666; font-style: italic; font-size: 12px;">No references</span>';
+                
+                tableRows += `
+                    <tr style="border-bottom: 1px solid #f0f0f0;">
+                        <td style="padding: 12px; font-weight: 600; color: var(--primary-color); vertical-align: top;">${questionId}</td>
+                        <td style="padding: 12px; vertical-align: top;">
+                            <span style="background: #e8f4f8; color: #2c5f7a; padding: 4px 8px; border-radius: 4px; font-size: 12px;">
+                                ${topic}
+                            </span>
+                        </td>
+                        <td style="padding: 12px; font-size: 14px; line-height: 1.4; vertical-align: top;">
+                            ${questionText}
+                        </td>
+                        <td style="padding: 12px; font-size: 14px; line-height: 1.4; vertical-align: top;">
+                            <div class="answer-content" style="max-height: 150px; overflow-y: auto;">
+                                ${formatAnswerText(answerText)}
+                            </div>
+                            ${answerText && answerText.length > 300 ? 
+                                `<button onclick="showFullAnswer('${questionId}')" class="view-full-btn">View Full Answer</button>` 
+                                : ''
+                            }
+                        </td>
+                        <td style="padding: 12px; font-size: 14px; line-height: 1.4; vertical-align: top;">
+                            <div style="max-height: 100px; overflow-y: auto;">
+                                ${referencesHtml}
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            });
+            
+            console.log('Generated table rows');
+            tableBody.innerHTML = tableRows;
+            console.log('Table populated successfully');
+        }
+
+        function updateSummary(session) {
+            console.log('updateSummary called with session:', session);
+            console.log('generatedAnswers.length:', generatedAnswers.length);
+            
+            document.getElementById('docName').textContent = session.documentName || 'Unknown Document';
+            document.getElementById('questionCount').textContent = `${generatedAnswers.length} questions`;
+            document.getElementById('generatedTime').textContent = new Date().toLocaleString();
+            
+            // Calculate estimated processing time (placeholder - in real implementation this would come from session)
+            const estimatedTime = Math.max(30, generatedAnswers.length * 15); // 15 seconds per question minimum
+            document.getElementById('processingTime').textContent = `${Math.floor(estimatedTime / 60)}m ${estimatedTime % 60}s`;
+            
+            console.log('Summary updated successfully');
+        }
+
+        function downloadCSV() {
+            // Track the export event BEFORE download
+            trackExport('csv', analytics.getDocumentName(), generatedAnswers.length, generatedAnswers.length);
+            
+            let csvContent = 'Question ID,Topic,Question,Answer,References\n';
+            
+            generatedAnswers.forEach(answer => {
+                const questionId = (answer.question_id || '').replace(/"/g, '""');
+                const topic = (answer.topic || 'General').replace(/"/g, '""');
+                const questionText = (answer.question_text || answer.question || '').replace(/"/g, '""');
+                const answerText = (answer.answer || '').replace(/"/g, '""');
+                const references = (answer.references || []).join('; ').replace(/"/g, '""');
+                
+                csvContent += `"${questionId}","${topic}","${questionText}","${answerText}","${references}"\n`;
+            });
+            
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            link.setAttribute('href', url);
+            link.setAttribute('download', `${getFileName()}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            ARIA.showAlert('CSV file downloaded successfully!', 'success');
+        }
+
+        function downloadHTML() {
+            // Track the export event BEFORE download
+            trackExport('html', analytics.getDocumentName(), generatedAnswers.length, generatedAnswers.length);
+            
+            const html = generateHTML();
+            const blob = new Blob([html], { type: 'text/html;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            link.setAttribute('href', url);
+            link.setAttribute('download', `${getFileName()}.html`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            ARIA.showAlert('HTML file downloaded successfully!', 'success');
+        }
+
+        function copyTableToClipboard() {
+            // Create tab-separated values format for spreadsheet applications
+            let tsvContent = 'Question ID\tTopic\tQuestion\tAnswer\tReferences\n';
+            
+            // Sort answers by Question ID ascending (same logic as table)
+            const sortedAnswers = [...generatedAnswers].sort((a, b) => {
+                const idA = a.question_id || `Q${generatedAnswers.indexOf(a) + 1}`;
+                const idB = b.question_id || `Q${generatedAnswers.indexOf(b) + 1}`;
+                
+                const parseId = (id) => {
+                    const parts = id.replace(/[^0-9.]/g, '').split('.');
+                    return parts.map(part => parseInt(part) || 0);
+                };
+                
+                const partsA = parseId(idA);
+                const partsB = parseId(idB);
+                
+                for (let i = 0; i < Math.max(partsA.length, partsB.length); i++) {
+                    const partA = partsA[i] || 0;
+                    const partB = partsB[i] || 0;
+                    if (partA !== partB) {
+                        return partA - partB;
+                    }
+                }
+                return 0;
+            });
+            
+            sortedAnswers.forEach((answer, index) => {
+                const questionId = (answer.question_id || `Q${index + 1}`).replace(/\t/g, ' ');
+                const topic = (answer.topic || 'General').replace(/\t/g, ' ');
+                const questionText = (answer.question_text || answer.question || 'No question text').replace(/\t/g, ' ').replace(/\n/g, ' ');
+                const answerText = (answer.answer || 'No answer provided').replace(/\t/g, ' ').replace(/\n/g, ' ');
+                const references = (answer.references || []).join('; ').replace(/\t/g, ' ').replace(/\n/g, ' ');
+                
+                tsvContent += `${questionId}\t${topic}\t${questionText}\t${answerText}\t${references}\n`;
+            });
+            
+            navigator.clipboard.writeText(tsvContent).then(() => {
+                ARIA.showAlert('Table copied to clipboard! You can now paste it into Excel, Google Sheets, or any spreadsheet application.', 'success');
+            }).catch(() => {
+                ARIA.showAlert('Failed to copy to clipboard. Please try selecting the table manually.', 'error');
+            });
+        }
+
+        function selectAllTableText() {
+            const table = document.getElementById('finalAnswersTable');
+            
+            // Create a range and select the table
+            if (window.getSelection && document.createRange) {
+                const selection = window.getSelection();
+                const range = document.createRange();
+                range.selectNodeContents(table);
+                selection.removeAllRanges();
+                selection.addRange(range);
+                
+                ARIA.showAlert('Table selected! Press Ctrl+C (or Cmd+C on Mac) to copy.', 'info');
+            } else {
+                ARIA.showAlert('Manual selection not supported. Please try the "Copy Table" button.', 'error');
+            }
+        }
+
+        function copyToClipboard() {
+            // Legacy function - redirect to new tabular copy
+            copyTableToClipboard();
+        }
+
+        function previewHTML() {
+            const html = generateHTML();
+            const newWindow = window.open('', '_blank');
+            newWindow.document.write(html);
+            newWindow.document.close();
+        }
+
+        function getFileName() {
+            const docName = document.getElementById('docName').textContent.replace(/[^a-z0-9]/gi, '_').toLowerCase();
+            const date = new Date().toISOString().split('T')[0];
+            return `rfi_response_${docName}_${date}`;
+        }
+
+        function startNew() {
+            if (confirm('Are you sure you want to start a new RFI? This will clear all current data.')) {
+                // Clear session
+                updateSession({
+                    documentName: null,
+                    uploadedFile: null,
+                    processedContent: null,
+                    extractedQuestions: null,
+                    generatedAnswers: null,
+                    currentStep: 'upload'
+                }).then(() => {
+                    window.location.href = '/';
+                });
+            }
+        }
+
+        async function downloadFile(format) {
+            const button = event.target;
+            const originalText = button.textContent;
+            
+            // Track the export event BEFORE download
+            trackExport(format, analytics.getDocumentName(), generatedAnswers.length, generatedAnswers.length);
+            
+            // Show loading
+            button.innerHTML = '<span class="loading"></span> Generating...';
+            button.disabled = true;
+            
+            try {
+                let blob;
+                const filename = `rfi-response-${new Date().toISOString().slice(0, 10)}.${format}`;
+                
+                if (format === 'pdf') {
+                    // PDF generatePDF() already returns a blob
+                    blob = generatePDF();
+                } else {
+                    // Other formats need content wrapped in blob
+                    const content = generateDownloadContent(format);
+                    blob = new Blob([content], { 
+                        type: getContentType(format) 
+                    });
+                }
+                
+                // Create and trigger download
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                
+                ARIA.showAlert(`${format.toUpperCase()} file downloaded successfully!`, 'success');
+                
+            } catch (error) {
+                console.error('Download error:', error);
+                ARIA.showAlert('Failed to generate download file', 'error');
+            } finally {
+                button.textContent = originalText;
+                button.disabled = false;
+            }
+        }
+
+        function generateDownloadContent(format) {
+            switch (format) {
+                case 'csv':
+                    return generateCSV();
+                case 'json':
+                    return generateJSON();
+                case 'html':
+                    return generateHTML();
+                case 'pdf':
+                    return generatePDF();
+                default:
+                    return generateText();
+            }
+        }
+
+        function generateCSV() {
+            const headers = ['Question ID', 'Question', 'Answer', 'Topic', 'References'];
+            const rows = [headers.join(',')];
+            
+            generatedAnswers.forEach(answer => {
+                const row = [
+                    `"${answer.question_id || ''}"`,
+                    `"${(answer.question || '').replace(/"/g, '""')}"`,
+                    `"${(answer.answer || '').replace(/"/g, '""')}"`,
+                    `"${answer.topic || ''}"`,
+                    `"${(answer.references || []).join('; ').replace(/"/g, '""')}"`
+                ];
+                rows.push(row.join(','));
+            });
+            
+            return rows.join('\n');
+        }
+
+        function generateJSON() {
+            return JSON.stringify({
+                metadata: {
+                    generated: new Date().toISOString(),
+                    total_answers: generatedAnswers.length,
+                    format_version: "1.0"
+                },
+                answers: generatedAnswers
+            }, null, 2);
+        }
+
+        function generateHTML() {
+            const docName = document.getElementById('docName').textContent;
+            
+            // Sort answers by Question ID ascending (same logic as display table)
+            const sortedAnswers = [...generatedAnswers].sort((a, b) => {
+                const idA = a.question_id || `Q${generatedAnswers.indexOf(a) + 1}`;
+                const idB = b.question_id || `Q${generatedAnswers.indexOf(b) + 1}`;
+                
+                const parseId = (id) => {
+                    const parts = id.replace(/[^0-9.]/g, '').split('.');
+                    return parts.map(part => parseInt(part) || 0);
+                };
+                
+                const partsA = parseId(idA);
+                const partsB = parseId(idB);
+                
+                for (let i = 0; i < Math.max(partsA.length, partsB.length); i++) {
+                    const partA = partsA[i] || 0;
+                    const partB = partsB[i] || 0;
+                    if (partA !== partB) {
+                        return partA - partB;
+                    }
+                }
+                return 0;
+            });
+            
+            let html = `<!DOCTYPE html>
+<html>
+<head>
+    <title>RFI Response - ${docName} - Generated ${new Date().toLocaleDateString()}</title>
+    <style>
+        body { 
+            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; 
+            margin: 40px; 
+            line-height: 1.6; 
+            color: #333; 
+        }
+        .header { 
+            border-bottom: 3px solid #007acc; 
+            padding-bottom: 20px; 
+            margin-bottom: 30px; 
+        }
+        .summary { 
+            background: #f8f9fa; 
+            padding: 15px; 
+            border-radius: 8px; 
+            margin-bottom: 30px; 
+        }
+        .answers-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .answers-table th {
+            background: #007acc;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+        .answers-table td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+            vertical-align: top;
+        }
+        .answers-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        .answers-table tr:hover {
+            background: #e8f4f8;
+        }
+        .question-id {
+            font-weight: bold;
+            color: #007acc;
+        }
+        .topic-badge {
+            background: #e8f4f8;
+            color: #2c5f7a;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.85em;
+            display: inline-block;
+        }
+        .question-text {
+            font-weight: 500;
+            max-width: 300px;
+        }
+        .answer-text {
+            line-height: 1.6;
+        }
+        footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            color: #666;
+            text-align: center;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>RFI Response</h1>
+        <div class="summary">
+            <p><strong>Document:</strong> ${docName}</p>
+            <p><strong>Generated:</strong> ${new Date().toLocaleString()}</p>
+            <p><strong>Total Questions:</strong> ${generatedAnswers.length}</p>
+        </div>
+    </div>
+
+    <table class="answers-table">
+        <thead>
+            <tr>
+                <th style="width: 100px;">Question ID</th>
+                <th style="width: 120px;">Topic</th>
+                <th style="width: 250px;">Question</th>
+                <th>Answer</th>
+                <th style="width: 150px;">References</th>
+            </tr>
+        </thead>
+        <tbody>`;
+
+            sortedAnswers.forEach((answer, index) => {
+                const questionId = answer.question_id || `Q${index + 1}`;
+                const topic = answer.topic || 'General';
+                const questionText = answer.question_text || answer.question || 'No question text';
+                const answerText = answer.answer || 'No answer provided';
+                const references = answer.references || [];
+                const referencesHtml = references.length > 0 
+                    ? references.map((ref, index) => `<a href="${ref}" target="_blank" style="color: #007acc; text-decoration: none; font-size: 12px; display: block; margin-bottom: 2px;">[${index + 1}] ${ref}</a>`).join('')
+                    : '<span style="color: #666; font-style: italic; font-size: 12px;">No references</span>';
+                
+                html += `
+            <tr>
+                <td class="question-id">${questionId}</td>
+                <td><span class="topic-badge">${topic}</span></td>
+                <td class="question-text">${questionText}</td>
+                <td class="answer-text">${formatAnswerText(answerText)}</td>
+                <td style="font-size: 12px; line-height: 1.4;">${referencesHtml}</td>
+            </tr>`;
+            });
+
+            html += `
+        </tbody>
+    </table>
+
+    <footer>
+        <p>Generated by ARIA (Analyst Relations Intelligent Assistant) on ${new Date().toLocaleString()}</p>
+    </footer>
+</body>
+</html>`;
+            return html;
+        }
+
+        function generateText() {
+            let content = `RFI Response\nGenerated: ${new Date().toLocaleString()}\nTotal Answers: ${generatedAnswers.length}\n\n`;
+            content += '='.repeat(50) + '\n\n';
+            
+            generatedAnswers.forEach((answer, index) => {
+                content += `Question ${index + 1}: ${answer.question || ''}\n`;
+                content += `Answer: ${answer.answer || ''}\n`;
+                content += `Topic: ${answer.topic || ''} | Confidence: ${answer.confidence || ''}\n`;
+                content += '\n' + '-'.repeat(30) + '\n\n';
+            });
+            
+            return content;
+        }
+
+        function generatePDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            
+            // Document title and metadata
+            const docName = document.getElementById('docName').textContent;
+            const currentDate = new Date().toLocaleDateString();
+            
+            // Set title and font
+            doc.setFontSize(20);
+            doc.setTextColor(0, 78, 137); // Databricks blue
+            doc.text('RFI Response Report', 20, 25);
+            
+            // Add subtitle
+            doc.setFontSize(12);
+            doc.setTextColor(102, 102, 102);
+            doc.text(`Document: ${docName}`, 20, 35);
+            doc.text(`Generated: ${new Date().toLocaleString()}`, 20, 42);
+            doc.text(`Total Questions: ${generatedAnswers.length}`, 20, 49);
+            
+            // Add line separator
+            doc.setDrawColor(255, 107, 53); // ARIA orange
+            doc.setLineWidth(1);
+            doc.line(20, 55, 190, 55);
+            
+            // Initialize content position
+            let yPosition = 70;
+            const pageHeight = 280;
+            const marginBottom = 20;
+            
+            // Sort answers by Question ID
+            const sortedAnswers = [...generatedAnswers].sort((a, b) => {
+                const idA = a.question_id || `Q${generatedAnswers.indexOf(a) + 1}`;
+                const idB = b.question_id || `Q${generatedAnswers.indexOf(b) + 1}`;
+                
+                const parseId = (id) => {
+                    const parts = id.replace(/[^0-9.]/g, '').split('.');
+                    return parts.map(part => parseInt(part) || 0);
+                };
+                
+                const partsA = parseId(idA);
+                const partsB = parseId(idB);
+                
+                for (let i = 0; i < Math.max(partsA.length, partsB.length); i++) {
+                    const partA = partsA[i] || 0;
+                    const partB = partsB[i] || 0;
+                    if (partA !== partB) {
+                        return partA - partB;
+                    }
+                }
+                return 0;
+            });
+            
+            // Add each answer
+            sortedAnswers.forEach((answer, index) => {
+                const questionId = answer.question_id || `Q${index + 1}`;
+                const topic = answer.topic || 'General';
+                const questionText = answer.question_text || answer.question || 'No question text';
+                const answerText = answer.answer || 'No answer provided';
+                const references = answer.references || [];
+                
+                // Check if we need a new page
+                if (yPosition > pageHeight - marginBottom) {
+                    doc.addPage();
+                    yPosition = 25;
+                }
+                
+                // Question ID and Topic
+                doc.setFontSize(14);
+                doc.setTextColor(255, 107, 53); // ARIA orange
+                doc.text(`${questionId}`, 20, yPosition);
+                
+                doc.setFontSize(10);
+                doc.setTextColor(44, 95, 122); // Topic color
+                const topicWidth = doc.getTextWidth(`Topic: ${topic}`);
+                doc.text(`Topic: ${topic}`, 190 - topicWidth, yPosition);
+                
+                yPosition += 8;
+                
+                // Question Text
+                doc.setFontSize(11);
+                doc.setTextColor(51, 51, 51); // Dark gray
+                doc.setFont(undefined, 'bold');
+                doc.text('Question:', 20, yPosition);
+                
+                doc.setFont(undefined, 'normal');
+                const questionLines = doc.splitTextToSize(questionText, 150);
+                doc.text(questionLines, 20, yPosition + 6);
+                yPosition += (questionLines.length * 5) + 10;
+                
+                // Answer Text
+                doc.setFont(undefined, 'bold');
+                doc.text('Answer:', 20, yPosition);
+                
+                doc.setFont(undefined, 'normal');
+                // Clean answer text of HTML tags for PDF
+                const cleanAnswerText = answerText
+                    .replace(/<[^>]*>/g, ' ') // Remove HTML tags
+                    .replace(/\s+/g, ' ') // Normalize whitespace
+                    .trim();
+                
+                const answerLines = doc.splitTextToSize(cleanAnswerText, 150);
+                doc.text(answerLines, 20, yPosition + 6);
+                yPosition += (answerLines.length * 5) + 8;
+                
+                // References
+                if (references.length > 0) {
+                    doc.setFont(undefined, 'bold');
+                    doc.text('References:', 20, yPosition);
+                    yPosition += 6;
+                    
+                    doc.setFontSize(9);
+                    doc.setFont(undefined, 'normal');
+                    doc.setTextColor(0, 122, 204); // Link blue
+                    
+                    references.forEach((ref, refIndex) => {
+                        if (yPosition > pageHeight - marginBottom) {
+                            doc.addPage();
+                            yPosition = 25;
+                        }
+                        
+                        const refText = `[${refIndex + 1}] ${ref}`;
+                        const refLines = doc.splitTextToSize(refText, 150);
+                        doc.text(refLines, 25, yPosition);
+                        yPosition += (refLines.length * 4) + 2;
+                    });
+                    
+                    doc.setFontSize(11);
+                    doc.setTextColor(51, 51, 51);
+                }
+                
+                // Add spacing between questions
+                yPosition += 10;
+                
+                // Add a subtle line separator
+                if (index < sortedAnswers.length - 1) {
+                    doc.setDrawColor(240, 240, 240);
+                    doc.setLineWidth(0.5);
+                    doc.line(20, yPosition, 190, yPosition);
+                    yPosition += 8;
+                }
+            });
+            
+            // Add footer to all pages
+            const pageCount = doc.internal.getNumberOfPages();
+            for (let i = 1; i <= pageCount; i++) {
+                doc.setPage(i);
+                doc.setFontSize(8);
+                doc.setTextColor(153, 153, 153);
+                doc.text(
+                    `Generated by ARIA (Analyst Relations Intelligent Assistant) - Page ${i} of ${pageCount}`,
+                    20,
+                    pageHeight + 10
+                );
+                doc.text(
+                    new Date().toLocaleString(),
+                    190 - doc.getTextWidth(new Date().toLocaleString()),
+                    pageHeight + 10
+                );
+            }
+            
+            return doc.output('blob');
+        }
+
+        function downloadPDF() {
+            try {
+                // Track the export event BEFORE download
+                trackExport('pdf', analytics.getDocumentName(), generatedAnswers.length, generatedAnswers.length);
+                
+                const pdfBlob = generatePDF();
+                const link = document.createElement('a');
+                const url = URL.createObjectURL(pdfBlob);
+                link.setAttribute('href', url);
+                link.setAttribute('download', `${getFileName()}.pdf`);
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                URL.revokeObjectURL(url);
+                
+                ARIA.showAlert('PDF file downloaded successfully!', 'success');
+            } catch (error) {
+                console.error('PDF generation error:', error);
+                ARIA.showAlert('Failed to generate PDF. Please try again.', 'error');
+            }
+        }
+
+        function getContentType(format) {
+            switch (format) {
+                case 'csv': return 'text/csv';
+                case 'json': return 'application/json';
+                case 'html': return 'text/html';
+                case 'pdf': return 'application/pdf';
+                default: return 'text/plain';
+            }
+        }
+
+        function downloadAll() {
+            const formats = ['csv', 'html', 'pdf'];
+            ARIA.showAlert('Preparing all formats for download...', 'info');
+            
+            // Download each format with a small delay
+            formats.forEach((format, index) => {
+                setTimeout(() => {
+                    downloadFile(format);
+                }, index * 1000); // Increased delay for PDF generation
+            });
+        }
+        
+        function showFullAnswer(questionId) {
+            const answer = generatedAnswers.find(a => a.question_id === questionId);
+            if (!answer) {
+                console.error('Answer not found for question ID:', questionId);
+                return;
+            }
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+                background: rgba(0,0,0,0.5); display: flex; align-items: center; 
+                justify-content: center; z-index: 1000;
+            `;
+            
+            modal.innerHTML = `
+                <div style="background: white; border-radius: 8px; max-width: 800px; max-height: 80vh; overflow-y: auto; padding: 30px;">
+                    <h3>${answer.question_id}: ${answer.question_text || answer.question || 'Question'}</h3>
+                    <div style="margin: 15px 0; padding: 10px; background: #f8f9fa; border-radius: 4px;">
+                        <strong>Topic:</strong> ${answer.topic || 'General'}
+                    </div>
+                    <div style="line-height: 1.6;" class="formatted-answer">${formatAnswerText(answer.answer)}</div>
+                    <button onclick="this.parentElement.parentElement.remove()" style="margin-top: 20px; padding: 8px 16px; background: var(--primary-color); color: white; border: none; border-radius: 4px; cursor: pointer;">
+                        Close
+                    </button>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,1864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate Answers - ARIA</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/static/images/icons/databricks-ARIA-icon-full-color.svg">
+    <link rel="alternate icon" href="/static/images/icons/databricks-ARIA-icon-full-color.svg">
+    <link rel="mask-icon" href="/static/images/icons/databricks-ARIA-icon-full-color.svg" color="#FF3621">
+    
+    <link rel="stylesheet" href="/static/css/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <img src="/static/images/logos/databricks-ARIA-lockup-full-color-stacked.svg" alt="ARIA Logo" style="height: 50px;">
+                <h1>Analyst Relations Intelligent Assistant</h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Mode Navigation -->
+        <div class="nav-tabs">
+            <a href="/" class="nav-tab active">📄 RFI Processor</a>
+            <a href="/chat" class="nav-tab">💬 Chat</a>
+            <a href="/audit" class="nav-tab">🔍 Document Audit</a>
+        </div>
+
+        <div class="main-content">
+            <div class="content-area">
+                <!-- Progress Stepper -->
+                <div class="stepper">
+                    <div class="step completed">
+                        <div class="step-circle">✓</div>
+                        <div class="step-label">Upload</div>
+                    </div>
+                    <div class="step completed">
+                        <div class="step-circle">✓</div>
+                        <div class="step-label">Extract</div>
+                    </div>
+                    <div class="step active">
+                        <div class="step-circle">3</div>
+                        <div class="step-label">Generate</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-circle">4</div>
+                        <div class="step-label">Download</div>
+                    </div>
+                </div>
+
+                <h2><img src="/static/images/icons/databricks-ARIA-icon-full-color.svg" alt="ARIA" style="width: 24px; height: 24px; margin-right: 8px; vertical-align: middle;">Generate Answers</h2>
+                <p>ARIA will generate comprehensive answers based on your extracted questions and knowledge base.</p>
+
+                <!-- Questions Status -->
+                <div id="questionsStatus" class="form-section">
+                    <div class="alert alert-info">
+                        <span class="loading"></span> Loading extracted questions...
+                    </div>
+                </div>
+
+                <!-- Generation Controls -->
+                <div id="generationSettings" class="form-section" style="display: none;">
+                    <!-- Topic Grouping Preview -->
+                    <div id="topicGroupsPreview" class="form-group" style="display: none;">
+                        <h4>📊 Questions Grouped by Topic</h4>
+                        <div id="topicGroupsList" style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                            <!-- Topic groups will be populated here -->
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="customPrompt" class="form-label">Additional Instructions:</label>
+                        <div class="help-text">Customize how the AI generates answers (tone, format, specific requirements)</div>
+                        <textarea id="customPrompt" class="form-input" placeholder="E.g., Focus on capabilities released in the last 6 months. Include customer examples where possible." rows="3"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <button id="generateBtn" class="btn btn-primary">
+                            🚀 Generate Answers
+                        </button>
+                        <button class="btn btn-secondary" onclick="window.location.href='/extract'">
+                            ← Back to Extraction
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Progress Indicator -->
+                <div id="generationProgress" style="display: none;">
+                    <h3>🔄 Generating Answers...</h3>
+                    <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                            <span class="loading"></span>
+                            <span id="progressText">Initializing...</span>
+                        </div>
+                        <div style="width: 100%; background: #e0e0e0; border-radius: 10px; height: 8px;">
+                            <div id="progressBar" style="width: 0%; background: var(--primary-color); height: 100%; border-radius: 10px; transition: width 0.3s;"></div>
+                        </div>
+
+                        <!-- Topic Progress -->
+                        <div id="topicProgress" style="margin-top: 15px; display: none;">
+                            <div style="font-size: 14px; color: #666; margin-bottom: 8px;">
+                                Processing topics: <span id="topicProgressText">0 / 0</span>
+                            </div>
+                            <div id="currentTopicStatus" style="font-size: 12px; color: #888;"></div>
+                        </div>
+                    </div>
+
+                    <!-- Real-time Answer Display -->
+                    <div id="liveAnswersSection" style="margin-top: 20px; display: none;">
+                        <h4>📝 Generated Answers (Live)</h4>
+                        <div id="liveAnswersContainer" style="background: white; border: 1px solid #e0e0e0; border-radius: 8px; max-height: 400px; overflow-y: auto;">
+                            <!-- Live answers will appear here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Generated Answers Table -->
+                <div id="generationResults" style="display: none;">
+                    <h3>✅ Generated Answers</h3>
+                    
+                    <!-- Summary -->
+                    <div class="alert alert-success" id="generationSummary">
+                        <div id="summaryText">Successfully generated answers!</div>
+                    </div>
+                    
+                    <!-- Answers Table -->
+                    <div class="form-section">
+                        <h4>📝 Review Generated Answers</h4>
+                        <div style="background: white; border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden; max-height: 600px; overflow-y: auto;">
+                            <table id="answersTable" style="width: 100%; border-collapse: collapse;">
+                                <thead style="background: #f8f9fa; position: sticky; top: 0; z-index: 10;">
+                                    <tr>
+                                        <th style="padding: 12px; text-align: left; border-bottom: 2px solid #e0e0e0; font-weight: 600; width: 100px;">Question ID</th>
+                                        <th style="padding: 12px; text-align: left; border-bottom: 2px solid #e0e0e0; font-weight: 600; width: 150px;">Topic</th>
+                                        <th style="padding: 12px; text-align: left; border-bottom: 2px solid #e0e0e0; font-weight: 600; width: 250px;">Question</th>
+                                        <th style="padding: 12px; text-align: left; border-bottom: 2px solid #e0e0e0; font-weight: 600;">Answer</th>
+                                        <th style="padding: 12px; text-align: left; border-bottom: 2px solid #e0e0e0; font-weight: 600; width: 150px;">References</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="answersTableBody">
+                                    <!-- Answers will be populated here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <!-- Actions -->
+                    <div style="margin-top: 20px; display: flex; gap: 10px;">
+                        <button class="btn btn-primary" onclick="proceedToDownload()">
+                            Next: Export & Download →
+                        </button>
+                        <button class="btn btn-secondary" onclick="regenerateAnswers()">
+                            🔄 Regenerate Answers
+                        </button>
+                        <button class="btn btn-secondary" onclick="copyAnswersToClipboard()">
+                            📋 Copy All to Clipboard
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Completion Message -->
+                <div id="completionMessage" style="display: none; margin-top: 30px;">
+                    <!-- Content will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <h3><img src="/static/images/icons/databricks-ARIA-icon-full-color.svg" alt="ARIA" style="width: 20px; height: 20px; margin-right: 8px; vertical-align: middle;">Answer Generation</h3>
+                <p>This step creates ARIA-powered responses to:</p>
+                <ul>
+                    <li><strong>Answer</strong> extracted questions</li>
+                    <li><strong>Reference</strong> knowledge base</li>
+                    <li><strong>Include</strong> relevant citations</li>
+                    <li><strong>Maintain</strong> consistent tone</li>
+                </ul>
+                
+                <h4>📚 Data Sources</h4>
+                <ul>
+                    <li>Databricks Documentation</li>
+                    <li>R&D Certified Answers</li>
+                    <li>Official Databricks Blogs</li>
+                </ul>
+                <h4>⏱️ Estimated Time</h4>
+                <ul>
+                    <li><strong>1-5 questions:</strong> 30-60 seconds</li>
+                    <li><strong>6-15 questions:</strong> 1-3 minutes</li>
+                    <li><strong>16+ questions:</strong> 3-10 minutes</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/app.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked@4.3.0/marked.min.js"></script>
+    <style>
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .loading-spinner {
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Formatted answer styling */
+        .answer-content p, .formatted-answer p {
+            margin-top: 0;
+            margin-bottom: 12px;
+        }
+        
+        .answer-content p:last-child, .formatted-answer p:last-child {
+            margin-bottom: 0;
+        }
+        
+        .formatted-answer {
+            background: #fafafa;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid #f0f0f0;
+        }
+        
+        .view-full-btn {
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            cursor: pointer;
+            font-size: 12px;
+            padding: 4px 0;
+            margin-top: 8px;
+            text-decoration: underline;
+            display: block;
+        }
+        
+        .view-full-btn:hover {
+            color: var(--secondary-color);
+        }
+        
+        /* Completion Summary Styles */
+        .completion-success, .completion-partial {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 30px 0;
+            text-align: center;
+        }
+        
+        .completion-success {
+            border-color: #10b981;
+            background: linear-gradient(135deg, #ecfdf5 0%, #f0fdf4 100%);
+        }
+        
+        .completion-partial {
+            border-color: #f59e0b;
+            background: linear-gradient(135deg, #fffbeb 0%, #fefce8 100%);
+        }
+        
+        .completion-success h3 {
+            color: #10b981;
+            margin-bottom: 15px;
+            font-size: 24px;
+        }
+        
+        .completion-partial h3 {
+            color: #f59e0b;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+        
+        .summary-stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin: 25px 0;
+            flex-wrap: wrap;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 20px;
+            border-radius: 8px;
+            min-width: 100px;
+        }
+        
+        .stat-item.success {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+        
+        .stat-item.failed {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+        
+        .stat-item.rate {
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+        
+        .stat-number {
+            display: block;
+            font-size: 32px;
+            font-weight: 700;
+            line-height: 1;
+            margin-bottom: 5px;
+        }
+        
+        .stat-item.success .stat-number {
+            color: #10b981;
+        }
+        
+        .stat-item.failed .stat-number {
+            color: #ef4444;
+        }
+        
+        .stat-item.rate .stat-number {
+            color: #3b82f6;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .failed-topics-summary {
+            background: rgba(239, 68, 68, 0.05);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 25px 0;
+            text-align: left;
+        }
+        
+        .failed-topics-summary h4 {
+            color: #ef4444;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+        
+        .failed-topics-summary ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+        
+        .failed-topics-summary li {
+            margin-bottom: 8px;
+            color: #374151;
+        }
+        
+        .completion-actions {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 25px 0;
+            flex-wrap: wrap;
+        }
+        
+        .help-text {
+            font-size: 14px;
+            color: #6b7280;
+            margin-top: 15px;
+            font-style: italic;
+        }
+        
+        @media (max-width: 768px) {
+            .summary-stats {
+                gap: 20px;
+            }
+            
+            .stat-item {
+                min-width: 80px;
+                padding: 15px;
+            }
+            
+            .stat-number {
+                font-size: 24px;
+            }
+            
+            .completion-actions {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .completion-actions .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+
+        /* Markdown content styling in modal */
+        .markdown-content {
+            font-family: 'DM Sans', system-ui, sans-serif;
+        }
+
+        .markdown-content h1, .markdown-content h2, .markdown-content h3, 
+        .markdown-content h4, .markdown-content h5, .markdown-content h6 {
+            color: var(--secondary-color);
+            margin: 20px 0 10px 0;
+            line-height: 1.3;
+        }
+
+        .markdown-content h1 { font-size: 24px; border-bottom: 2px solid var(--border-gray); padding-bottom: 8px; }
+        .markdown-content h2 { font-size: 20px; }
+        .markdown-content h3 { font-size: 18px; }
+        .markdown-content h4 { font-size: 16px; }
+
+        .markdown-content p {
+            margin: 12px 0;
+            line-height: 1.6;
+        }
+
+        .markdown-content ul, .markdown-content ol {
+            margin: 12px 0;
+            padding-left: 25px;
+        }
+
+        .markdown-content li {
+            margin: 6px 0;
+            line-height: 1.5;
+        }
+
+        .markdown-content strong {
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .markdown-content em {
+            font-style: italic;
+            color: var(--text-muted);
+        }
+
+        .markdown-content code {
+            background: #f1f3f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 13px;
+            color: #d14;
+        }
+
+        .markdown-content pre {
+            background: #f8f9fa;
+            border: 1px solid var(--border-gray);
+            border-radius: 6px;
+            padding: 15px;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+
+        .markdown-content pre code {
+            background: none;
+            padding: 0;
+            color: var(--text-dark);
+            font-size: 14px;
+        }
+
+        .markdown-content blockquote {
+            border-left: 4px solid var(--primary-color);
+            background: #f8f9fa;
+            margin: 15px 0;
+            padding: 10px 20px;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        .markdown-content table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 15px 0;
+        }
+
+        .markdown-content th, .markdown-content td {
+            border: 1px solid var(--border-gray);
+            padding: 8px 12px;
+            text-align: left;
+        }
+
+        .markdown-content th {
+            background: var(--light-gray);
+            font-weight: 600;
+        }
+
+        .markdown-content a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .markdown-content a:hover {
+            text-decoration: underline;
+        }
+    </style>
+    <script>
+        let extractedQuestions = [];
+        let generatedAnswers = [];
+        
+        // ===== LOCAL STORAGE RECOVERY SYSTEM =====
+        function saveProgressToLocalStorage(answers, totalQuestions) {
+            try {
+                const progressData = {
+                    sessionId: sessionId,
+                    generatedAnswers: answers,
+                    totalQuestions: totalQuestions.length,
+                    completedCount: answers.length,
+                    timestamp: Date.now(),
+                    documentName: document.querySelector('#questionsStatus')?.textContent?.includes('From document:') 
+                        ? document.querySelector('#questionsStatus').textContent.split('From document:')[1]?.trim() 
+                        : 'Document'
+                };
+                localStorage.setItem('aria-generation-progress', JSON.stringify(progressData));
+                console.log(`📱 Saved ${answers.length} answers to localStorage`);
+            } catch (error) {
+                console.warn('Failed to save progress to localStorage:', error);
+            }
+        }
+
+        function loadProgressFromLocalStorage() {
+            try {
+                const stored = localStorage.getItem('aria-generation-progress');
+                if (!stored) return null;
+
+                const progressData = JSON.parse(stored);
+                
+                // Check if it's for the same session (within 24 hours)
+                const isRecent = Date.now() - progressData.timestamp < (24 * 60 * 60 * 1000);
+                const isSameSession = progressData.sessionId === sessionId;
+                
+                if (isRecent) {
+                    console.log(`📱 Loaded ${progressData.completedCount} answers from localStorage`);
+                    return progressData;
+                }
+                
+                // Clear old data
+                clearProgressFromLocalStorage();
+                return null;
+            } catch (error) {
+                console.warn('Failed to load progress from localStorage:', error);
+                clearProgressFromLocalStorage();
+                return null;
+            }
+        }
+
+        function clearProgressFromLocalStorage() {
+            try {
+                localStorage.removeItem('aria-generation-progress');
+                console.log('📱 Cleared localStorage progress');
+            } catch (error) {
+                console.warn('Failed to clear localStorage:', error);
+            }
+        }
+        
+        // Function to format answer text with proper paragraphs
+        function formatAnswerText(text, truncate = 0) {
+            if (!text) return 'No answer provided';
+            
+            // Replace multiple newlines with paragraph breaks
+            let formatted = text
+                .replace(/\n{3,}/g, '\n\n')  // Normalize multiple newlines to max 2
+                .replace(/\n\n/g, '</p><p>') // Convert double newlines to paragraphs
+                .replace(/\n/g, '<br>');     // Convert single newlines to line breaks
+            
+            // Wrap in paragraph tags if not already
+            if (!formatted.startsWith('<p>')) {
+                formatted = '<p>' + formatted;
+            }
+            if (!formatted.endsWith('</p>')) {
+                formatted = formatted + '</p>';
+            }
+            
+            // Truncate if needed
+            if (truncate > 0 && text.length > truncate) {
+                // Find a good breaking point
+                const truncated = text.substring(0, truncate);
+                // Try to end at a sentence or paragraph
+                const lastPeriod = truncated.lastIndexOf('.');
+                const lastBreak = truncated.lastIndexOf('\n');
+                const breakPoint = Math.max(lastPeriod, lastBreak);
+                
+                if (breakPoint > truncate * 0.7) { // Only use breakpoint if it's far enough
+                    formatted = formatAnswerText(text.substring(0, breakPoint + 1), 0);
+                } else {
+                    formatted = formatAnswerText(truncated, 0);
+                }
+                
+                // Add ellipsis to show truncation
+                formatted = formatted.replace(/<\/p>$/, '...</p>');
+                return formatted;
+            }
+            
+            return formatted;
+        }
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Load session and check if we have extracted questions
+            const session = await getSession();
+            
+            if (!session.extractedQuestions || session.extractedQuestions.length === 0) {
+                document.getElementById('questionsStatus').innerHTML = `
+                    <div class="alert alert-error">
+                        No questions found. Please <a href="/extract">extract questions</a> first.
+                    </div>
+                `;
+                return;
+            }
+
+            extractedQuestions = session.extractedQuestions;
+
+            // Check localStorage for partial progress (no server payload issues!)
+            const localProgress = loadProgressFromLocalStorage();
+            const existingAnswers = localProgress?.generatedAnswers || session.generatedAnswers || [];
+            
+            // Load existing answers if available
+            if (existingAnswers.length > 0) {
+                generatedAnswers = existingAnswers;
+            }
+
+            // Group questions by topic to show preview
+            const topicGroups = groupQuestionsByTopic(extractedQuestions);
+
+            // Check for partial generation state
+            if (existingAnswers.length > 0 && existingAnswers.length < extractedQuestions.length) {
+                // Show partial progress recovery interface
+                console.log('📱 Found partial progress in localStorage:', existingAnswers.length, '/', extractedQuestions.length);
+                showPartialProgressRecovery(existingAnswers, extractedQuestions, topicGroups, session);
+            } else if (existingAnswers.length === extractedQuestions.length) {
+                // All answers complete - show completion state
+                console.log('📱 Found completed progress in localStorage');
+                showCompletedState(existingAnswers, session);
+            } else {
+                // No answers yet - show normal generation interface
+                showFreshGenerationInterface(topicGroups, session);
+            }
+
+            // Set up event listeners
+            setupEventListeners();
+            
+            // Clean up localStorage when user manually navigates away (not during generation)
+            window.addEventListener('beforeunload', () => {
+                // Only clear if we're not actively generating (no progress bar showing)
+                const progressDiv = document.getElementById('generationProgress');
+                const isGenerating = progressDiv && progressDiv.style.display !== 'none';
+                
+                if (!isGenerating) {
+                    // User is manually navigating away, not mid-generation
+                    clearProgressFromLocalStorage();
+                }
+            });
+        });
+
+        function setupEventListeners() {
+            const generateBtn = document.getElementById('generateBtn');
+            if (generateBtn) {
+                generateBtn.addEventListener('click', generateAnswers);
+            }
+        }
+
+        function showPartialProgressRecovery(existingAnswers, allQuestions, topicGroups, session) {
+            // Show recovery interface with partial answers
+            const completionPercent = Math.round((existingAnswers.length / allQuestions.length) * 100);
+            
+            document.getElementById('questionsStatus').innerHTML = `
+                <div class="alert alert-warning">
+                    <strong>🔄 Partial Progress Detected!</strong><br>
+                    Found <strong>${existingAnswers.length} out of ${allQuestions.length}</strong> answers (${completionPercent}% complete).<br>
+                    <small>From document: ${session.documentName}</small>
+                </div>
+            `;
+
+            // Show the partial answers in a table
+            showProgressInterface();
+            const tableSection = document.getElementById('answersTableSection');
+            const tableBody = document.getElementById('answersTableBody');
+            tableSection.style.display = 'block';
+            tableBody.innerHTML = '';
+
+            // Populate existing answers
+            existingAnswers.forEach(answer => {
+                addAnswerRowRealTime(answer);
+            });
+
+            // Update progress bar to reflect current state
+            const progressBar = document.getElementById('progressBar');
+            const progressText = document.getElementById('progressText');
+            const progressPercentage = document.getElementById('progressPercentage');
+            
+            progressBar.style.width = `${completionPercent}%`;
+            progressPercentage.textContent = `${completionPercent}%`;
+            progressText.textContent = `Progress recovered: ${existingAnswers.length}/${allQuestions.length} answers completed`;
+
+            // Hide spinner since we're not actively generating
+            const spinner = document.querySelector('.loading-spinner');
+            if (spinner) {
+                spinner.style.display = 'none';
+            }
+
+            // Show recovery options
+            const progressDiv = document.getElementById('generationProgress');
+            progressDiv.innerHTML += `
+                <div style="margin-top: 20px; padding: 20px; background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 8px;">
+                    <h4 style="margin: 0 0 15px 0; color: #856404;">Recovery Options</h4>
+                    <p style="margin: 0 0 15px 0; color: #856404;">
+                        You can continue generating the remaining ${allQuestions.length - existingAnswers.length} answers, or start over.
+                    </p>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <button id="continueGenerationBtn" class="btn btn-primary">
+                            ▶️ Continue Generation (${allQuestions.length - existingAnswers.length} remaining)
+                        </button>
+                        <button id="restartGenerationBtn" class="btn btn-secondary">
+                            🔄 Start Over (${allQuestions.length} questions)
+                        </button>
+                        <button id="viewCompletedBtn" class="btn btn-success" style="display: ${existingAnswers.length > 0 ? 'inline-block' : 'none'};">
+                            📋 View Completed Answers
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            // Add event listeners for recovery buttons
+            document.getElementById('continueGenerationBtn').addEventListener('click', () => {
+                continueGeneration(existingAnswers, allQuestions);
+            });
+            
+            document.getElementById('restartGenerationBtn').addEventListener('click', () => {
+                restartGeneration();
+            });
+
+            document.getElementById('viewCompletedBtn').addEventListener('click', () => {
+                // Scroll to the existing answers table
+                document.getElementById('answersTableSection').scrollIntoView({ behavior: 'smooth' });
+            });
+        }
+
+        function showCompletedState(existingAnswers, session) {
+            // Show completion interface
+            document.getElementById('questionsStatus').innerHTML = `
+                <div class="alert alert-success">
+                    <strong>✅ Generation Complete!</strong><br>
+                    All <strong>${existingAnswers.length} answers</strong> have been generated successfully.<br>
+                    <small>From document: ${session.documentName}</small>
+                </div>
+            `;
+
+            // Show results interface
+            showProgressInterface();
+            const tableSection = document.getElementById('answersTableSection');
+            const tableBody = document.getElementById('answersTableBody');
+            tableSection.style.display = 'block';
+            tableBody.innerHTML = '';
+
+            // Populate all answers
+            existingAnswers.forEach(answer => {
+                addAnswerRowRealTime(answer);
+            });
+
+            // Show 100% completion
+            const progressBar = document.getElementById('progressBar');
+            const progressText = document.getElementById('progressText');
+            const progressPercentage = document.getElementById('progressPercentage');
+            
+            progressBar.style.width = '100%';
+            progressPercentage.textContent = '100%';
+            progressText.textContent = `✅ Complete! All ${existingAnswers.length} answers generated`;
+
+            // Hide spinner
+            const spinner = document.querySelector('.loading-spinner');
+            if (spinner) {
+                spinner.style.display = 'none';
+            }
+
+            // Show completion actions
+            document.getElementById('answerCount').textContent = existingAnswers.length;
+            document.getElementById('completionMessage').style.display = 'block';
+
+            // Add event listener for proceed button
+            const proceedBtn = document.getElementById('proceedToResults');
+            if (proceedBtn) {
+                proceedBtn.addEventListener('click', () => {
+                    window.location.href = '/download';
+                });
+            }
+        }
+
+        function showFreshGenerationInterface(topicGroups, session) {
+            // Show normal generation interface (existing behavior)
+            document.getElementById('questionsStatus').innerHTML = `
+                <div class="alert alert-success">
+                    <strong>✅ Ready to generate!</strong> Found ${extractedQuestions.length} extracted questions across ${topicGroups.length} topics.<br>
+                    <small>From document: ${session.documentName}</small>
+                    <div style="margin-top: 8px; font-size: 14px;">
+                        Topics: ${topicGroups.map(t => `${t.topic} (${t.question_count})`).join(', ')}
+                    </div>
+                </div>
+            `;
+
+            // Display topic grouping preview
+            displayTopicGroups(topicGroups);
+
+            document.getElementById('generationSettings').style.display = 'block';
+        }
+
+        async function continueGeneration(existingAnswers, allQuestions) {
+            // Find remaining questions to generate
+            const existingQuestionIds = new Set(existingAnswers.map(a => a.question_id));
+            const remainingQuestions = extractedQuestions.filter(q => 
+                !existingQuestionIds.has(q.sub_question)
+            );
+
+            console.log('DEBUG: Continuing generation for', remainingQuestions.length, 'remaining questions');
+            console.log('DEBUG: Existing question IDs:', Array.from(existingQuestionIds));
+            console.log('DEBUG: Remaining questions:', remainingQuestions);
+
+            if (remainingQuestions.length === 0) {
+                // All questions are actually complete
+                showCompletedState(existingAnswers, await getSession());
+                return;
+            }
+
+            // Start generating remaining questions
+            generateRemainingAnswers(remainingQuestions);
+        }
+
+        function restartGeneration() {
+            // Clear existing answers and start fresh
+            generatedAnswers = [];
+            
+            // Clear localStorage first (instant)
+            clearProgressFromLocalStorage();
+            
+            // Update session to clear answers (small payload)
+            console.log('📱 Clearing all progress for restart');
+            updateSession({
+                generatedAnswers: [],
+                currentStep: 'generate'
+            }).then(() => {
+                // Reload page to show fresh interface
+                window.location.reload();
+            });
+        }
+
+        async function generateRemainingAnswers(remainingQuestions) {
+            const customPrompt = ''; // Default prompt for continuation
+            
+            try {
+                // Update UI to show continuing generation
+                const progressDiv = document.getElementById('generationProgress');
+                progressDiv.innerHTML = `
+                    <!-- Progress Bar -->
+                    <div class="progress-section" style="margin-bottom: 30px; padding: 20px; background: white; border-radius: 8px; border: 1px solid #e0e0e0;">
+                        <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
+                            <div class="loading-spinner" style="width: 20px; height: 20px; border: 3px solid #f3f3f3; border-top: 3px solid var(--primary-color); border-radius: 50%; animation: spin 1s linear infinite;"></div>
+                            <div style="flex: 1;">
+                                <div id="progressText" style="font-size: 16px; font-weight: 500; color: #333; margin-bottom: 4px;">Continuing generation...</div>
+                                <div id="currentTopicInfo" style="font-size: 14px; color: #666; display: none;"></div>
+                            </div>
+                        </div>
+                        
+                        <div style="width: 100%; background: #e9ecef; border-radius: 25px; height: 8px; overflow: hidden; margin-bottom: 10px;">
+                            <div id="progressBar" style="width: 0%; background: linear-gradient(45deg, var(--primary-color), #ff8c5a); height: 100%; border-radius: 25px; transition: width 0.8s ease-in-out;"></div>
+                        </div>
+                        
+                        <div id="progressPercentage" style="font-size: 12px; color: #666; text-align: center;">0%</div>
+                    </div>
+
+                    <!-- Live Answers Table -->
+                    <div id="answersTableSection" style="display: block;">
+                        <h3>📝 Generated Answers</h3>
+                        <div style="background: white; border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden; max-height: 600px; overflow-y: auto;">
+                            <table id="answersTable" style="width: 100%; border-collapse: collapse;">
+                                <thead style="background: #f8f9fa; position: sticky; top: 0; z-index: 10;">
+                                    <tr>
+                                        <th style="padding: 12px; text-align: left; border-bottom: 2px solid #e0e0e0; font-weight: 600;">Question ID</th>
+                                        <th style="padding: 12px; text-align: left; border-bottom: 2px solid #e0e0e0; font-weight: 600;">Topic</th>
+                                        <th style="padding: 12px; text-align: left; border-bottom: 2px solid #e0e0e0; font-weight: 600;">Question</th>
+                                        <th style="padding: 12px; text-align: left; border-bottom: 2px solid #e0e0e0; font-weight: 600;">Answer</th>
+                                        <th style="padding: 12px; text-align: left; border-bottom: 2px solid #e0e0e0; font-weight: 600; width: 150px;">References</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="answersTableBody">
+                                    <!-- Existing answers will be preserved -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Completion Message -->
+                    <div id="completionMessage" style="display: none; margin-top: 30px;">
+                        <div class="alert alert-success">
+                            ✅ Successfully generated <span id="answerCount">0</span> answers!
+                        </div>
+                        
+                        <div style="margin-top: 20px;">
+                            <button id="proceedToResults" class="btn btn-success">
+                                ➡️ Proceed to Download
+                            </button>
+                        </div>
+                    </div>
+                `;
+
+                // Re-populate existing answers in the table
+                const tableBody = document.getElementById('answersTableBody');
+                tableBody.innerHTML = '';
+                generatedAnswers.forEach(answer => {
+                    addAnswerRowRealTime(answer);
+                });
+
+                // Calculate starting progress based on existing answers
+                const totalQuestions = extractedQuestions.length;
+                const startingProgress = Math.round((generatedAnswers.length / totalQuestions) * 100);
+                
+                // Update progress to reflect existing progress
+                const progressBar = document.getElementById('progressBar');
+                const progressText = document.getElementById('progressText');
+                const progressPercentage = document.getElementById('progressPercentage');
+                
+                progressBar.style.width = `${startingProgress}%`;
+                progressPercentage.textContent = `${startingProgress}%`;
+                progressText.textContent = `Continuing from ${generatedAnswers.length}/${totalQuestions} answers...`;
+
+                // Start progressive generation for remaining questions
+                await generateAnswersWithProgress({
+                    model: '',
+                    response_length: 'standard',
+                    custom_prompt: customPrompt,
+                    is_regeneration: false  // Continuing generation, not regeneration
+                }, remainingQuestions);
+                
+            } catch (error) {
+                console.error('Error continuing generation:', error);
+                ARIA.showAlert(`Error continuing generation: ${error.message}`, 'error');
+            }
+        }
+
+        // Topic grouping function - handles nested structure and creates topic summary
+        function groupQuestionsByTopic(questions) {
+            const topicGroups = {};
+            
+            // First, flatten the questions if they have nested structure
+            const flattenedQuestions = flattenQuestionStructure(questions);
+            
+            // Group flattened questions by topic
+            flattenedQuestions.forEach(question => {
+                const topic = question.topic || 'General';
+                if (!topicGroups[topic]) {
+                    topicGroups[topic] = {
+                        topic: topic,
+                        questions: [],
+                        sub_question_ids: [],
+                        question_count: 0
+                    };
+                }
+                topicGroups[topic].questions.push(question);
+                topicGroups[topic].sub_question_ids.push(question.sub_question);
+                topicGroups[topic].question_count++;
+            });
+            
+            return Object.values(topicGroups);
+        }
+
+        // Flatten question structure to handle nested sub_topics (copied from extract.html)
+        function flattenQuestionStructure(questions) {
+            let flattened = [];
+            
+            if (!Array.isArray(questions)) {
+                return flattened;
+            }
+            
+            questions.forEach((item, i) => {
+                if (typeof item === 'string') {
+                    // Handle array of strings (fallback)
+                    flattened.push({
+                        question: String(i + 1),
+                        topic: "General",
+                        sub_question: `${i + 1}.1`,
+                        text: item
+                    });
+                } else if (typeof item === 'object' && item !== null) {
+                    // Handle the complex nested AI model structure with sub_topics
+                    if (item.sub_topics && Array.isArray(item.sub_topics)) {
+                        item.sub_topics.forEach((topicGroup) => {
+                            const topicName = topicGroup.topic || 'General';
+                            
+                            if (topicGroup.sub_questions && Array.isArray(topicGroup.sub_questions)) {
+                                topicGroup.sub_questions.forEach((subQ) => {
+                                    flattened.push({
+                                        question: item.question || String(i + 1),
+                                        topic: topicName,
+                                        sub_question: subQ.sub_question || `${item.question || (i + 1)}.1`,
+                                        text: subQ.text || ''
+                                    });
+                                });
+                            }
+                        });
+                    } 
+                    // Handle simple flat structure (already normalized by backend)
+                    else if (item.question && item.topic && item.sub_question && item.text) {
+                        flattened.push({
+                            question: item.question,
+                            topic: item.topic,
+                            sub_question: item.sub_question,
+                            text: item.text
+                        });
+                    }
+                    // Handle simple object structure (fallback)
+                    else {
+                        flattened.push({
+                            question: item.question || String(i + 1),
+                            topic: item.topic || 'General',
+                            sub_question: item.sub_question || `${i + 1}.1`,
+                            text: item.text || item.question || ''
+                        });
+                    }
+                }
+            });
+            
+            return flattened;
+        }
+
+        // Display topic groups preview
+        function displayTopicGroups(topics) {
+            const topicGroupsList = document.getElementById('topicGroupsList');
+            const topicGroupsPreview = document.getElementById('topicGroupsPreview');
+            
+            let html = '';
+            topics.forEach(topicGroup => {
+                html += `
+                    <div style="margin-bottom: 10px; padding: 8px 12px; background: white; border-radius: 4px; border-left: 4px solid var(--primary-color);">
+                        <strong>${topicGroup.topic}</strong> (${topicGroup.question_count} questions)
+                    </div>
+                `;
+            });
+            
+            topicGroupsList.innerHTML = html;
+            topicGroupsPreview.style.display = 'block';
+        }
+
+        // Add live answer to display
+        function addLiveAnswer(answer) {
+            const liveAnswersContainer = document.getElementById('liveAnswersContainer');
+            const liveAnswersSection = document.getElementById('liveAnswersSection');
+            
+            // Show the live answers section if not already visible
+            liveAnswersSection.style.display = 'block';
+            
+            const answerHtml = `
+                <div style="border-bottom: 1px solid #f0f0f0; padding: 15px;">
+                    <div style="font-weight: 600; color: var(--primary-color); margin-bottom: 8px;">
+                        ${answer.question_id}: ${answer.question_text || 'N/A'}
+                    </div>
+                    <div style="color: #555; line-height: 1.6; font-size: 14px;">
+                        ${answer.answer || 'No answer provided'}
+                    </div>
+                    <div style="margin-top: 8px; font-size: 12px; color: #888;">
+                        Topic: ${answer.topic || 'General'}
+                    </div>
+                </div>
+            `;
+            
+            liveAnswersContainer.innerHTML += answerHtml;
+            
+            // Auto-scroll to bottom
+            liveAnswersContainer.scrollTop = liveAnswersContainer.scrollHeight;
+        }
+
+        async function generateAnswers() {
+            const generateBtn = document.getElementById('generateBtn');
+            const customPrompt = document.getElementById('customPrompt').value.trim();
+            
+            // These elements don't exist in current HTML, so use defaults
+            const modelSelect = ''; // Use default model from backend
+            const responseLength = 'standard'; // Default response length
+            
+            generateBtn.innerHTML = '<span class="loading"></span> Generating...';
+            generateBtn.disabled = true;
+            
+            try {
+                // Hide the current content and show progress interface
+                showProgressInterface();
+                
+                // Start generation
+                await generateAnswersWithProgress({
+                    model: modelSelect,
+                    response_length: responseLength,
+                    custom_prompt: customPrompt,
+                    is_regeneration: false  // Explicit new generation
+                });
+                
+            } catch (error) {
+                console.error('Error generating answers:', error);
+                generateBtn.disabled = false;
+                generateBtn.innerHTML = '🚀 Generate Answers';
+                ARIA.showAlert(`Error generating answers: ${error.message}`, 'error');
+                
+                // Show the original content again on error
+                showSettingsInterface();
+            }
+        }
+
+        function showProgressInterface() {
+            // Hide all the settings content
+            document.getElementById('questionsStatus').style.display = 'none';
+            document.getElementById('generationSettings').style.display = 'none';
+            document.getElementById('topicGroupsPreview').style.display = 'none';
+            
+            // Show progress interface
+            document.getElementById('generationProgress').style.display = 'block';
+            
+            // Update the content to be cleaner
+            const progressDiv = document.getElementById('generationProgress');
+            progressDiv.innerHTML = `
+                <!-- Progress Bar -->
+                <div class="progress-section" style="margin-bottom: 30px; padding: 20px; background: white; border-radius: 8px; border: 1px solid #e0e0e0;">
+                    <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
+                        <div class="loading-spinner" style="width: 20px; height: 20px; border: 3px solid #f3f3f3; border-top: 3px solid var(--primary-color); border-radius: 50%; animation: spin 1s linear infinite;"></div>
+                        <div style="flex: 1;">
+                            <div id="progressText" style="font-size: 16px; font-weight: 500; color: #333; margin-bottom: 4px;">Starting generation...</div>
+                            <div id="currentTopicInfo" style="font-size: 14px; color: #666; display: none;"></div>
+                        </div>
+                    </div>
+                    
+                    <div style="width: 100%; background: #e9ecef; border-radius: 25px; height: 8px; overflow: hidden; margin-bottom: 10px;">
+                        <div id="progressBar" style="width: 0%; background: linear-gradient(45deg, var(--primary-color), #ff8c5a); height: 100%; border-radius: 25px; transition: width 0.8s ease-in-out;"></div>
+                    </div>
+                    
+                    <div id="progressPercentage" style="font-size: 12px; color: #666; text-align: center;">0%</div>
+                </div>
+
+                <!-- Live Answers Table -->
+                <div id="answersTableSection" style="display: none;">
+                    <h3>📝 Generated Answers</h3>
+                    <div style="background: white; border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden; max-height: 600px; overflow-y: auto;">
+                        <table id="answersTable" style="width: 100%; border-collapse: collapse;">
+                            <thead style="background: #f8f9fa; position: sticky; top: 0; z-index: 10;">
+                                <tr>
+                                    <th style="padding: 12px; text-align: left; border-bottom: 2px solid #e0e0e0; font-weight: 600;">Question ID</th>
+                                    <th style="padding: 12px; text-align: left; border-bottom: 2px solid #e0e0e0; font-weight: 600;">Topic</th>
+                                    <th style="padding: 12px; text-align: left; border-bottom: 2px solid #e0e0e0; font-weight: 600;">Question</th>
+                                    <th style="padding: 12px; text-align: left; border-bottom: 2px solid #e0e0e0; font-weight: 600;">Answer</th>
+                                    <th style="padding: 12px; text-align: left; border-bottom: 2px solid #e0e0e0; font-weight: 600; width: 150px;">References</th>
+                                </tr>
+                            </thead>
+                            <tbody id="answersTableBody">
+                                <!-- Live answers will appear here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Completion Message -->
+                <div id="completionMessage" style="display: none; margin-top: 30px;">
+                    <div class="alert alert-success">
+                        ✅ Successfully generated <span id="answerCount">0</span> answers!
+                    </div>
+                    
+                    <div style="margin-top: 20px;">
+                        <button id="proceedToResults" class="btn btn-success">
+                            ➡️ Proceed to Download
+                        </button>
+                        <button class="btn btn-secondary" onclick="showSettingsInterface()">
+                            ← Back to Settings
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function showSettingsInterface() {
+            // Show the original settings content
+            document.getElementById('questionsStatus').style.display = 'block';
+            document.getElementById('generationSettings').style.display = 'block';
+            
+            // Hide progress interface
+            document.getElementById('generationProgress').style.display = 'none';
+            
+            // Reset the generate button
+            const generateBtn = document.getElementById('generateBtn');
+            generateBtn.innerHTML = '🚀 Generate Answers';
+            generateBtn.disabled = false;
+        }
+
+        async function generateAnswersWithProgress(settings, questionsToProcess = null) {
+            console.log('🚨 IMPORTANT: AI Model gets ONLY current topic questions, NEVER previous answers!');
+            console.log('📱 Progress saved to localStorage (for recovery), NO server payload issues!');
+            
+            // Get session data for document name access
+            const session = await getSession();
+            
+            const progressText = document.getElementById('progressText');
+            const progressBar = document.getElementById('progressBar');
+            const progressPercentage = document.getElementById('progressPercentage');
+
+            function updateProgress(percentage, text, topicInfo = '') {
+                progressBar.style.width = `${percentage}%`;
+                progressPercentage.textContent = `${Math.round(percentage)}%`;
+                progressText.textContent = text;
+                
+                // Update topic info if provided
+                const topicDisplay = document.getElementById('currentTopicInfo');
+                if (topicDisplay && topicInfo) {
+                    topicDisplay.textContent = topicInfo;
+                    topicDisplay.style.display = 'block';
+                } else if (topicDisplay && !topicInfo) {
+                    topicDisplay.style.display = 'none';
+                }
+            }
+
+            // Step 1: Determine which questions to process
+            const questionsForGeneration = questionsToProcess || extractedQuestions;
+            const isContinuing = questionsToProcess !== null;
+            
+            updateProgress(5, `Starting...`);
+            const topicGroups = groupQuestionsByTopic(questionsForGeneration);
+            const totalQuestions = extractedQuestions.length; // Always use total for progress calculation
+            let completedQuestions = isContinuing ? generatedAnswers.length : 0; // Start from existing count if continuing
+            let allAnswers = [];
+            
+            if (!isContinuing) {
+                generatedAnswers = []; // Only reset if not continuing
+            }
+
+            console.log('DEBUG: Processing', topicGroups.length, 'topic groups with', questionsForGeneration.length, 'questions to generate (', totalQuestions, 'total)');
+
+            // Show the answers table immediately
+            const tableSection = document.getElementById('answersTableSection');
+            const tableBody = document.getElementById('answersTableBody');
+            tableSection.style.display = 'block';
+            
+            if (!isContinuing) {
+                tableBody.innerHTML = ''; // Only clear if starting fresh
+            }
+
+            updateProgress(10, 
+                `Processing ${completedQuestions}/${totalQuestions} questions`,
+                isContinuing ? 
+                    `Continuing with ${topicGroups.length} remaining topic groups...` : 
+                    `Processing ${topicGroups.length} topic groups...`
+            );
+
+            // Step 2: Process each topic group sequentially with automatic retry
+            const failedTopics = [];
+            
+            for (let i = 0; i < topicGroups.length; i++) {
+                const topicGroup = topicGroups[i];
+                const questionsInGroup = topicGroup.questions;
+                let topicSuccess = false;
+                
+                // Retry logic for each topic (up to 3 attempts)
+                for (let attempt = 1; attempt <= 3 && !topicSuccess; attempt++) {
+                    try {
+                        const retryText = attempt > 1 ? ` (retry ${attempt}/3)` : '';
+                        updateProgress(
+                            10 + (i / topicGroups.length) * 80,
+                            `Processing ${completedQuestions}/${totalQuestions} questions`,
+                            `Topic ${i + 1}/${topicGroups.length}: "${topicGroup.topic}" (${questionsInGroup.length} questions)${retryText}`
+                        );
+
+                        console.log(`DEBUG: Processing topic group ${i + 1}/${topicGroups.length}: "${topicGroup.topic}" - Attempt ${attempt}`);
+
+                        // Show "Still thinking..." for longer operations
+                        if (attempt > 1) {
+                            updateProgress(
+                                10 + (i / topicGroups.length) * 80,
+                                `Still thinking... This may take longer due to model cold start`,
+                                `🤔 Retrying topic "${topicGroup.topic}" (attempt ${attempt}/3)`
+                            );
+                        }
+
+                        // IMPORTANT: Only send current topic questions to AI model (never previous answers!)
+                        const aiModelPayload = {
+                            questions: questionsInGroup,  // Only current group questions
+                            settings: settings,
+                            is_regeneration: settings.is_regeneration || false,  // Explicit regeneration flag
+                            document_name: session.documentName || 'Unknown Document'  // Document name for consistent analytics
+                        };
+                        console.log(`DEBUG: Sending to AI model - Topic: "${topicGroup.topic}", Questions: ${questionsInGroup.length}, Attempt: ${attempt}`);
+                        console.log(`DEBUG: AI Model payload size: ${JSON.stringify(aiModelPayload).length} chars`);
+                
+                const response = await fetch('/api/generate-answers', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Session-Id': sessionId
+                    },
+                            body: JSON.stringify(aiModelPayload)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const result = await response.json();
+
+                if (!result.success) {
+                    throw new Error(result.info?.error || 'Generation failed');
+                }
+
+                        const topicAnswers = result.answers || [];
+                        console.log(`DEBUG: Received ${topicAnswers.length} answers for topic "${topicGroup.topic}" on attempt ${attempt}`);
+
+                        // Success! Add answers to the table immediately as they come in
+                        topicAnswers.forEach(answer => {
+                            allAnswers.push(answer);
+                            generatedAnswers.push(answer); // Update global array immediately for "View Full Answer"
+                            addAnswerRowRealTime(answer);
+                            completedQuestions++;
+                            
+                            // Update progress in real-time for each answer
+                            const progressPercent = 10 + (completedQuestions / totalQuestions) * 80;
+                            updateProgress(
+                                progressPercent,
+                                `Processing ${completedQuestions}/${totalQuestions} questions`,
+                                `✅ Completed: ${answer.question_id}`
+                            );
+                        });
+
+                        topicSuccess = true;
+                        console.log(`✅ Topic "${topicGroup.topic}" completed successfully on attempt ${attempt}`);
+
+                        // Save progress to localStorage (no server payload issues!)
+                        if (i % 5 === 0 || i === topicGroups.length - 1) {
+                            saveProgressToLocalStorage(generatedAnswers, extractedQuestions);
+                        }
+
+                        // Save to session every 10 answers to prevent payload overflow
+                        if (generatedAnswers.length % 10 === 0 || i === topicGroups.length - 1) {
+                            try {
+                                console.log(`💾 Incremental session save: ${generatedAnswers.length} answers (${Math.round(JSON.stringify(generatedAnswers).length / 1024)}KB)`);
+                                await updateSession({
+                                    generatedAnswers: generatedAnswers,
+                                    currentStep: 'generate' // Keep as generate until fully complete
+                                });
+                            } catch (error) {
+                                console.warn('Failed incremental session save, continuing with localStorage backup:', error);
+                                // Don't stop generation, localStorage still has the backup
+                            }
+                        }
+
+                    } catch (error) {
+                        console.error(`Error processing topic "${topicGroup.topic}" on attempt ${attempt}:`, error);
+                        
+                        if (attempt === 3) {
+                            // Final attempt failed - record as failed topic
+                            console.error(`❌ Topic "${topicGroup.topic}" failed after 3 attempts`);
+                            failedTopics.push({
+                                topic: topicGroup.topic,
+                                questions: questionsInGroup,
+                                error: error.message,
+                                attempts: 3
+                            });
+                            
+                            // Mark questions in this group as failed but continue with other groups
+                            questionsInGroup.forEach(question => {
+                                completedQuestions++;
+                                const progressPercent = 10 + (completedQuestions / totalQuestions) * 80;
+                                updateProgress(
+                                    progressPercent,
+                                    `Processing ${completedQuestions}/${totalQuestions} questions`,
+                                    `❌ Failed after 3 attempts: ${question.sub_question}`
+                                );
+                            });
+                        } else {
+                            // Will retry - show retry message
+                            updateProgress(
+                                10 + (i / topicGroups.length) * 80,
+                                `Retrying failed topic in 2 seconds...`,
+                                `⚠️ Topic "${topicGroup.topic}" failed (attempt ${attempt}/3), retrying...`
+                            );
+                            
+                            // Wait before retry with exponential backoff
+                            await new Promise(resolve => setTimeout(resolve, 2000 * attempt));
+                        }
+                    }
+                }
+            }
+
+            // Step 3: Finalize with summary
+            const successfulQuestions = generatedAnswers.length;
+            const failedQuestions = totalQuestions - successfulQuestions;
+            const successRate = Math.round((successfulQuestions / totalQuestions) * 100);
+            
+            if (failedTopics.length === 0) {
+                updateProgress(100, `✅ Complete! Generated ${successfulQuestions}/${totalQuestions} answers (${successRate}% success rate)`);
+                console.log('🎉 All topics completed successfully!');
+            } else {
+                updateProgress(100, `⚠️ Partial completion: ${successfulQuestions}/${totalQuestions} answers (${successRate}% success rate)`);
+                console.log(`⚠️ ${failedTopics.length} topics failed after 3 attempts:`, failedTopics);
+            }
+
+            // Save final results to localStorage and clear recovery data
+            saveProgressToLocalStorage(generatedAnswers, extractedQuestions);
+            
+            // Store failed topics for retry option
+            if (failedTopics.length > 0) {
+                localStorage.setItem('aria-failed-topics', JSON.stringify(failedTopics));
+            }
+            
+            // Final session update - mark as complete with summary
+            const completionSummary = {
+                total_questions: totalQuestions,
+                successful_questions: successfulQuestions,
+                failed_topics: failedTopics.length,
+                success_rate: successRate
+            };
+            
+            // Final session update - just mark as complete for download (answers already saved incrementally)
+            console.log(`DEBUG: Marking generation complete in session - ${generatedAnswers.length} total answers`);
+            try {
+                await updateSession({
+                    currentStep: 'download' // Only update step, answers already saved incrementally
+                });
+            } catch (error) {
+                console.error('Failed to mark generation complete in session:', error);
+                ARIA.showAlert('⚠️ Results generated but failed to save completion status. You can still download from the button below.', 'warning');
+                // Continue since answers are already saved, just the step marker failed
+            }
+            
+            // Clear localStorage since generation is complete
+            clearProgressFromLocalStorage();
+
+            // Hide the spinner
+            const spinner = document.querySelector('.loading-spinner');
+            if (spinner) {
+                spinner.style.display = 'none';
+            }
+
+            // Show enhanced completion message with retry options
+            showCompletionSummary(generatedAnswers.length, totalQuestions, failedTopics, completionSummary);
+        }
+        
+        function showCompletionSummary(successfulAnswers, totalQuestions, failedTopics, summary) {
+            const completionContainer = document.getElementById('completionMessage');
+            if (!completionContainer) return;
+            
+            const successRate = Math.round((successfulAnswers / totalQuestions) * 100);
+            
+            if (failedTopics.length === 0) {
+                // All successful - show normal completion
+                completionContainer.innerHTML = `
+                    <div class="completion-success">
+                        <h3>🎉 Generation Complete!</h3>
+                        <p>Successfully generated answers for all <strong>${totalQuestions}</strong> questions (${successRate}% success rate)</p>
+                        <button id="proceedToResults" class="btn btn-primary">
+                            📥 Continue to Download
+                        </button>
+                    </div>
+                `;
+            } else {
+                // Some failures - show summary with retry options
+                const failedQuestionCount = failedTopics.reduce((total, topic) => total + topic.questions.length, 0);
+                
+                completionContainer.innerHTML = `
+                    <div class="completion-partial">
+                        <h3>⚠️ Generation Partially Complete</h3>
+                        <div class="summary-stats">
+                            <div class="stat-item success">
+                                <span class="stat-number">${successfulAnswers}</span>
+                                <span class="stat-label">Successful</span>
+                            </div>
+                            <div class="stat-item failed">
+                                <span class="stat-number">${failedQuestionCount}</span>
+                                <span class="stat-label">Failed</span>
+                            </div>
+                            <div class="stat-item rate">
+                                <span class="stat-number">${successRate}%</span>
+                                <span class="stat-label">Success Rate</span>
+                            </div>
+                        </div>
+                        
+                        <div class="failed-topics-summary">
+                            <h4>Failed Topics (${failedTopics.length}):</h4>
+                            <ul>
+                                ${failedTopics.map(topic => 
+                                    `<li><strong>${topic.topic}</strong> - ${topic.questions.length} questions failed after 3 attempts</li>`
+                                ).join('')}
+                            </ul>
+                        </div>
+                        
+                        <div class="completion-actions">
+                            <button id="retryFailedTopics" class="btn btn-secondary">
+                                🔄 Retry Failed Topics
+                            </button>
+                            <button id="proceedToResults" class="btn btn-primary">
+                                📥 Continue to Download Available Results
+                            </button>
+                        </div>
+                        
+                        <p class="help-text">
+                            You can retry the failed topics or proceed with the ${successfulAnswers} answers that were successfully generated.
+                        </p>
+                    </div>
+                `;
+                
+                // Add retry functionality
+                const retryBtn = document.getElementById('retryFailedTopics');
+                if (retryBtn) {
+                    retryBtn.addEventListener('click', () => {
+                        retryFailedTopics(failedTopics);
+                    });
+                }
+            }
+            
+            // Add event listener for proceed button
+            const proceedBtn = document.getElementById('proceedToResults');
+            if (proceedBtn) {
+                proceedBtn.addEventListener('click', () => {
+                    window.location.href = '/download';
+                });
+            }
+            
+            completionContainer.style.display = 'block';
+        }
+        
+        async function retryFailedTopics(failedTopics) {
+            console.log('Retrying failed topics:', failedTopics);
+            
+            // Clear the failed topics from localStorage
+            localStorage.removeItem('aria-failed-topics');
+            
+            // Hide completion message and show progress again
+            document.getElementById('completionMessage').style.display = 'none';
+            showProgressInterface();
+            
+            // Extract just the questions from failed topics
+            const questionsToRetry = failedTopics.flatMap(topic => topic.questions);
+            
+            console.log(`Retrying ${questionsToRetry.length} questions from ${failedTopics.length} failed topics`);
+            
+            try {
+                // Re-run generation for failed questions only
+                await generateAnswersWithProgress({
+                    custom_prompt: document.getElementById('customPrompt')?.value?.trim() || '',
+                    is_regeneration: true
+                }, questionsToRetry);
+            } catch (error) {
+                console.error('Error during retry:', error);
+                ARIA.showAlert(`Error during retry: ${error.message}`, 'error');
+                // Show completion interface again
+                showCompletionSummary(generatedAnswers.length, extractedQuestions.length, failedTopics, {});
+            }
+        }
+        
+        function addAnswerRowRealTime(answer) {
+            const tableBody = document.getElementById('answersTableBody');
+                const questionId = answer.question_id || 'N/A';
+                const topic = answer.topic || 'General';
+            
+            console.log('DEBUG: Adding answer row with question_id:', questionId);
+            console.log('DEBUG: Full answer object:', answer);
+                const questionText = (answer.question_text || answer.question || 'Question').substring(0, 150);
+                
+                const references = answer.references || [];
+                const referencesHtml = references.length > 0 
+                    ? references.map((ref, index) => `<a href="${ref}" target="_blank" style="color: var(--primary-color); text-decoration: none; font-size: 12px; display: block; margin-bottom: 4px;">[${index + 1}] ${ref.length > 60 ? ref.substring(0, 60) + '...' : ref}</a>`).join('')
+                    : '<span style="color: #666; font-style: italic; font-size: 12px;">No references</span>';
+                
+                const row = document.createElement('tr');
+                row.style.animation = 'slideIn 0.5s ease-out';
+            row.style.background = '#f0fff0'; // Light green highlight for new answers
+                
+                row.innerHTML = `
+                    <td style="padding: 12px; font-weight: 600; color: var(--primary-color); border-bottom: 1px solid #f0f0f0;">${questionId}</td>
+                    <td style="padding: 12px; border-bottom: 1px solid #f0f0f0;">
+                        <span style="background: #e8f4f8; color: #2c5f7a; padding: 4px 8px; border-radius: 4px; font-size: 12px;">
+                            ${topic}
+                        </span>
+                    </td>
+                    <td style="padding: 12px; font-size: 14px; line-height: 1.4; border-bottom: 1px solid #f0f0f0;">
+                        ${questionText}${questionText.length >= 150 ? '...' : ''}
+                    </td>
+                    <td style="padding: 12px; font-size: 14px; line-height: 1.4; border-bottom: 1px solid #f0f0f0;">
+                        <div class="answer-content" style="max-height: 150px; overflow-y: auto;">
+                            ${formatAnswerText(answer.answer, 300)}
+                        </div>
+                        ${answer.answer && answer.answer.length > 300 ? 
+                            `<button onclick="showFullAnswer('${questionId}')" class="view-full-btn">View Full Answer</button>` 
+                            : ''
+                        }
+                    </td>
+                    <td style="padding: 12px; font-size: 14px; line-height: 1.4; border-bottom: 1px solid #f0f0f0; vertical-align: top;">
+                        <div style="max-height: 100px; overflow-y: auto;">
+                            ${referencesHtml}
+                        </div>
+                    </td>
+                `;
+                
+                tableBody.appendChild(row);
+            
+                        // Smooth scroll to new answer within the table container
+            const tableContainer = tableBody.closest('div[style*="overflow-y: auto"]');
+            if (tableContainer) {
+                // Scroll the table container to show the new row
+                tableContainer.scrollTop = tableContainer.scrollHeight;
+            } else {
+                // Fallback to normal scrolling
+                row.scrollIntoView({ behavior: 'smooth', block: 'end' });
+            }
+                
+            // Remove highlight after animation
+            setTimeout(() => {
+                row.style.background = '';
+            }, 2000);
+        }
+
+        function displayResults(result) {
+            // Populate the answers table
+            populateAnswersTable(result.answers);
+            
+            // Update summary
+            const summaryText = document.getElementById('summaryText');
+            const processingTime = result.info?.processing_time || 0;
+            const method = result.info?.method || 'unknown';
+            
+            summaryText.innerHTML = `
+                Successfully generated <strong>${result.answers.length} answers</strong> 
+                in <strong>${processingTime.toFixed(1)}s</strong> using <strong>${method}</strong> processing.
+            `;
+            
+            // Show results section
+            document.getElementById('generationResults').style.display = 'block';
+            
+            // Scroll to results
+            document.getElementById('generationResults').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function populateAnswersTable(answers) {
+            const tableBody = document.getElementById('answersTableBody');
+            
+            // Sort answers by Question ID ascending
+            const sortedAnswers = [...answers].sort((a, b) => {
+                const idA = a.question_id || `Q${answers.indexOf(a) + 1}`;
+                const idB = b.question_id || `Q${answers.indexOf(b) + 1}`;
+                
+                // Extract numeric parts for proper sorting (e.g., "1.01" vs "1.1")
+                const parseId = (id) => {
+                    const parts = id.replace(/[^0-9.]/g, '').split('.');
+                    return parts.map(part => parseInt(part) || 0);
+                };
+                
+                const partsA = parseId(idA);
+                const partsB = parseId(idB);
+                
+                // Compare each part numerically
+                for (let i = 0; i < Math.max(partsA.length, partsB.length); i++) {
+                    const partA = partsA[i] || 0;
+                    const partB = partsB[i] || 0;
+                    if (partA !== partB) {
+                        return partA - partB;
+                    }
+                }
+                return 0;
+            });
+            
+            let tableRows = '';
+            sortedAnswers.forEach((answer, index) => {
+                const questionId = answer.question_id || `Q${index + 1}`;
+                const topic = answer.topic || 'General';
+                const questionText = (answer.question_text || answer.question || 'No question text').substring(0, 200);
+                const answerText = (answer.answer || 'No answer provided').substring(0, 300);
+                
+                const references = answer.references || [];
+                const referencesHtml = references.length > 0 
+                    ? references.map((ref, index) => `<a href="${ref}" target="_blank" style="color: var(--primary-color); text-decoration: none; font-size: 12px; display: block; margin-bottom: 4px;">[${index + 1}] ${ref.length > 60 ? ref.substring(0, 60) + '...' : ref}</a>`).join('')
+                    : '<span style="color: #666; font-style: italic; font-size: 12px;">No references</span>';
+                
+                tableRows += `
+                    <tr style="border-bottom: 1px solid #f0f0f0;">
+                        <td style="padding: 12px; font-weight: 600; color: var(--primary-color);">${questionId}</td>
+                        <td style="padding: 12px;">
+                            <span style="background: #e8f4f8; color: #2c5f7a; padding: 4px 8px; border-radius: 4px; font-size: 12px;">
+                                ${topic}
+                            </span>
+                        </td>
+                        <td style="padding: 12px; font-size: 14px; line-height: 1.4;">
+                            ${questionText}${questionText.length >= 200 ? '...' : ''}
+                        </td>
+                        <td style="padding: 12px; font-size: 14px; line-height: 1.4;">
+                            <div style="max-height: 100px; overflow-y: auto;">
+                                ${answerText}${answerText.length >= 300 ? '...' : ''}
+                            </div>
+                            ${answerText.length >= 300 ? 
+                                `<button onclick="showFullAnswer('${questionId}')" style="margin-top: 8px; background: none; border: none; color: var(--primary-color); cursor: pointer; font-size: 12px;">View Full Answer</button>` 
+                                : ''
+                            }
+                        </td>
+                        <td style="padding: 12px; font-size: 14px; line-height: 1.4; vertical-align: top;">
+                            <div style="max-height: 100px; overflow-y: auto;">
+                                ${referencesHtml}
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            });
+            
+            tableBody.innerHTML = tableRows;
+        }
+
+        function showFullAnswer(questionId) {
+            console.log('DEBUG: Looking for question ID:', questionId);
+            console.log('DEBUG: Current generatedAnswers length:', generatedAnswers.length);
+            console.log('DEBUG: Available question IDs:', generatedAnswers.map(a => a.question_id));
+            
+            const answer = generatedAnswers.find(a => a.question_id === questionId);
+            if (!answer) {
+                console.error('Answer not found for question ID:', questionId);
+                console.error('Available answers:', generatedAnswers);
+                return;
+            }
+
+            // Parse Markdown content
+            const markdownContent = answer.answer || 'No answer provided';
+            const htmlContent = marked.parse(markdownContent);
+            
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+                background: rgba(0,0,0,0.5); display: flex; align-items: center; 
+                justify-content: center; z-index: 1000;
+            `;
+            
+            modal.innerHTML = `
+                <div style="background: white; border-radius: 8px; max-width: 900px; max-height: 85vh; overflow-y: auto; padding: 30px; font-family: 'DM Sans', system-ui, sans-serif;">
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; border-bottom: 2px solid #f0f0f0; padding-bottom: 15px;">
+                        <h3 style="margin: 0; color: var(--secondary-color); font-size: 18px;">${answer.question_id}: ${answer.question_text || 'Question'}</h3>
+                        <button onclick="this.closest('.modal-container').remove()" style="background: none; border: none; font-size: 24px; cursor: pointer; color: #666; padding: 0; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; border-radius: 50%; transition: background-color 0.2s;" onmouseover="this.style.backgroundColor='#f0f0f0'" onmouseout="this.style.backgroundColor='transparent'">×</button>
+                    </div>
+                    <div style="margin: 15px 0; padding: 12px; background: #f8f9fa; border-radius: 6px; border-left: 4px solid var(--primary-color);">
+                        <strong style="color: var(--text-dark);">Topic:</strong> <span style="color: var(--text-muted);">${answer.topic || 'General'}</span>
+                    </div>
+                    <div class="markdown-content" style="line-height: 1.6; color: var(--text-dark);">
+                        ${htmlContent}
+                    </div>
+                    <div style="margin-top: 25px; display: flex; gap: 10px; justify-content: flex-end;">
+                        <button onclick="copyAnswerToClipboard('${questionId}')" style="padding: 10px 20px; background: #f8f9fa; color: var(--text-dark); border: 1px solid var(--border-gray); border-radius: 6px; cursor: pointer; font-weight: 500; transition: all 0.2s;" onmouseover="this.style.backgroundColor='#e9ecef'" onmouseout="this.style.backgroundColor='#f8f9fa'">
+                            📋 Copy Answer
+                        </button>
+                        <button onclick="this.closest('.modal-container').remove()" style="padding: 10px 20px; background: var(--primary-color); color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 500; transition: all 0.2s;" onmouseover="this.style.backgroundColor='#e55a2b'" onmouseout="this.style.backgroundColor='var(--primary-color)'">
+                            Close
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            modal.className = 'modal-container';
+            document.body.appendChild(modal);
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) modal.remove();
+            });
+        }
+
+        function copyAnswerToClipboard(questionId) {
+            const answer = generatedAnswers.find(a => a.question_id === questionId);
+            if (!answer) return;
+            
+            const textContent = `Question: ${answer.question_text}\nTopic: ${answer.topic}\n\nAnswer:\n${answer.answer}`;
+            
+            navigator.clipboard.writeText(textContent).then(() => {
+                ARIA.showAlert('Answer copied to clipboard!', 'success');
+            }).catch(() => {
+                ARIA.showAlert('Failed to copy to clipboard', 'error');
+            });
+        }
+
+        function copyAnswersToClipboard() {
+            let text = 'Generated Answers\n\n';
+            generatedAnswers.forEach((answer, index) => {
+                text += `Question ${index + 1}: ${answer.question_text || 'N/A'}\n`;
+                text += `Topic: ${answer.topic || 'General'}\n`;
+                text += `Answer: ${answer.answer || 'No answer provided'}\n\n`;
+            });
+            
+            navigator.clipboard.writeText(text).then(() => {
+                ARIA.showAlert('Answers copied to clipboard!', 'success');
+            }).catch(() => {
+                ARIA.showAlert('Failed to copy to clipboard', 'error');
+            });
+        }
+
+        function proceedToDownload() {
+            // Mark as ready for download (answers already saved incrementally)
+            updateSession({
+                currentStep: 'download' // Only update step, answers already saved incrementally
+            }).then(() => {
+                window.location.href = '/download';
+            }).catch((error) => {
+                console.error('Failed to mark as ready for download:', error);
+                // Navigate anyway since answers should already be saved
+                ARIA.showAlert('Navigating to download (answers should be available)...', 'warning');
+                setTimeout(() => {
+                    window.location.href = '/download';
+                }, 1500);
+            });
+        }
+
+        function regenerateAnswers() {
+            // Reset UI
+            document.getElementById('generationResults').style.display = 'none';
+            
+            // Clear existing answers and localStorage
+            generatedAnswers = [];
+            clearProgressFromLocalStorage();
+            
+            // Start regeneration with explicit flag
+            regenerateAnswersWithFlag();
+        }
+        
+        async function regenerateAnswersWithFlag() {
+            const generateBtn = document.getElementById('generateBtn');
+            const customPrompt = document.getElementById('customPrompt')?.value.trim() || '';
+            
+            // These elements don't exist in current HTML, so use defaults
+            const modelSelect = ''; // Use default model from backend
+            const responseLength = 'standard'; // Default response length
+            
+            // Update UI to show regenerating
+            if (generateBtn) {
+                generateBtn.innerHTML = '<span class="loading"></span> Regenerating...';
+                generateBtn.disabled = true;
+            }
+            
+            try {
+                // Hide the current content and show progress interface
+                showProgressInterface();
+                
+                // Start regeneration with explicit flag
+                await generateAnswersWithProgress({
+                    model: modelSelect,
+                    response_length: responseLength,
+                    custom_prompt: customPrompt,
+                    is_regeneration: true  // Explicit regeneration flag
+                });
+                
+            } catch (error) {
+                console.error('Error regenerating answers:', error);
+                if (generateBtn) {
+                    generateBtn.disabled = false;
+                    generateBtn.innerHTML = '🚀 Generate Answers';
+                }
+                ARIA.showAlert(`Error regenerating answers: ${error.message}`, 'error');
+                
+                // Show the original content again on error
+                showSettingsInterface();
+            }
+        }
+    </script>
+</body>
+</html>

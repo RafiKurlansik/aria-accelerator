@@ -1,0 +1,1256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document Audit - ARIA</title>
+    <link rel="stylesheet" href="/static/css/main.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/static/images/icons/databricks-ARIA-icon-full-color.svg">
+    <link rel="alternate icon" href="/static/images/icons/databricks-ARIA-icon-full-color.svg">
+    <link rel="mask-icon" href="/static/images/icons/databricks-ARIA-icon-full-color.svg" color="#FF3621">
+    
+
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <img src="/static/images/logos/databricks-ARIA-lockup-full-color-stacked.svg" alt="ARIA Logo" style="height: 50px;">
+                Analyst Relations Intelligent Assistant
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="nav-tabs">
+            <a href="/" class="nav-tab">📄 RFI Processor</a>
+            <a href="/chat" class="nav-tab">💬 Chat</a>
+            <a href="/audit" class="nav-tab active">🔍 Document Audit</a>
+        </div>
+
+        <div class="main-content">
+            <div class="content-area">
+                <!-- Progress Stepper -->
+                <div class="stepper">
+                    <div class="step active" id="step1">
+                        <div class="step-circle">1</div>
+                        <div class="step-label">Upload</div>
+                    </div>
+                    <div class="step" id="step2">
+                        <div class="step-circle">2</div>
+                        <div class="step-label">Configure</div>
+                    </div>
+                    <div class="step" id="step3">
+                        <div class="step-circle">3</div>
+                        <div class="step-label">Review</div>
+                    </div>
+                    <div class="step" id="step4">
+                        <div class="step-circle">4</div>
+                        <div class="step-label">Export</div>
+                    </div>
+                </div>
+
+                <!-- Step 1: Upload Document -->
+                <div id="auditStep1" class="audit-step">
+                    <h2>📄 Step 1: Upload Document</h2>
+                    <p>Upload your document for audit analysis.</p>
+
+                    <div class="form-section">
+                        <div class="form-group">
+                            <label for="documentText" class="form-label">📝 Document Text:</label>
+                            <textarea 
+                                id="documentText" 
+                                class="form-input" 
+                                rows="10" 
+                                placeholder="Paste your document text here..."
+                            ></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">📁 Or Upload File:</label>
+                            <div class="file-upload-area" onclick="document.getElementById('auditFileInput').click()">
+                                <div style="text-align: center; padding: 20px;">
+                                    📁 Click to select or drag and drop your file here
+                                </div>
+                                <div style="margin-top: 8px; font-size: 14px; color: #666; text-align: center;">
+                                    Supported: TXT, HTML, HTM files
+                                </div>
+                            </div>
+                            <input type="file" id="auditFileInput" accept=".txt,.html,.htm" style="display: none;">
+                        </div>
+
+                        <div class="form-group">
+                            <button id="proceedToStep2" class="btn btn-primary" disabled>
+                                Continue to Configuration →
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2: Configure Audit -->
+                <div id="auditStep2" class="audit-step" style="display: none;">
+                    <h2>⚙️ Step 2: Configure Audit</h2>
+                    <p>Select the audit categories and provide any additional instructions.</p>
+
+                    <div class="form-section">
+                        <h3>📋 Audit Categories</h3>
+                        <p>Select the categories you want to audit (at least one required):</p>
+                        
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="factual_accuracy" name="auditCategory" value="factual_accuracy" checked>
+                                <label for="factual_accuracy" class="checkbox-label">
+                                    <div class="checkbox-title">✅ Factual Accuracy</div>
+                                    <div class="checkbox-description">Verify claims, statistics, product features, and technical accuracy</div>
+                                </label>
+                            </div>
+                            
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="tone" name="auditCategory" value="tone">
+                                <label for="tone" class="checkbox-label">
+                                    <div class="checkbox-title">😊 Tone & Professionalism</div>
+                                    <div class="checkbox-description">Assess tone, professionalism, and appropriateness of language</div>
+                                </label>
+                            </div>
+                            
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="messaging" name="auditCategory" value="messaging">
+                                <label for="messaging" class="checkbox-label">
+                                    <div class="checkbox-title">📢 Messaging Alignment</div>
+                                    <div class="checkbox-description">Ensure content aligns with company messaging and positioning</div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">📝 Rules Preview:</label>
+                            <div id="rulesPreview" style="background: #f8f9fa; padding: 12px; border-radius: 6px; font-size: 14px;">
+                                <strong>Factual Accuracy</strong>: Active
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="additionalInstructions" class="form-label">📋 Additional Instructions (Optional):</label>
+                            <textarea 
+                                id="additionalInstructions" 
+                                class="form-input" 
+                                rows="3" 
+                                placeholder="Provide any specific instructions for the audit..."
+                            ></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <button id="backToStep1" class="btn btn-secondary">
+                                ← Back to Upload
+                            </button>
+                            <button id="startAudit" class="btn btn-primary">
+                                🔍 Start Audit
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3: Review Results -->
+                <div id="auditStep3" class="audit-step" style="display: none;">
+                    <h2>📊 Step 3: Review Audit Results</h2>
+                    <p>Review the flagged content with explanations.</p>
+
+                    <div id="auditResults" style="display: none;">
+                        <!-- Annotated Audit Results -->
+                        <div id="annotatedResults">
+                            <h3>📝 Annotated Document</h3>
+                            <div id="annotatedView" style="background: white; border: 2px solid #e0e0e0; border-radius: 6px; padding: 20px; min-height: 300px; margin-bottom: 20px;">
+                                <!-- Content will be populated here -->
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <button id="backToStep2" class="btn btn-secondary">
+                                ← Back to Configuration
+                            </button>
+                            <button id="proceedToExport" class="btn btn-primary">
+                                Export Results →
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="auditProgress" style="text-align: center; padding: 40px;">
+                        <div class="loading" style="margin: 0 auto 20px;"></div>
+                        <p>Analyzing document... This may take a moment.</p>
+                    </div>
+                </div>
+
+                <!-- Step 4: Export Results -->
+                <div id="auditStep4" class="audit-step" style="display: none;">
+                    <h2>📤 Step 4: Export Results</h2>
+                    <p>Export your audit results in various formats.</p>
+
+                    <div class="form-section">
+                        <h3>📋 Audit Summary</h3>
+                        <div id="auditSummary">
+                            <!-- Summary will be populated here -->
+                        </div>
+
+                        <h3>📊 Export Options</h3>
+                        <div class="export-options" style="display: flex; gap: 15px; margin: 20px 0;">
+                            <button id="exportCSV" class="btn btn-secondary">
+                                📊 Export CSV
+                            </button>
+                            <button id="exportJSON" class="btn btn-secondary">
+                                📄 Export JSON
+                            </button>
+                            <button id="exportHTML" class="btn btn-secondary">
+                                🌐 Export HTML
+                            </button>
+                        </div>
+
+                        <div class="form-group" style="margin-top: 30px;">
+                            <button id="backToStep3" class="btn btn-secondary">
+                                ← Back to Review
+                            </button>
+                            <button id="startNewAudit" class="btn btn-primary">
+                                🔄 Start New Audit
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar for Step 3: Flagged Items List -->
+            <div class="sidebar">
+                <div id="defaultAuditInstructions">
+                    <h3>🔍 Document Audit</h3>
+                    <p>Follow these steps to audit your document:</p>
+                    <ul>
+                        <li><strong>Upload</strong> your document text or file</li>
+                        <li><strong>Configure</strong> audit categories</li>
+                        <li><strong>Review</strong> flagged content</li>
+                        <li><strong>Export</strong> results</li>
+                    </ul>
+                    
+                    <h4>📋 Audit Categories</h4>
+                    <ul>
+                        <li><strong>Factual Accuracy:</strong> Verifies claims and statistics</li>
+                        <li><strong>Tone:</strong> Assesses professionalism</li>
+                        <li><strong>Messaging:</strong> Checks brand alignment</li>
+                    </ul>
+                </div>
+
+                <div id="flaggedItemsSidebar" style="display: none;">
+                    <h3>🚨 Flagged Content</h3>
+                    <div id="flaggedItemsList" style="max-height: 900px; overflow-y: auto; padding-right: 8px;">
+                        <!-- Flagged items will be populated here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/app.js"></script>
+    <script>
+        // Audit workflow state
+        let currentAuditStep = 1;
+        let documentText = '';
+        let auditResults = null;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            setupAuditWorkflow();
+        });
+
+        function setupAuditWorkflow() {
+            // Step navigation
+            document.getElementById('proceedToStep2').addEventListener('click', () => goToStep(2));
+            document.getElementById('backToStep1').addEventListener('click', () => goToStep(1));
+            document.getElementById('startAudit').addEventListener('click', performAudit);
+            document.getElementById('backToStep2').addEventListener('click', () => goToStep(2));
+            document.getElementById('proceedToExport').addEventListener('click', () => goToStep(4));
+            document.getElementById('backToStep3').addEventListener('click', () => goToStep(3));
+            document.getElementById('startNewAudit').addEventListener('click', () => resetAudit());
+
+            // Input handlers
+            document.getElementById('documentText').addEventListener('input', validateStep1);
+            document.getElementById('auditFileInput').addEventListener('change', handleFileUpload);
+
+            // Category checkbox handlers
+            document.querySelectorAll('input[name="auditCategory"]').forEach(checkbox => {
+                checkbox.addEventListener('change', updateRulesPreview);
+            });
+
+            // Export handlers
+            document.getElementById('exportCSV').addEventListener('click', () => exportResults('csv'));
+            document.getElementById('exportJSON').addEventListener('click', () => exportResults('json'));
+            document.getElementById('exportHTML').addEventListener('click', () => exportResults('html'));
+        }
+
+        function goToStep(step) {
+            // Hide all steps
+            for (let i = 1; i <= 4; i++) {
+                document.getElementById(`auditStep${i}`).style.display = 'none';
+                document.getElementById(`step${i}`).classList.remove('active', 'completed');
+            }
+
+            // Show current step
+            document.getElementById(`auditStep${step}`).style.display = 'block';
+            document.getElementById(`step${step}`).classList.add('active');
+
+            // Mark previous steps as completed
+            for (let i = 1; i < step; i++) {
+                document.getElementById(`step${i}`).classList.add('completed');
+            }
+
+            currentAuditStep = step;
+
+            // Update sidebar
+            if (step === 3 && auditResults) {
+                document.getElementById('defaultAuditInstructions').style.display = 'none';
+                document.getElementById('flaggedItemsSidebar').style.display = 'block';
+            } else {
+                document.getElementById('defaultAuditInstructions').style.display = 'block';
+                document.getElementById('flaggedItemsSidebar').style.display = 'none';
+            }
+        }
+
+        function validateStep1() {
+            const text = document.getElementById('documentText').value.trim();
+            const button = document.getElementById('proceedToStep2');
+            
+            if (text.length > 10) {
+                button.disabled = false;
+                documentText = text;
+            } else {
+                button.disabled = true;
+            }
+        }
+
+        function handleFileUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('documentText').value = e.target.result;
+                    validateStep1();
+                };
+                reader.readAsText(file);
+            }
+        }
+
+        function updateRulesPreview() {
+            const selectedCategories = Array.from(document.querySelectorAll('input[name="auditCategory"]:checked'))
+                .map(cb => cb.value);
+            
+            const rulesPreview = document.getElementById('rulesPreview');
+            
+            if (selectedCategories.length === 0) {
+                rulesPreview.innerHTML = '<em style="color: #dc3545;">Please select at least one audit category.</em>';
+                document.getElementById('startAudit').disabled = true;
+            } else {
+                const categoryNames = {
+                    'factual_accuracy': 'Factual Accuracy',
+                    'tone': 'Tone & Professionalism', 
+                    'messaging': 'Messaging Alignment'
+                };
+                
+                const activeRules = selectedCategories.map(cat => `<strong>${categoryNames[cat]}</strong>`).join(', ');
+                rulesPreview.innerHTML = `Active categories: ${activeRules}`;
+                document.getElementById('startAudit').disabled = false;
+            }
+        }
+
+        async function performAudit() {
+            goToStep(3);
+            
+            const selectedCategories = Array.from(document.querySelectorAll('input[name="auditCategory"]:checked'))
+                .map(cb => cb.value);
+            const additionalInstructions = document.getElementById('additionalInstructions').value.trim();
+
+            try {
+                const response = await fetch('/api/audit', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Session-Id': sessionId
+                    },
+                    body: JSON.stringify({
+                        document_text: documentText,
+                        audit_categories: selectedCategories,
+                        additional_instructions: additionalInstructions
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    auditResults = result;
+                    displayAuditResults(result);
+                } else {
+                    showError('Audit failed: ' + (result.error || 'Unknown error'));
+                }
+            } catch (error) {
+                console.error('Audit error:', error);
+                showError('Network error during audit');
+            }
+        }
+
+        function displayAuditResults(result) {
+            document.getElementById('auditProgress').style.display = 'none';
+            document.getElementById('auditResults').style.display = 'block';
+
+            // Display annotated view with color-coded highlights
+            displayAnnotatedView(result.info.original_text, result.info.audit_items);
+            
+            // Display flagged items in sidebar
+            displayFlaggedItemsSidebar(result.info.audit_items);
+            
+            // Prepare audit summary for Step 4
+            prepareAuditSummary(result.info.audit_items);
+            
+            // Show sidebar with flagged items
+            goToStep(3); // This will update the sidebar
+        }
+
+        function displayAnnotatedView(documentText, auditItems) {
+            const annotatedView = document.getElementById('annotatedView');
+            
+            console.log('Setting up annotated view with:', { 
+                textLength: documentText.length, 
+                itemsCount: auditItems.length,
+                items: auditItems 
+            });
+
+            // Use the working structure from app.js
+            annotatedView.innerHTML = `
+                <div style="margin-bottom: 15px;">
+                    <p><strong>Document Text with Audit Highlights:</strong></p>
+                    <p style="font-size: 14px; color: #666;">Found ${auditItems.length} audit items to highlight</p>
+                </div>
+                <div id="recogito-doc" class="recogito-container" style="border: 2px solid #e0e0e0; padding: 20px; border-radius: 8px; background: white; line-height: 1.6; font-size: 14px; white-space: pre-wrap;">
+                    ${documentText}
+                </div>
+                <div id="recogitoStatus" style="margin-top: 10px; padding: 10px; background: #f8f9fa; border-radius: 4px; font-size: 12px;">
+                    Initializing RecogitoJS...
+                </div>
+            `;
+
+            // Load RecogitoJS and setup annotations using the working method
+            loadRecogitoJS(() => {
+                initializeRecogito(documentText, auditItems);
+            });
+        }
+
+        function displayFlaggedItemsSidebar(auditItems) {
+            const flaggedItemsList = document.getElementById('flaggedItemsList');
+            flaggedItemsList.innerHTML = '';
+
+            auditItems.forEach((item, index) => {
+                const flaggedItem = document.createElement('div');
+                flaggedItem.className = 'flagged-item';
+                
+                // Ensure all required properties exist with fallbacks
+                const verdict = item.verdict || 'unknown';
+                const flaggedText = item.flagged_text || item.text || 'No text available';
+                const explanation = item.explanation || item.reason || 'No explanation available';
+                
+                // Get verdict color and create subtle tints
+                const verdictColor = getVerdictColor(verdict);
+                const lightTint = `${verdictColor}08`; // Very subtle 3% opacity background
+                const hoverTint = `${verdictColor}15`; // Slightly more visible on hover
+                const borderTint = `${verdictColor}25`; // Subtle border color
+                
+                flaggedItem.style.cssText = `
+                    margin-bottom: 15px;
+                    padding: 15px;
+                    border-radius: 8px;
+                    border-left: 5px solid ${verdictColor};
+                    background: linear-gradient(135deg, ${lightTint} 0%, #f8f9fa 100%);
+                    cursor: pointer;
+                    transition: all 0.2s ease;
+                    border: 1px solid ${borderTint};
+                    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+                `;
+                
+                // Store colors for hover effects
+                flaggedItem.setAttribute('data-verdict-color', verdictColor);
+                flaggedItem.setAttribute('data-light-tint', lightTint);
+                flaggedItem.setAttribute('data-hover-tint', hoverTint);
+                
+                flaggedItem.innerHTML = `
+                    <div style="font-size: 11px; margin-bottom: 8px;">
+                        <span style="background: ${verdictColor}15; color: ${verdictColor}; padding: 3px 8px; border-radius: 12px; font-weight: 600; font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px;">
+                            ${getVerdictLabel(verdict)}
+                        </span>
+                    </div>
+                    <div style="font-weight: 600; margin-bottom: 8px; font-size: 14px; word-wrap: break-word; overflow-wrap: break-word; hyphens: auto; color: #2c3e50;">
+                        "${flaggedText.substring(0, 60)}${flaggedText.length > 60 ? '...' : ''}"
+                    </div>
+                    <div style="font-size: 13px; color: #495057; line-height: 1.4; word-wrap: break-word; overflow-wrap: break-word;">
+                        ${explanation}
+                    </div>
+                `;
+
+                // Add click handler to scroll to annotation
+                flaggedItem.addEventListener('click', () => {
+                    scrollToAnnotation(index);
+                });
+
+                flaggedItem.addEventListener('mouseenter', () => {
+                    const hoverTint = flaggedItem.getAttribute('data-hover-tint');
+                    flaggedItem.style.background = `linear-gradient(135deg, ${hoverTint} 0%, #e9ecef 100%)`;
+                    flaggedItem.style.boxShadow = '0 4px 8px rgba(0,0,0,0.12)';
+                    flaggedItem.style.transform = 'translateY(-1px)';
+                });
+
+                flaggedItem.addEventListener('mouseleave', () => {
+                    const lightTint = flaggedItem.getAttribute('data-light-tint');
+                    flaggedItem.style.background = `linear-gradient(135deg, ${lightTint} 0%, #f8f9fa 100%)`;
+                    flaggedItem.style.boxShadow = '0 2px 4px rgba(0,0,0,0.05)';
+                    flaggedItem.style.transform = 'translateY(0)';
+                });
+
+                flaggedItemsList.appendChild(flaggedItem);
+            });
+        }
+
+        function getVerdictColor(verdict) {
+            const colors = {
+                'inaccurate_claim': '#dc3545',      // Red
+                'unsupported_claim': '#fd7e14',     // Orange  
+                'problematic_tone': '#6f42c1',      // Purple
+                'off_brand_messaging': '#20c997', // Teal
+                'legal_or_compliance_risk': '#ffc107'        // Yellow
+            };
+            return colors[verdict] || '#6c757d';    // Default gray
+        }
+
+        function getVerdictLabel(verdict) {
+            const labels = {
+                'inaccurate_claim': '❌ Inaccurate Claim',
+                'unsupported_claim': '❓ Unsupported Claim',
+                'problematic_tone': '😤 Tone Issue', 
+                'off_brand_messaging': '📢 Messaging Off Brand',
+                'legal_or_compliance_risk': '⚠️ Legal or Compliance Risk'
+            };
+            return labels[verdict] || '❓ Unknown';
+        }
+
+        function scrollToAnnotation(index) {
+            // Scroll to the annotation in the document
+            const annotations = document.querySelectorAll('.r6o-annotation');
+            if (annotations[index]) {
+                annotations[index].scrollIntoView({ behavior: 'smooth', block: 'center' });
+                // Highlight the annotation temporarily
+                annotations[index].style.boxShadow = '0 0 10px rgba(255, 193, 7, 0.8)';
+                setTimeout(() => {
+                    annotations[index].style.boxShadow = '';
+                }, 2000);
+            }
+        }
+
+        function normalizeQuotes(text) {
+            return text
+                .replace(/[\u2018\u2019]/g, "'")  // Smart single quotes
+                .replace(/[\u201C\u201D]/g, '"')  // Smart double quotes
+                .replace(/\u2013/g, '-')          // En dash
+                .replace(/\u2014/g, '--')         // Em dash
+                .replace(/\u2026/g, '...')        // Ellipsis
+                .replace(/\s+/g, ' ')             // Normalize whitespace
+                .trim();
+        }
+
+        function loadRecogitoJS(callback) {
+            // Check if already loaded
+            if (window.Recogito) {
+                callback();
+                return;
+            }
+
+            // Load RecogitoJS from CDN - EXACTLY like the working version
+            const script = document.createElement('script');
+            script.src = 'https://cdn.jsdelivr.net/npm/@recogito/recogito-js@latest/dist/recogito.min.js';
+            script.onload = callback;
+            document.head.appendChild(script);
+
+            // Also load CSS
+            const link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = 'https://cdn.jsdelivr.net/npm/@recogito/recogito-js@latest/dist/recogito.min.css';
+            document.head.appendChild(link);
+        }
+
+        function initializeRecogito(documentText, auditItems) {
+            const container = document.getElementById('recogito-doc');
+            const status = document.getElementById('recogitoStatus');
+            
+            console.log('🔧 Initializing Recogito:', {
+                container: !!container,
+                Recogito: !!window.Recogito,
+                RecogitoType: typeof window.Recogito,
+                auditItemsCount: auditItems.length,
+                documentLength: documentText.length
+            });
+            
+            if (!container) {
+                console.error('❌ Container #recogito-doc not found');
+                if (status) status.innerHTML = '❌ Error: Container not found';
+                return;
+            }
+            
+            if (!window.Recogito) {
+                console.error('❌ RecogitoJS library not available');
+                if (status) status.innerHTML = '❌ Error: RecogitoJS library not loaded';
+                return;
+            }
+
+            try {
+                if (status) status.textContent = 'Creating annotations...';
+                
+                // Create annotations from audit items using the working method
+                const annotations = createWorkingAnnotations(documentText, auditItems);
+                console.log('Created annotations:', annotations);
+                
+                if (status) status.textContent = 'Initializing RecogitoJS...';
+                
+                // Initialize Recogito using the working method
+                const r = window.Recogito.init({
+                    content: container,
+                    readOnly: true
+                });
+
+                // Add custom CSS for color-coded highlights
+                addCustomHighlightStyles();
+
+                if (status) status.textContent = 'Adding annotations...';
+                
+                // Add annotations to Recogito
+                let addedCount = 0;
+                annotations.forEach((annotation, index) => {
+                    try {
+                        r.addAnnotation(annotation);
+                        addedCount++;
+                        console.log(`Added annotation ${index + 1}:`, annotation);
+                        
+                        // Debug: Log the tag values for color coding
+                        const tagBody = annotation.body.find(b => b.purpose === 'tagging');
+                        if (tagBody) {
+                            console.log(`🏷️ Tag for annotation ${index + 1}: "${tagBody.value}"`);
+                        }
+                    } catch (error) {
+                        console.error(`Failed to add annotation ${index + 1}:`, error, annotation);
+                    }
+                });
+
+                // Handle annotation selection
+                r.on('selectAnnotation', (annotation) => {
+                    console.log('Annotation selected:', annotation);
+                });
+
+                if (status) {
+                    status.innerHTML = `✅ RecogitoJS initialized successfully!<br>
+                        <strong>Created:</strong> ${annotations.length} annotations<br>
+                        <strong>Added:</strong> ${addedCount} annotations<br>
+                        <em>Click on highlighted text to see details.</em>`;
+                }
+                
+                console.log(`✅ Initialized Recogito with ${addedCount}/${annotations.length} annotations`);
+                
+                // Debug and apply colors manually
+                setTimeout(() => {
+                    const annotationElements = document.querySelectorAll('.r6o-annotation');
+                    console.log(`🔍 Found ${annotationElements.length} annotation elements in DOM`);
+                    
+                    annotationElements.forEach((el, i) => {
+                        const dataTag = el.getAttribute('data-tag');
+                        console.log(`🎨 Annotation ${i + 1} data-tag: "${dataTag}"`);
+                        
+                        // Manual color application based on text content or position
+                        if (i < auditItems.length) {
+                            const verdict = auditItems[i].verdict;
+                            const color = getVerdictColor(verdict);
+                            
+                            console.log(`🎯 Applying color for verdict "${verdict}": ${color}`);
+                            
+                            // Apply color directly to element
+                            el.style.backgroundColor = `${color}40`;  // 25% opacity
+                            el.style.borderBottom = `2px solid ${color}`;
+                            el.style.borderLeft = `3px solid ${color}`;
+                            el.style.padding = '2px 4px';
+                            el.style.margin = '1px 0';
+                            el.style.borderRadius = '3px';
+                            
+                            // Set data attribute for future CSS matching
+                            el.setAttribute('data-verdict', verdict);
+                        }
+                    });
+                }, 1500);
+            } catch (error) {
+                console.error('❌ Failed to initialize Recogito:', error);
+                if (status) status.textContent = `Error initializing RecogitoJS: ${error.message}`;
+                container.innerHTML = `
+                    <div class="alert alert-warning">
+                        <strong>Annotation view unavailable.</strong><br>
+                        Error: ${error.message}<br><br>
+                        <div style="background: #f8f9fa; padding: 10px; border-radius: 4px; margin-top: 10px;">
+                            ${documentText.replace(/\n/g, '<br>')}
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        function createWorkingAnnotations(documentText, auditItems) {
+            const annotations = [];
+            
+            // Normalize the document text
+            const normalizedDoc = normalizeQuotes(documentText);
+            
+            auditItems.forEach((item, index) => {
+                // Use flagged_text instead of claim/rule (this is what our API returns)
+                let flaggedText = item.flagged_text || item.claim || item.rule || '';
+                if (!flaggedText) {
+                    console.warn(`No flagged text found for item ${index}:`, item);
+                    return;
+                }
+
+                console.log(`Processing item ${index}:`, { 
+                    originalFlaggedText: flaggedText, 
+                    itemKeys: Object.keys(item) 
+                });
+
+                // Show character encoding differences for debugging
+                console.log('Character comparison:', {
+                    flaggedPreview: flaggedText.substring(0, 50),
+                    docPreview: normalizedDoc.substring(0, 50),
+                    // Focus on quote characters specifically (including Unicode ranges)
+                    flaggedQuotes: Array.from(flaggedText).filter(c => /[\u2018-\u203A\u2033\u2036\u3003"''`´]/.test(c)).map(c => `${c}(U+${c.charCodeAt(0).toString(16).toUpperCase().padStart(4, '0')})`),
+                    docQuotes: Array.from(normalizedDoc).filter(c => /[\u2018-\u203A\u2033\u2036\u3003"''`´]/.test(c)).map(c => `${c}(U+${c.charCodeAt(0).toString(16).toUpperCase().padStart(4, '0')})`)
+                });
+
+                // Normalize the flagged text
+                const normalizedFlagged = normalizeQuotes(flaggedText);
+                
+                console.log('After normalization:', {
+                    originalFlagged: flaggedText.substring(0, 50),
+                    normalizedFlagged: normalizedFlagged.substring(0, 50),
+                    normalizedDoc: normalizedDoc.substring(0, 50),
+                    // Check if normalization fixed quote differences
+                    quotesChanged: flaggedText !== normalizedFlagged ? 'YES' : 'NO',
+                    lengthDiff: normalizedFlagged.length - flaggedText.length
+                });
+                
+                // Try exact match first
+                let startIndex = normalizedDoc.indexOf(normalizedFlagged);
+                let actualMatchText = normalizedFlagged;
+                
+                console.log(`Exact match attempt: "${normalizedFlagged.substring(0, 30)}..." -> ${startIndex !== -1 ? 'FOUND at ' + startIndex : 'NOT FOUND'}`);
+                
+                if (startIndex === -1) {
+                    // Try case-insensitive search
+                    console.log('Exact match failed, trying case-insensitive...');
+                    startIndex = normalizedDoc.toLowerCase().indexOf(normalizedFlagged.toLowerCase());
+                    console.log(`Case-insensitive match: ${startIndex !== -1 ? 'FOUND at ' + startIndex : 'NOT FOUND'}`);
+                }
+                
+                // If still not found, try partial match (first 60% of the text)
+                if (startIndex === -1 && normalizedFlagged.length > 20) {
+                    const partialText = normalizedFlagged.substring(0, Math.floor(normalizedFlagged.length * 0.6));
+                    startIndex = normalizedDoc.indexOf(partialText);
+                    if (startIndex !== -1) {
+                        actualMatchText = partialText;
+                        console.log(`Partial match found at ${startIndex} using first 60%`);
+                    }
+                }
+                
+                if (startIndex === -1) {
+                    console.warn(`Could not find flagged text in document: "${flaggedText.substring(0, 100)}..."`);
+                    console.log('Document preview:', normalizedDoc.substring(0, 200) + '...');
+                    return;
+                }
+
+                const endIndex = startIndex + actualMatchText.length;
+                
+                // Create Web Annotation - use original document text positions
+                const annotation = {
+                    '@context': 'http://www.w3.org/ns/anno.jsonld',
+                    type: 'Annotation',
+                    id: `annotation-${index}`,
+                    body: [
+                        {
+                            type: 'TextualBody',
+                            purpose: 'tagging',
+                            value: `verdict:${item.verdict || item.status || 'flagged'}`
+                        },
+                        {
+                            type: 'TextualBody', 
+                            purpose: 'commenting',
+                            value: item.reason || item.explanation || 'No explanation provided'
+                        }
+                    ],
+                    target: {
+                        selector: [
+                            {
+                                type: 'TextPositionSelector',
+                                start: startIndex,
+                                end: endIndex
+                            },
+                            {
+                                type: 'TextQuoteSelector',
+                                exact: actualMatchText,
+                                prefix: normalizedDoc.slice(Math.max(0, startIndex - 40), startIndex),
+                                suffix: normalizedDoc.slice(endIndex, Math.min(normalizedDoc.length, endIndex + 40))
+                            }
+                        ]
+                    }
+                };
+
+                console.log(`Created annotation for "${actualMatchText.substring(0, 50)}..." at position ${startIndex}-${endIndex}`);
+                annotations.push(annotation);
+            });
+
+            console.log(`Created ${annotations.length} annotations from ${auditItems.length} audit items`);
+            return annotations;
+        }
+
+
+
+        function addCustomHighlightStyles() {
+            if (document.getElementById('custom-highlight-styles')) return;
+            
+            const style = document.createElement('style');
+            style.id = 'custom-highlight-styles';
+            style.textContent = `
+                /* General Recogito annotation styling with better spacing */
+                .r6o-annotation {
+                    background-color: rgba(255, 193, 7, 0.3) !important;
+                    border-bottom: 2px solid #ffc107 !important;
+                    cursor: pointer !important;
+                    transition: all 0.2s ease !important;
+                    padding: 2px 4px !important;
+                    margin: 1px 0 !important;
+                    border-radius: 3px !important;
+                }
+                
+                /* Color coding based on verdict tags - multiple selector approaches */
+                .r6o-annotation[data-tag*="verdict:inaccurate_claim"],
+                .r6o-annotation[data-tag="verdict:inaccurate_claim"] {
+                    background-color: rgba(220, 53, 69, 0.25) !important;
+                    border-bottom: 2px solid #dc3545 !important;
+                    border-left: 3px solid #dc3545 !important;
+                }
+                
+                .r6o-annotation[data-tag*="verdict:unsupported_claim"],
+                .r6o-annotation[data-tag="verdict:unsupported_claim"] {
+                    background-color: rgba(253, 126, 20, 0.25) !important;
+                    border-bottom: 2px solid #fd7e14 !important;
+                    border-left: 3px solid #fd7e14 !important;
+                }
+                
+                .r6o-annotation[data-tag*="verdict:problematic_tone"],
+                .r6o-annotation[data-tag="verdict:problematic_tone"] {
+                    background-color: rgba(111, 66, 193, 0.25) !important;
+                    border-bottom: 2px solid #6f42c1 !important;
+                    border-left: 3px solid #6f42c1 !important;
+                }
+                
+                .r6o-annotation[data-tag*="verdict:off_brand_messaging"],
+                .r6o-annotation[data-tag="verdict:off_brand_messaging"] {
+                    background-color: rgba(32, 201, 151, 0.25) !important;
+                    border-bottom: 2px solid #20c997 !important;
+                    border-left: 3px solid #20c997 !important;
+                }
+                
+                .r6o-annotation[data-tag*="verdict:legal_or_compliance_risk"],
+                .r6o-annotation[data-tag="verdict:legal_or_compliance_risk"] {
+                    background-color: rgba(255, 193, 7, 0.25) !important;
+                    border-bottom: 2px solid #ffc107 !important;
+                    border-left: 3px solid #ffc107 !important;
+                }
+                
+                /* Hover effects */
+                .r6o-annotation:hover {
+                    opacity: 0.9 !important;
+                    transform: scale(1.01) !important;
+                    filter: brightness(1.05) !important;
+                    box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+                }
+                
+                /* Clean popup widget styling - completely redesigned */
+                .r6o-widget {
+                    z-index: 1000 !important;
+                    max-width: 350px !important;
+                    border-radius: 8px !important;
+                    box-shadow: 0 8px 24px rgba(0,0,0,0.15) !important;
+                    border: 1px solid #e0e0e0 !important;
+                    background: white !important;
+                    overflow: hidden !important;
+                    padding: 0 !important;
+                    margin: 0 !important;
+                }
+                
+                /* Remove all nested containers and padding */
+                .r6o-widget * {
+                    box-sizing: border-box !important;
+                }
+                
+                .r6o-widget .r6o-widget-content,
+                .r6o-widget .r6o-annotation,
+                .r6o-widget .r6o-body {
+                    padding: 0 !important;
+                    margin: 0 !important;
+                    border: none !important;
+                    background: transparent !important;
+                }
+                
+                /* Main content area */
+                .r6o-widget .r6o-body {
+                    padding: 16px !important;
+                    background: white !important;
+                    line-height: 1.5 !important;
+                }
+                
+                /* Style the verdict tag with better design */
+                .r6o-widget .r6o-tag {
+                    background: #2563eb !important;
+                    color: white !important;
+                    border: none !important;
+                    border-radius: 4px !important;
+                    padding: 4px 8px !important;
+                    font-size: 11px !important;
+                    font-weight: 600 !important;
+                    margin: 0 0 8px 0 !important;
+                    display: inline-block !important;
+                    text-transform: uppercase !important;
+                    letter-spacing: 0.5px !important;
+                }
+                
+                /* Style the comment text */
+                .r6o-widget .r6o-comment {
+                    font-size: 14px !important;
+                    line-height: 1.5 !important;
+                    color: #374151 !important;
+                    margin: 0 !important;
+                    padding: 0 !important;
+                }
+                
+                /* Hide all unnecessary elements */
+                .r6o-widget .r6o-icon,
+                .r6o-widget .r6o-btn,
+                .r6o-widget .r6o-widget-header,
+                .r6o-widget .r6o-arrow,
+                .r6o-widget .r6o-footer {
+                    display: none !important;
+                }
+                
+                /* Remove any extra borders and spacing */
+                .r6o-widget .r6o-annotation-body,
+                .r6o-widget .r6o-editable-text {
+                    border: none !important;
+                    padding: 0 !important;
+                    margin: 0 !important;
+                    background: transparent !important;
+                    box-shadow: none !important;
+                }
+                
+                /* Ensure clean layout */
+                .r6o-widget div {
+                    box-shadow: none !important;
+                }
+                
+                /* Make the popup arrow cleaner if it shows */
+                .r6o-widget::before,
+                .r6o-widget::after {
+                    display: none !important;
+                }
+                
+                /* Additional cleanup for RecogitoJS specific elements */
+                .r6o-widget .r6o-annotation-ui,
+                .r6o-widget .r6o-editor,
+                .r6o-widget .r6o-readonly,
+                .r6o-widget .r6o-widget-body {
+                    padding: 0 !important;
+                    margin: 0 !important;
+                    border: none !important;
+                    background: transparent !important;
+                    box-shadow: none !important;
+                }
+                
+                /* Style any text content directly */
+                .r6o-widget p,
+                .r6o-widget span:not(.r6o-tag),
+                .r6o-widget div:not(.r6o-tag) {
+                    padding: 0 !important;
+                    margin: 0 0 4px 0 !important;
+                    background: transparent !important;
+                    border: none !important;
+                    font-size: 14px !important;
+                    line-height: 1.5 !important;
+                    color: #374151 !important;
+                }
+                
+                /* Remove any remaining visual clutter */
+                .r6o-widget input,
+                .r6o-widget textarea,
+                .r6o-widget select {
+                    display: none !important;
+                }
+                
+                /* Force flat layout - remove all internal spacing and borders */
+                .r6o-widget > *,
+                .r6o-widget > * > *,
+                .r6o-widget > * > * > * {
+                    border: none !important;
+                    margin: 0 !important;
+                    padding: 0 !important;
+                    background: transparent !important;
+                    box-shadow: none !important;
+                }
+                
+                /* Override RecogitoJS default styling completely */
+                .r6o-widget .r6o-widget-content > div {
+                    padding: 16px !important;
+                    margin: 0 !important;
+                    border: none !important;
+                    background: white !important;
+                }
+                
+                /* Flatten the nested structure by targeting all divs */
+                .r6o-widget div[style*="padding"],
+                .r6o-widget div[style*="margin"],
+                .r6o-widget div[style*="border"] {
+                    padding: 0 !important;
+                    margin: 0 !important;
+                    border: none !important;
+                    background: transparent !important;
+                }
+                
+                /* Better text container formatting */
+                #recogito-doc {
+                    line-height: 1.8 !important;
+                    font-size: 15px !important;
+                    padding: 24px !important;
+                    letter-spacing: 0.3px !important;
+                    word-spacing: 1px !important;
+                }
+                
+                /* Custom scrollbar for sidebar */
+                #flaggedItemsList::-webkit-scrollbar {
+                    width: 6px;
+                }
+                
+                #flaggedItemsList::-webkit-scrollbar-track {
+                    background: #f1f1f1;
+                    border-radius: 3px;
+                }
+                
+                #flaggedItemsList::-webkit-scrollbar-thumb {
+                    background: #c1c1c1;
+                    border-radius: 3px;
+                }
+                
+                #flaggedItemsList::-webkit-scrollbar-thumb:hover {
+                    background: #a8a8a8;
+                }
+            `;
+            document.head.appendChild(style);
+        }
+
+        function exportResults(format) {
+            if (!auditResults) return;
+
+            const timestamp = new Date().toISOString().slice(0, 19).replace(/[:.]/g, '-');
+            const filename = `audit-results-${timestamp}`;
+
+            if (format === 'csv') {
+                exportCSV(auditResults.info.audit_items, filename);
+            } else if (format === 'json') {
+                exportJSON(auditResults, filename);
+            } else if (format === 'html') {
+                exportHTML(auditResults, filename);
+            }
+        }
+
+        function exportCSV(auditItems, filename) {
+            const csvContent = [
+                ['Flagged Text', 'Verdict', 'Explanation', 'Severity'].join(','),
+                ...auditItems.map(item => [
+                    `"${item.flagged_text.replace(/"/g, '""')}"`,
+                    `"${item.verdict}"`,
+                    `"${item.explanation.replace(/"/g, '""')}"`,
+                    `"${item.severity || 'medium'}"`
+                ].join(','))
+            ].join('\n');
+
+            downloadFile(csvContent, `${filename}.csv`, 'text/csv');
+        }
+
+        function exportJSON(auditResults, filename) {
+            const jsonContent = JSON.stringify(auditResults, null, 2);
+            downloadFile(jsonContent, `${filename}.json`, 'application/json');
+        }
+
+        function exportHTML(auditResults, filename) {
+            const htmlContent = `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>Audit Results</title>
+                    <style>
+                        body { font-family: 'DM Sans', system-ui, sans-serif; margin: 40px; }
+                        .header { border-bottom: 2px solid #dee2e6; margin-bottom: 30px; padding-bottom: 20px; }
+                        .flagged-item { margin: 20px 0; padding: 15px; border-left: 4px solid #007bff; background: #f8f9fa; }
+                        .verdict { font-weight: 600; color: #495057; }
+                        .text { font-style: italic; margin: 10px 0; }
+                        .explanation { color: #6c757d; }
+                    </style>
+                </head>
+                <body>
+                    <div class="header">
+                        <h1>Document Audit Results</h1>
+                        <p>Generated on ${new Date().toLocaleString()}</p>
+                        <p>Total flagged items: ${auditResults.info.audit_items.length}</p>
+                    </div>
+                    ${auditResults.info.audit_items.map((item, i) => `
+                        <div class="flagged-item">
+                            <div class="verdict">${i + 1}. ${getVerdictLabel(item.verdict)}</div>
+                            <div class="text">"${item.flagged_text}"</div>
+                            <div class="explanation">${item.explanation}</div>
+                        </div>
+                    `).join('')}
+                </body>
+                </html>
+            `;
+            downloadFile(htmlContent, `${filename}.html`, 'text/html');
+        }
+
+        function downloadFile(content, filename, mimeType) {
+            const blob = new Blob([content], { type: mimeType });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function resetAudit() {
+            currentAuditStep = 1;
+            documentText = '';
+            auditResults = null;
+            
+            // Reset form
+            document.getElementById('documentText').value = '';
+            document.getElementById('additionalInstructions').value = '';
+            document.getElementById('auditFileInput').value = '';
+            
+            // Reset checkboxes to default
+            document.querySelectorAll('input[name="auditCategory"]').forEach(cb => {
+                cb.checked = cb.value === 'factual_accuracy';
+            });
+            
+            updateRulesPreview();
+            goToStep(1);
+        }
+
+        function prepareAuditSummary(auditItems) {
+            const auditSummary = document.getElementById('auditSummary');
+            
+            // Calculate summary statistics
+            const totalItems = auditItems.length;
+            const verdictCounts = {};
+            auditItems.forEach(item => {
+                verdictCounts[item.verdict] = (verdictCounts[item.verdict] || 0) + 1;
+            });
+
+            // Generate summary HTML
+            const summaryStats = Object.entries(verdictCounts)
+                .map(([verdict, count]) => `
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; margin: 5px 0; background: ${getVerdictColor(verdict)}20; border-left: 4px solid ${getVerdictColor(verdict)}; border-radius: 4px;">
+                        <span>${getVerdictLabel(verdict)}</span>
+                        <strong>${count}</strong>
+                    </div>
+                `).join('');
+
+            auditSummary.innerHTML = `
+                <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <h4 style="margin: 0;">Audit Results Overview</h4>
+                        <div style="background: ${totalItems > 0 ? '#dc3545' : '#28a745'}; color: white; padding: 5px 12px; border-radius: 15px; font-weight: 600;">
+                            ${totalItems} Issues Found
+                        </div>
+                    </div>
+                    
+                    <div style="margin-bottom: 15px;">
+                        <strong>Document Length:</strong> ${documentText.length} characters<br>
+                        <strong>Analysis Date:</strong> ${new Date().toLocaleString()}
+                    </div>
+                    
+                    ${totalItems > 0 ? `
+                        <h5>Issues by Category:</h5>
+                        ${summaryStats}
+                    ` : `
+                        <div style="text-align: center; padding: 20px; color: #28a745;">
+                            <strong>✅ No issues found in your document!</strong><br>
+                            <small>Your content meets the selected audit criteria.</small>
+                        </div>
+                    `}
+                </div>
+                
+                ${totalItems > 0 ? `
+                    <div style="background: white; border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden;">
+                        <div style="background: #f8f9fa; padding: 15px; border-bottom: 1px solid #e0e0e0;">
+                            <h5 style="margin: 0;">📋 Detailed Results Table</h5>
+                        </div>
+                        <div style="overflow-x: auto;">
+                            <table style="width: 100%; border-collapse: collapse;">
+                                <thead>
+                                    <tr style="background: #f8f9fa;">
+                                        <th style="padding: 12px; text-align: left; border-bottom: 1px solid #e0e0e0;">#</th>
+                                        <th style="padding: 12px; text-align: left; border-bottom: 1px solid #e0e0e0;">Issue Type</th>
+                                        <th style="padding: 12px; text-align: left; border-bottom: 1px solid #e0e0e0;">Flagged Text</th>
+                                        <th style="padding: 12px; text-align: left; border-bottom: 1px solid #e0e0e0;">Explanation</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${auditItems.map((item, index) => `
+                                        <tr style="border-bottom: 1px solid #f0f0f0;">
+                                            <td style="padding: 12px; color: #666;">${index + 1}</td>
+                                            <td style="padding: 12px;">
+                                                <span style="display: inline-block; padding: 4px 8px; background: ${getVerdictColor(item.verdict)}20; color: ${getVerdictColor(item.verdict)}; border-radius: 12px; font-size: 12px; font-weight: 600;">
+                                                    ${getVerdictLabel(item.verdict)}
+                                                </span>
+                                            </td>
+                                            <td style="padding: 12px; font-style: italic; max-width: 200px;">
+                                                "${item.flagged_text.length > 100 ? item.flagged_text.substring(0, 100) + '...' : item.flagged_text}"
+                                            </td>
+                                            <td style="padding: 12px; font-size: 13px; line-height: 1.4;">
+                                                ${item.explanation}
+                                            </td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                ` : ''}
+            `;
+        }
+
+        function showError(message) {
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'alert alert-error';
+            errorDiv.textContent = message;
+            errorDiv.style.margin = '20px 0';
+            
+            const step3 = document.getElementById('auditStep3');
+            step3.insertBefore(errorDiv, step3.firstChild);
+            
+            setTimeout(() => errorDiv.remove(), 5000);
+        }
+
+        // Initialize rules preview on page load
+        updateRulesPreview();
+    </script>
+</body>
+</html>

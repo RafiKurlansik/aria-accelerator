@@ -1,0 +1,342 @@
+# Databricks Asset Bundle (DAB) Configuration for ARIA
+# Analyst Relations Intelligent Assistant
+
+bundle:
+  name: aria-assistant
+  git:
+    origin_url: https://github.com/company/aria
+
+# Workspace configuration
+workspace:
+  root_path: /Workspace/Users/${workspace.current_user.userName}/aria-bundle
+  artifact_path: /Workspace/Users/${workspace.current_user.userName}/aria-bundle/artifacts
+  file_path: /Workspace/Users/${workspace.current_user.userName}/aria-bundle/files
+
+# Define multiple deployment targets
+# Note: host is inherited from Databricks CLI profile configuration
+targets:
+  development:
+    workspace:
+      root_path: /Workspace/Users/${workspace.current_user.userName}/aria-dev
+    
+  staging:
+    workspace:
+      root_path: /Workspace/Users/${workspace.current_user.userName}/aria-staging
+      
+  production:
+    workspace:
+      root_path: /Workspace/Users/${workspace.current_user.userName}/aria-prod
+
+# Resource definitions
+resources:
+  # =============================================================================
+  # DATABRICKS APPS - Main ARIA Application
+  # =============================================================================
+  apps:
+    aria-web-app:
+      name: aria-web-application
+      description: "ARIA Web Application with Node.js frontend and Python FastAPI backend"
+      
+      # Configuration moved to app.yaml in project root
+      # config section removed per Databricks recommendation
+      
+      # Source code to include  
+      source_code_path: ./app
+
+  # =============================================================================
+  # JOBS - ARIA Deployment Workflows
+  # =============================================================================
+  jobs:
+    # =============================================================================
+    # 🚀 RECOMMENDED: ONE-CLICK COMPLETE SETUP
+    # =============================================================================
+    # This is the MAIN job that most users should run. It handles everything needed
+    # to get ARIA fully operational in the correct order with proper dependencies.
+    # 
+    # Usage: databricks bundle run aria-complete-setup --target development
+    # =============================================================================
+    aria-complete-setup:
+      name: "🚀 ARIA - Complete Setup (One-Click Installation)"
+      description: "⭐ RECOMMENDED: Complete end-to-end setup of ARIA system - ETL, Vector Indexes, and Agent Deployment. This is the main job that sets up everything needed for ARIA to be fully functional."
+      
+      tasks:
+        # Phase 1: Data Processing (ETL Pipeline)
+        - task_key: setup_responses_data
+          notebook_task:
+            notebook_path: ./src/aria/notebooks/etl/01a_responses_etl.py
+            source: WORKSPACE
+            base_parameters:
+              uc_catalog: "${var.catalog_name}"
+              uc_schema: "${workspace.current_user.userName}"
+              data_path: "/Workspace/Users/${workspace.current_user.userName}/aria-bundle/files"
+              sample_data_mode: "true"
+              responses_file: "/Workspace/Users/${workspace.current_user.userName}/aria-bundle/files/sample_data/knowledge_base/databricks_qa_dataset.csv"
+        
+        - task_key: setup_docs_data
+          notebook_task:
+            notebook_path: ./src/aria/notebooks/etl/01b_docs_etl.py
+            source: WORKSPACE
+            base_parameters:
+              uc_catalog: "${var.catalog_name}"
+              uc_schema: "${workspace.current_user.userName}"
+              sample_data_mode: "true"
+        
+        - task_key: setup_keywords_data
+          notebook_task:
+            notebook_path: ./src/aria/notebooks/etl/01c_product_keywords_etl.py
+            source: WORKSPACE
+            base_parameters:
+              uc_catalog: "${var.catalog_name}"
+              uc_schema: "${workspace.current_user.userName}"
+              data_path: "/Workspace/Users/${workspace.current_user.userName}/aria-bundle/files"
+              sample_data_mode: "true"
+        
+        - task_key: setup_blogs_data
+          notebook_task:
+            notebook_path: ./src/aria/notebooks/etl/01d_blogs_etl.py
+            source: WORKSPACE
+            base_parameters:
+              uc_catalog: "${var.catalog_name}"
+              uc_schema: "${workspace.current_user.userName}"
+              sample_data_mode: "true"
+
+        # Phase 2: Vector Search Infrastructure
+        - task_key: create_vector_indexes
+          notebook_task:
+            notebook_path: ./src/aria/notebooks/agents/rag/01_create_vs_idx.py
+            source: WORKSPACE
+            base_parameters:
+              uc_catalog: "${var.catalog_name}"
+              uc_schema: "${workspace.current_user.userName}"
+              vector_search_endpoint: "${var.vector_search_endpoint}"
+              embedding_model_endpoint: "databricks-gte-large-en"
+              sample_data_mode: "true"
+          depends_on:
+            - task_key: setup_responses_data
+            - task_key: setup_docs_data
+            - task_key: setup_keywords_data
+            - task_key: setup_blogs_data
+
+        # Phase 3: AI Agent Deployment (Sequential)
+        - task_key: deploy_rfi_agent
+          notebook_task:
+            notebook_path: ./src/aria/notebooks/agents/rfi_processor.py
+            source: WORKSPACE
+            base_parameters:
+              uc_catalog: "${var.catalog_name}"
+              uc_schema: "${workspace.current_user.userName}"
+              model_name: "auto_rfi"
+          depends_on:
+            - task_key: create_vector_indexes
+        
+        - task_key: deploy_audit_agent
+          notebook_task:
+            notebook_path: ./src/aria/notebooks/agents/audit_agent.py
+            source: WORKSPACE
+            base_parameters:
+              uc_catalog: "${var.catalog_name}"
+              uc_schema: "${workspace.current_user.userName}"
+              model_name: "audit_agent"
+              rfi_processor_endpoint: "aria-auto_rfi-endpoint"
+          depends_on:
+            - task_key: deploy_rfi_agent
+
+      # This job sets up everything needed for ARIA to be fully functional
+      # After completion, users can immediately use the ARIA web application
+
+    # =============================================================================
+    # 🔧 ADVANCED/DEBUGGING: Individual Component Jobs
+    # =============================================================================
+    # These jobs are provided for advanced users, debugging, and development purposes.
+    # Most users should use 'aria-complete-setup' instead of these individual jobs.
+    # 
+    # Use these when you need to:
+    # - Debug a specific component that failed
+    # - Test individual parts during development  
+    # - Run only a subset of the setup process
+    # - Understand how each component works independently
+    # 
+    # ⚠️  WARNING: Running these individually requires manual dependency management!
+    # =============================================================================
+    # Simple Demo ETL Job
+    demo-etl-pipeline:
+      name: "🔧 ARIA - ETL Pipeline (Debug/Individual)"
+      description: "⚠️ DEBUGGING: ETL pipeline only. Use 'aria-complete-setup' for normal installation."
+      
+      tasks:
+        - task_key: responses_etl
+          notebook_task:
+            notebook_path: ./src/aria/notebooks/etl/01a_responses_etl.py
+            source: WORKSPACE
+            base_parameters:
+              uc_catalog: "${var.catalog_name}"
+              uc_schema: "${workspace.current_user.userName}"
+              data_path: "/Workspace/Users/${workspace.current_user.userName}/aria-bundle/files"
+              sample_data_mode: "true"
+              responses_file: "/Workspace/Users/${workspace.current_user.userName}/aria-bundle/files/sample_data/knowledge_base/databricks_qa_dataset.csv"
+        - task_key: docs_etl
+          notebook_task:
+            notebook_path: ./src/aria/notebooks/etl/01b_docs_etl.py
+            source: WORKSPACE
+            base_parameters:
+              uc_catalog: "${var.catalog_name}"
+              uc_schema: "${workspace.current_user.userName}"
+              sample_data_mode: "true"
+        - task_key: keywords_etl
+          notebook_task:
+            notebook_path: ./src/aria/notebooks/etl/01c_product_keywords_etl.py
+            source: WORKSPACE
+            base_parameters:
+              uc_catalog: "${var.catalog_name}"
+              uc_schema: "${workspace.current_user.userName}"
+              data_path: "/Workspace/Users/${workspace.current_user.userName}/aria-bundle/files"
+              sample_data_mode: "true"
+        - task_key: blogs_etl
+          notebook_task:
+            notebook_path: ./src/aria/notebooks/etl/01d_blogs_etl.py
+            source: WORKSPACE
+            base_parameters:
+              uc_catalog: "${var.catalog_name}"
+              uc_schema: "${workspace.current_user.userName}"
+              sample_data_mode: "true"
+
+      # Manual trigger only for demo purposes
+
+    # Vector Search Index Creation Job
+    create-vector-search-indexes:
+      name: "🔧 ARIA - Create Vector Search Indexes (Debug/Individual)"
+      description: "⚠️ DEBUGGING: Vector search indexes only. Requires ETL completion first. Use 'aria-complete-setup' for normal installation."
+      
+      tasks:
+        - task_key: create_indexes
+          notebook_task:
+            notebook_path: ./src/aria/notebooks/agents/rag/01_create_vs_idx.py
+            source: WORKSPACE
+            base_parameters:
+              uc_catalog: "${var.catalog_name}"
+              uc_schema: "${workspace.current_user.userName}"
+              vector_search_endpoint: "${var.vector_search_endpoint}"
+              embedding_model_endpoint: "databricks-gte-large-en"
+              sample_data_mode: "true"
+            
+      # Manual trigger only after ETL completion
+
+    # Demo Model Processing Job
+    demo-model-processing:
+      name: "🔧 ARIA - Deploy RFI Processor Agent (Debug/Individual)"
+      description: "⚠️ DEBUGGING: RFI processor agent only. Requires vector indexes first. Use 'aria-complete-setup' for normal installation."
+      
+      tasks:
+        - task_key: demo_agent
+          notebook_task:
+            notebook_path: ./src/aria/notebooks/agents/rfi_processor.py
+            source: WORKSPACE
+            base_parameters:
+              demo_mode: "true"
+              sample_data: "demo"
+            
+      # Manual trigger only for demo
+
+    # Deploy Audit Agent Job
+    deploy-audit-agent:
+      name: "🔧 ARIA - Deploy Audit Agent (Debug/Individual)"
+      description: "⚠️ DEBUGGING: Audit agent only. Requires vector indexes and RFI processor first. Use 'aria-complete-setup' for normal installation."
+      
+      tasks:
+        - task_key: deploy_audit_agent
+          notebook_task:
+            notebook_path: ./src/aria/notebooks/agents/audit_agent.py
+            source: WORKSPACE
+            base_parameters:
+              uc_catalog: "${var.catalog_name}"
+              uc_schema: "${var.schema_name}"
+              model_name: "audit_agent"
+            
+      # Manual trigger only for deployment
+
+    # Note: Serving endpoints are now created automatically by agent deployment jobs
+    # - rfi_processor.py creates aria-auto_rfi-endpoint  
+    # - audit_agent.py creates aria-audit_agent-endpoint
+      
+  # =============================================================================
+  # EXPERIMENTS AND MODEL REGISTRY
+  # =============================================================================
+  experiments:
+    aria-model-experiments:
+      name: "/Shared/aria-experiments"
+
+  # =============================================================================
+  # CLUSTERS - Optional, comment out if no cluster creation permissions
+  # =============================================================================
+  # clusters:
+  #   aria-development-cluster:
+  #     cluster_name: "aria-dev-cluster"
+  #     spark_version: "15.4.x-scala2.12"
+  #     node_type_id: "i3.xlarge"
+  #     num_workers: 2
+  #     autotermination_minutes: 30
+  #     
+  #     spark_conf:
+  #       "spark.databricks.delta.preview.enabled": "true"
+  #       "spark.databricks.delta.retentionDurationCheck.enabled": "false"
+  #       
+  #     custom_tags:
+  #       project: "aria"
+  #       environment: "development"
+
+# Variable definitions for different environments
+# Note: Databricks host is configured via CLI profiles, not variables
+variables:
+  # Unity Catalog configuration
+  catalog_name:
+    description: "Unity Catalog name for ARIA data"
+    default: "users"
+    
+  schema_name:
+    description: "Schema name for ARIA tables"
+    default: "${workspace.current_user.userName}"
+    
+  # Vector Search configuration
+  vector_search_endpoint:
+    description: "Vector search endpoint name"
+    default: "one-env-shared-endpoint-2"
+    
+  # Model configuration (for reference - endpoints created automatically by agents)
+  answer_generation_model:
+    description: "Model for answer generation (created by rfi_processor.py)"
+    default: "agents_users-${workspace.current_user.userName}-auto_rfi"
+    
+  audit_agent_model:
+    description: "Model for document auditing (created by audit_agent.py)"
+    default: "agents_users-${workspace.current_user.userName}-audit_agent"
+
+# Sync configuration for deployment
+sync:
+  include:
+    - "src/**"
+    - "static/**"
+    - "requirements.txt"
+    - "package.json"
+    - "app.py"
+    - "app.js"
+    - "app.yaml"
+  
+  exclude:
+    - ".git/**"
+    - ".venv/**"
+    - "node_modules/**"
+    - "__pycache__/**"
+    - "*.pyc"
+    - ".env"
+    - "uploads/**"
+    - ".coverage"
+
+# Permissions for different environments
+# Note: Minor warnings about artifact/file path permissions are expected and harmless
+permissions:
+  - level: CAN_MANAGE
+    user_name: "${workspace.current_user.userName}"
+  - level: CAN_MANAGE
+    group_name: "users"
+  - level: CAN_MANAGE
+    group_name: "mlops-templates-sp"

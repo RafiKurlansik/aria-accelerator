@@ -1,0 +1,36 @@
+# Development Target Configuration for ARIA DAB
+
+variables:
+  catalog_name: "users"
+  schema_name: "rafi_kurlansik"
+  vector_search_endpoint: "one-env-shared-endpoint-2"
+  
+  # Development-specific model names (can use smaller/cheaper models)
+  question_extraction_model: "databricks-claude-sonnet-4"
+  answer_generation_model: "agents_users-rafi_kurlansik-auto_rfi"
+  audit_agent_model: "agents_users-rafi_kurlansik-audit_agent"
+
+# Development-specific resource overrides
+resources:
+  jobs:
+    lakeflow-etl-pipeline:
+      # Manual trigger for development - no schedule
+        
+    # batch-inference-job: # Commented out - notebook not migrated
+        
+    model-evaluation-job:
+      # Manual trigger for development - no schedule
+        
+  clusters:
+    aria-development-cluster:
+      autotermination_minutes: 15  # Shorter auto-termination for cost savings
+      num_workers: 1  # Smaller cluster for development
+      
+  model_serving_endpoints:
+    aria-answer-generation:
+      config:
+        served_entities:
+          - entity_name: "agents_users-rafi_kurlansik-auto_rfi"
+            entity_version: "1"
+            workload_size: "Small"  # Smaller workload for development
+            scale_to_zero_enabled: true  # Save costs in development

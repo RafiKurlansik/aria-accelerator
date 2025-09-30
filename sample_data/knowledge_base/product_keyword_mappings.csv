@@ -1,0 +1,692 @@
+focus,product_name,product_one_liner,description,product_url,keywords,id
+Platform,Databricks Data Intelligence Platform,"A unified platform for data, analytics and AI","Intelligent. Simple. Private.
+The Databricks Data Intelligence Platform allows your entire organization to use data and AI. It’s built on a lakehouse to provide an open, unified foundation for all data and governance, and is powered by a Data Intelligence Engine that understands the uniqueness of your data.
+The winners in every industry will be data and AI companies. From ETL to data warehousing to generative AI, Databricks helps you simplify and accelerate your data and AI goals.
+
+Intelligent:Databricks combines generative AI with the unification benefits of a lakehouse to power a Data Intelligence Engine that understands the unique semantics of your data. This allows the Databricks Platform to automatically optimize performance and manage infrastructure in ways unique to your business.
+
+Simple: Natural language substantially simplifies the user experience on Databricks. The Data Intelligence Engine understands your organization’s language, so search and discovery of new data is as easy as asking a question like you would to a coworker. Additionally, developing new data and applications is accelerated through natural language assistance to write code, remediate errors and find answers
+
+Private: Data and AI applications require strong governance and security, especially with the advent of generative AI. Databricks provides an end-to-end MLOps and AI development solution that’s built upon our unified approach to governance and security. You’re able to pursue all your AI initiatives — from using APIs like OpenAI to custom-built models — without compromising data privacy and IP control..
+
+
+
+",https://www.databricks.com/product/data-intelligence-platform,"Lakehouse, data integration, unified analytics, scalability, multi-cloud, real-time insights, ETL, AI, ML, open ecosystem, modern data platform",0
+Sharing,Delta Sharing,"An open, secure, zero-copy sharing for all data","Databricks and the Linux Foundation developed Delta Sharing to provide the first open source approach to data sharing across data, analytics and AI. Customers can share live data across platforms, clouds and regions with strong security and governance.
+Key benefits - 
+1. Open cross-platform sharing: Avoid vendor lock-in, and easily share existing data in Delta Lake and Apache Parquet formats to any data platform.
+2. Share live data with no replication: Share across data platforms, clouds or regions without copying, and share using Cloudflare R2 to lower costs with zero egress fees.
+3. Centralized governance: Centrally manage, govern, audit and track usage of the shared data on one platform.
+4. Marketplace for data products: Build and package data products — including datasets, AI models and notebooks — once and distribute them anywhere through an open marketplace.
+5. Privacy-safe data clean rooms: Easily collaborate with your customers and partners on any cloud via a secure hosted environment while safeguarding data privacy.
+
+How it works:
+1. Native integration with the Databricks Platform: Delta Sharing has native integration with Unity Catalog, which allows you to centrally manage and audit shared data across organizations. This lets you confidently share data assets with suppliers and partners for better coordination of your business while meeting security and compliance needs.
+2. Easily manage data and AI assets: Empower any AI or BI workload by collaborating on all types of data assets, including structured datasets, or unstructured datasets with volume sharing, AI models, notebooks and code. Sign up now to get early access to Cross-Platform View Sharing and also early access to Materialized Views and Streaming Tables Sharing.
+3. Discover and access data products through an open marketplace: Databricks Marketplace allows you to easily discover, evaluate and gain access to data products including datasets, AI models, dashboards and notebooks from anywhere, without the need to be on the Databricks Platform.
+4. Privacy-safe data clean rooms: Collaborate with your customers and partners on any cloud in a privacy-safe environment with Databricks Clean Rooms. Securely share data without data replication. Meet collaborators on their preferred cloud and provide them with the flexibility to run complex computations and workloads in any language — SQL and Python, as well as R, Scala and Java (coming soon). Guide collaborators through common use cases using predefined templates, notebooks and dashboards, accelerating time to insights.
+
+Use Cases: 
+1. Internal line of business sharing: Build Data Mesh with Delta Sharing to securely share data with business units and subsidiaries across clouds or regions without copying or replicating the data.
+2. Securely share data with your partners and suppliers without requiring them to be on the Databricks Platform.
+3. Data Monetization: Distribute and monetize data products — datasets, machine learning models and dashboards — without the need for customers to be on the Databricks Platform.
+
+
+",https://www.databricks.com/product/delta-sharing,"sharing, marketplace",1
+Sharing,Databricks Clean rooms,"Privacy-safe collaboration for data, analytics and AI
+","Databricks Clean Rooms allow businesses to easily collaborate in a secure environment with their customers and partners on any cloud in a privacy-safe way.
+
+1. Any language and workload of your choice: ""Run computations in any language — SQL, Python, R, Scala and Java — enabling joins and crosswalks as well as complex computations and ML/AI use cases.""
+2. Any scale with collaboration at any trust level: ""Easily scale to complex workloads with API support, built-in orchestration and multiparty collaboration.""
+3. Any cloud, any platform with no replication: ""Collaborate across clouds, across regions and across data platforms — without requiring data movement — powered by Delta Sharing.""
+
+Use Cases
+
+1. Category management for retail and consumer goods: Clean rooms enable real-time collaboration between retailers and suppliers, ensuring secure information exchange for demand forecasting, inventory planning and supply chain optimization. This improves product availability, reduces costs and streamlines operations for both parties.
+2. Real-world evidence (RWE) for healthcare: Clean rooms provide secure access to sensitive healthcare datasets, allowing collaborators to connect and query multiple sources of data without compromising data privacy. This supports RWE use cases such as regulatory decisions, safety, clinical trial design and observational research.
+3. Audience overlap exploration for media and entertainment: By creating a clean room environment, media companies can securely share their audience data with advertisers or other media partners. This allows them to perform in-depth analysis and identify shared audience segments without directly accessing or exposing individual user information.
+4. Know Your Customer (KYC) in banking: KYC standards are designed to combat financial fraud, money laundering and terrorism financing. Clean rooms can be used within a given jurisdiction to allow financial services companies to collaborate and run shared analytics to build a holistic view of a transaction for investigations.
+5. Personalization with expanded interests for retailers: Retailers want to target consumers based on past purchases, as well as other purchases with different retailers. Clean rooms enable retailers to augment their knowledge of consumers to suggest new products and services that are relevant to the individual but have not yet been purchased.
+6. 5G data monetization for telecom: 5G data monetizatio n enables telecoms to capitalize on data from 5G networks. Clean rooms provide a secure environment for collaboration with trusted partners, ensuring privacy while maximizing data value for optimized services, personalized experiences and targeted advertising.
+
+
+",https://www.databricks.com/product/clean-room,"cleanroom, multicloud, secure collaboration",2
+Governance,Unity Catalog,Unified governance for all data analytics,"Databricks Unity Catalog is the industry’s only unified and open governance solution for data and AI, built into the Databricks Data Intelligence Platform. With Unity Catalog, organizations can seamlessly govern both structured and unstructured data in any format, as well as machine learning models, notebooks, dashboards and files across any cloud or platform. Data scientists, analysts and engineers can securely discover, access and collaborate on trusted data and AI assets across platforms, leveraging AI to boost productivity and unlock the full potential of the lakehouse environment. This unified and open approach to governance promotes interoperability and accelerates data and AI initiatives while simplifying regulatory compliance.
+
+Unified visibility into data and AI:
+""Easily discover and classify both structured and unstructured data in any format, including machine learning models, notebooks, dashboards and files across all cloud platforms. Seamlessly manage, govern and query data from external databases and data warehouses like MySQL, PostgreSQL, Amazon Redshift, Snowflake, Azure SQL, Azure Synapse, Google BigQuery and catalogs such as HMS and AWS Glue in one place. Accelerate your data and AI initiatives with a single point of access for data exploration. Improve productivity with intelligent search, discovery and automatically generated data insights and documentation.""
+
+Single permission model for data and AI:
+""Simplify access management with a unified interface to define access policies on data and AI assets and consistently apply and audit these policies on any cloud or data platform. Securely access data from other computing platforms using open interfaces, with consistent permissions managed in one place. Enhance security with fine-grained control on rows and columns, while efficiently managing access through low-code attribute-based access policies that scale seamlessly.""
+
+AI-powered monitoring and observability:
+Harness the power of AI to automate monitoring, diagnose errors and uphold data and ML model quality. Benefit from proactive alerts that automatically detect personally identifiable information (PII) data, track model drift, and effectively resolve issues within your data and AI pipelines to maintain accuracy and integrity. Streamline debugging, root cause analysis, and impact assessment with automated column-level data lineage. Gain comprehensive observability into your data and AI with operational intelligence utilizing built-in system tables for billing, auditing, lineage and more.
+
+Open accessibility:
+Securely access your data and AI assets from any compute engine using open APIs and standard interfaces. Share data and AI assets across clouds, regions and platforms with open source Delta Sharing. Securely collaborate with anyone, anywhere to unlock new revenue streams and drive business value, without relying on proprietary formats, complex ETL processes or costly data replication.
+
+Integration with modern data stack: Unity Catalog works with your existing data catalogs, data storage systems and governance solutions so you can leverage your existing investments and build a future-proof governance model without expensive migration costs.
+
+
+
+",https://www.databricks.com/product/unity-catalog,"Data governance, catalog management, lineage tracking, secure collaboration, auditability, cross-cloud control, asset centralization",3
+Artifical Intelligence,Mosaic AI,Build and deploy production quality ML and GenAI applications,"Databricks Mosaic AI provides unified tooling to build, deploy, evaluate and govern AI and ML solutions — from building predictive ML models to the latest GenAI apps. Built on the Databricks Data Intelligence Platform, Mosaic AI enables organizations to securely and cost-effectively build production-quality compound AI systems integrated with their enterprise data.
+1. Production Quality: Deliver accurate outputs, customized with enterprise data
+2. Complete Control: End-to-end Governance across all data + AI assets
+3. Lower Cost: Train and serve your own custom LLMs at 10x lower cost
+
+Start building your generative AI solution: 
+""There are four architectural patterns to consider when building a large language model–based (LLM) solution, including prompt engineering, retrieval augmented generation (RAG), fine-tuning and pretraining. Databricks is the only provider that enables all four generative AI architectural patterns, ensuring you have the most options and can evolve as your business requirements change.""
+
+Complete ownership over your models and data:
+""Mosaic AI is part of the Databricks Data Intelligence Platform, which unifies data, model training and production environments in a single solution. You can securely use your enterprise data to augment, fine-tune or build your own machine learning and generative AI models, powering them with a semantic understanding of your business without sending your data and IP outside your walls.""
+
+Deploy and govern all your AI models centrally:
+""Model Serving is a unified service for deploying, governing and querying AI models. Our unified approach makes it easy to experiment with and productionize models. This includes
+Custom ML models like PyFunc, scikit-learn and LangChain ;
+Foundation models (FMs) on Databricks like Llama 3, MPT, Mistral and BGE ;
+Foundation models hosted elsewhere like ChatGPT, Claude 3, Cohere and Stable Diffusion""
+
+Monitor data, features and AI models in one place:
+""Lakehouse Monitoring provides a single, unified monitoring solution inside the Databricks Data Intelligence Platform. It monitors the statistical properties and quality of all tables with a single click. For applications powered by generative AI, it can scan outputs for toxic and unsafe content as well as diagnose errors.""
+
+Govern and track lineage across the full AI lifecycle from data to models:
+""Enforce proper permissions, set rate limits and track lineage to meet stringent security and governance requirements. All ML assets from data to models can be governed with a single tool, Unity Catalog, to help ensure consistent oversight and control at every stage of the ML lifecycle through development, deployment and maintenance.""
+
+Train and serve your own custom LLMs at 10x lower cost:
+""With Mosaic AI, you can build your own custom large language model from scratch to ensure the foundational knowledge of the model is tailored to your specific domain. By training on your organization’s IP with your data, it creates a customized model that is uniquely differentiated. Databricks Mosaic AI Training is an optimized training solution that can build new multibillion-parameter LLMs in days with up to 10x lower training costs.""
+
+
+
+
+
+",https://www.databricks.com/product/machine-learning,"Generative AI, LLMOps, Foundation Models, Vector Database, Model Serving, Prompt Engineering, RAG, Fine-tuning, Pre-training, AI Governance, Payload Logging, AI Monitoring, AI Lifecycle Optimization, Content Filtration​",4
+Artifical Intelligence,Mosaic AI Vector Search,A highly performant vector database with governance built in,"A highly performant vector database with governance built-in
+Unlock generative AI’s full potential with Databricks Vector Search
+
+Vector Search is a serverless vector database
+seamlessly integrated in the Data Intelligence Platform
+
+Unlike other databases, Databricks Vector Search supports automatic data synchronization from source to index, eliminating complex and costly pipeline maintenance. It leverages the same security and data governance tools organizations have already built for peace of mind. With its serverless design, Databricks Vector Search easily scales to support billions of embeddings and thousands of real-time queries per second.
+
+Built for retrieval augmented generation (RAG): Databricks Vector Search is purpose-built for customers to augment their large language models (LLMs) with enterprise data. Specifically designed for retrieval augmented generation (RAG) applications, Databricks Vector Search delivers similarity search results, enriching LLM queries with context and domain knowledge, and improving accuracy and quality of results.
+
+Automated real-time pipelines: Real-time synchronization of source data by automatically updating the corresponding vector index as new data is introduced, modified or removed. Under the hood, Databricks does the embedding vector generation and management, and automatically manages failures, handles retries, optimizes throughput, and does automatic batch size tuning and autoscaling without any intervention needed.
+
+Built-in governance: The unified interface defines policies on data, with fine-grained access control on embeddings. With built-in integration to Unity Catalog, Vector Search shows data lineage and tracking automatically without the need for additional tools or security policies. This ensures LLM models won’t expose confidential data to users who shouldn’t have access.
+
+Fast query performance: Automatically scales out to handle billions of embeddings in an index and thousands of queries per second. It shows up to 5x faster performance than other leading vector databases on up to 1 million OpenAI embedding datasets.
+
+
+
+
+",https://www.databricks.com/product/machine-learning/vector-search,"Vector search, similarity search, machine learning models, high-dimensional data, nearest-neighbor search, AI-powered databases, RAG",5
+Artifical Intelligence,Mosaic AI Agent Framework,Built production quality retreival augmented generation(RAG) apps,"Build production-quality retrieval augmented generation (RAG) apps
+Retrieval augmented generation (RAG) is a generative AI application pattern that finds data/documents relevant to a question or task and provides them as context for large language models (LLMs) to give more accurate responses.
+Mosaic AI Agent Framework is a suite of tooling designed to help developers build and deploy high-quality generative AI applications using RAG for output that is consistently measured and evaluated to be accurate, safe and governed. Mosaic AI Agent Framework makes it easy for developers to evaluate the quality of their RAG application, iterate quickly with the ability to test their hypothesis, redeploy their application easily, and have the appropriate governance and guardrails to ensure quality continuously.
+
+Highest production quality: Mosaic AI Agent Framework helps organizations deploy production-quality GenAI applications for output that is consistently measured and evaluated to be accurate, safe and governed. Mosaic AI Agent Framework has built-in proprietary AI-assisted evaluation that can automatically determine if outputs are high quality, as well as an intuitive UI to get feedback from human stakeholders.
+
+Rapid development iteration: Mosaic AI Agent Framework makes it easy for developers to take feedback about the GenAI application and rapidly iterate on changes to test every hypothesis. They can then redeploy their application into production with no code changes using an end-to-end LLMOps workflow. Developers can iterate on all aspects of the RAG process: from data preparation, vector databases and model deployment to monitoring, security and governance.
+
+Governance and guardrails: Mosaic AI Agent Framework is seamlessly integrated with the rest of the Databricks Data Intelligence Platform. This means you have everything you need to deploy an end-to-end RAG system, from security and governance to data integration, vector databases, quality evaluation and one-click optimized deployment. With governance and guardrails in place, you can also prevent toxic responses and ensure your application follows your organization’s policies.
+
+Automated real-time pipelines for any type of data: Mosaic AI natively supports serving and indexing your data for online retrieval. For unstructured data (text, images and video), Vector Search automatically indexes and serves data, making it accessible for RAG applications without needing to create separate data pipelines. Under the hood, Vector Search manages failures, handles retries and optimizes batch sizes to provide you with the best performance, throughput and cost. For structured data, Feature and Function Serving provides millisecond-scale queries of contextual data, such as user or account data, that enterprises often want to inject into prompts in order to customize them based on user information.
+",https://www.databricks.com/product/machine-learning/retrieval-augmented-generation,"Enterprise AI, RAG applications, agent development, LLM augmentation, enterprise integration",6
+Artifical Intelligence,Mosaic AI Model Serving,Unified deployment and governance for all AI models,"Unified deployment and governance for all AI models.
+Mosaic AI Model Serving is a unified service for deploying, governing, querying and monitoring models fine-tuned or pre-deployed by Databricks like Meta Llama 3, DBRX or BGE, or from any other model provider like Azure OpenAI, AWS Bedrock, AWS SageMaker or Anthropic. Our unified approach makes it easy to experiment with and productionize models from any cloud or provider to find the best candidate for your real-time application. With batch inference support, you can efficiently run AI inference on large datasets, complementing real-time serving for comprehensive model evaluation. You can do A/B testing of different models and monitor model quality on live production data once they are deployed. Model Serving also has pre-deployed models such as Llama 3 70B, allowing you to jump-start developing AI applications like retrieval augmented generation (RAG) and provide pay-per-token access or pay-for-provisioned compute for throughput guarantees.
+
+Simplified deployment for all AI models: Deploy any model type, from pretrained open source models to custom models built on your own data — on both CPUs and GPUs. Automated container build and infrastructure management reduce maintenance costs and speed up deployment so you can focus on building your AI projects and delivering value faster for your business.
+
+Unified management for all models: Manage all models, including custom ML models like PyFunc, scikit-learn and LangChain, foundation models (FMs) on Databricks like Llama 3, MPT and BGE, and foundation models hosted elsewhere like ChatGPT, Claude 3, Cohere and Stable Diffusion. Model Serving makes all models accessible in a unified user interface and API, including models hosted by Databricks, or from another model provider on Azure or AWS.
+
+Effortless batch inference: Model Serving enables efficient AI inference on large datasets, supporting all data types and models in a serverless environment. You can seamlessly integrate with Databricks SQL, Notebooks and Workflows to apply AI models across vast amounts of data in one streamlined operation. Enhance data processing, generate embeddings and evaluate models — all without complex rework.
+
+Governance built-in: Integrate with Mosaic AI Gateway to meet stringent security and advanced governance requirements. You can enforce proper permissions, monitor model quality, set rate limits, and track lineage across all models whether they are hosted by Databricks or on any other model provider.
+
+Data-centric models: Accelerate deployments and reduce errors through deep integration with the Data Intelligence Platform. You can easily host various generative AI models, augmented (RAG) or fine-tuned with their enterprise data. Model Serving offers automated lookups, monitoring and governance across the entire AI lifecycle.
+
+Cost-effective: Serve models as a low-latency API on a highly available serverless service with both CPU and GPU support. Effortlessly scale from zero to meet your most critical needs — and back down as requirements change. You can get started quickly with one or more pre-deployed models and pay-per-token (on demand with no commitments) or pay-for-provisioned compute workloads for guaranteed throughput. Databricks will take care of infrastructure management and maintenance costs, so you can focus on delivering business value.
+
+
+
+
+
+
+",https://www.databricks.com/product/model-serving,"Real-time ML serving, API integration, scalable hosting, low latency, production-grade deployment, inference optimization, monitoring, Model Deployment, Generative AI, External Model Support, Low Latency, AI Optimization​",7
+Artifical Intelligence,Mosaic AI AI Gateway,Manage and govern all GenAI models across the enterprise,"Manage and govern all GenAI models across the enterprise
+Secure access to any AI model: Mosaic AI Gateway protects your data and GenAI deployments through centralized governance across all models in your enterprise. With support for any model endpoint, including Azure OpenAI, Amazon Bedrock on AWS, and Meta Llama 3, AI Gateway allows you to tap into cutting-edge innovations through a single, powerful query interface. With AI Gateway you can easily test and swap new models without requiring changes to your codebase. It captures usage tracking in Unity Catalog, with permissions enforced to prevent sensitive data leaks. Additionally, with real-time spending insights, AI Gateway keeps your finances in check and your operations streamlined.
+
+Unified access to all AI models: Mosaic AI Gateway offers unified access to a wide range of models, including external LLMs like OpenAI and Meta Llama 3, through a single standard query interface. This eliminates the need to maintain separate systems to manage AI traffic. Enterprises can effortlessly switch between foundation and custom models, ensuring uninterrupted pipelines and simplified maintenance.
+
+Advanced security and governance: Adopting GenAI means navigating complex security protocols, data governance standards and access controls. AI Gateway simplifies this by capturing data flowing through model APIs — such as payload logs, usage tracking and guardrail activation — into Unity Catalog for secure storage, sharing and management. With centralized governance and custom guardrails like content filtration and PII detection, it ensures consistent security and compliance across all endpoints, protecting your organization’s most critical information.
+
+Improved model accuracy:
+Elevate your model quality with our robust observability tools that capture detailed request and response data. Payload logging enables you to debug, fine-tune and enhance models, improving accuracy and reducing latency. This ensures your AI applications perform at their best and deliver optimal results.
+
+Spending oversight: Our observability tools offer detailed usage tracking and spending oversight. With real-time insights into your AI operations, you can monitor expenses, optimize resource allocation and ensure efficient performance. These tools help you maintain financial control while maximizing the effectiveness of your AI deployments.
+
+
+
+
+
+",https://www.databricks.com/product/ai-gateway,"Centralized AI governance, curated model catalog, PII protection, cost management, model discovery",8
+Artifical Intelligence,Mosaic AI Model Training,Fine Tune and Pretrain your own LLMs and other genrative AI models,"Fine-tune and pretrain your own LLMs and other generative AI models
+Fine-tune an open source LLM or build custom LLMs trained on your enterprise data with Mosaic AI Model Training. Custom models built with Model Training are faster, produce higher-quality results that are more domain-specific, and have up to 10x lower costs than proprietary LLMs.
+
+Highly accurate: Fine-tuning an open source LLM or building a new LLM with enterprise data leads to a greater semantic understanding of the business and delivers highly accurate responses. Because Mosaic AI Model Training is natively available in Databricks, organizations can easily and securely fine-tune or build models without moving their data. This also ensures governance, auditability, traceability and monitoring to ensure models are used in the right way and are providing the right responses. The result is higher-quality and accurate results that are specific to the business context.
+
+Effortless scale: A key element to high-performance LLM training is scalability, which requires fast, low-latency networking and access to the highest-performing GPUs. Using Mosaic AI Model Training automatically gives you access to both NVIDIA InfiniBand networking and NVIDIA H100 Tensor Core GPUs, the highest-performing NVIDIA GPUs, which give unprecedented performance and scalability compared to previous hardware generations. This lets you scale to train large (>70 billion-parameter) models easily and complete training runs in hours and days.
+
+Cost-effective: Mosaic AI Model Training can fine-tune smaller open source GenAI LLMs to produce highly efficient models that can be served up to 5x more cost-effectively than larger proprietary LLMs. Additionally, you can build new LLMs from scratch using an optimized software stack that makes training LLMs cost-effective. A combination of system-level optimizations, tuned parallelism strategies and model training science results in a 10x lower cost of training.
+
+Secure and compliant: For most organizations, security is paramount, and they can’t afford to have their employees send their data to a third-party API and risk having the data leaked or used to train a public model. Mosaic AI Model Training ensures that this can never happen, because organizations will build their own LLM where they maintain complete control and ownership over both the data and the model. Everything remains encrypted by default, including traffic and all training data. This ensures you have complete data privacy and full model ownership, meeting any regulatory compliance.
+
+
+
+
+",https://www.databricks.com/product/machine-learning/mosaic-ai-training,"Model finetuning, transfer learning, domain adaptation, model optimization, specialized training, custom datasets, Model pre-training, large-scale training, supervised learning, unsupervised learning, model initialization, deep learning",9
+Artifical Intelligence,Mosaic AI Feature Store,The first feature store codesigned with a data platform and MLOPs framework,"The first feature store co-designed with a data platform and MLOps framework
+Provide data teams with the ability to create new features, explore and reuse existing ones, publish features to low-latency online stores, build training data sets and retrieve feature values for batch inference.
+
+Features as reusable assets: Feature Registry provides a searchable record of all features, their associated definition, source data, and their consumers, eliminating considerable rework across teams. Data scientists, analysts and ML engineers can search for features based on the consumed raw data and either use features directly or fork existing features.
+
+Consistent features for training and serving: Feature Provider serves the features in two modes. Batch mode provides features at high throughput for training ML models or batch inference. Online mode provides features at low latency for serving ML models or for the consumption of the same features in BI applications. Features used in model training are automatically tracked with the model and, during model inference, the model itself retrieves them directly from the feature store.
+
+Secure features with built-in governance: Feature store integrations provide the full lineage of the data used to compute features. Features have associated ACLs to ensure the right level of security. Integration with MLflow ensures that the features are stored alongside the ML models, eliminating drift between training and serving time.
+
+",https://www.databricks.com/product/feature-store,"Feature Engineering, Data Lineage, Simplified Deployment, Automated Feature Sharing, Model Training",10
+Artifical Intelligence,Mosaic AI Evaluation,Out of the box evaluation capabilities for GenAI,"Tools to assess AI systems, combining automated LLM judges and human evaluations to ensure high-quality, accurate model responses and functionality.",https://docs.databricks.com/en/generative-ai/agent-evaluation/index.html,"Agent evaluation, quality metrics, golden examples, debugging, LLM judges, production assessments, AI system evaluation, quality metrics, human feedback, performance debugging, MLflow Tracing",11
+Artifical Intelligence,Mosaic AI AutoML,Augment Experts. Empower Citizen Data Scientists,"Augment experts. Empower citizen data scientists.
+Databricks AutoML allows you to quickly generate baseline models and notebooks. ML experts can accelerate their workflow by fast-forwarding through the usual trial-and-error and focus on customizations using their domain knowledge, and citizen data scientists can quickly achieve usable results with a low-code approach.
+
+Jump-start new ML projects: Databricks AutoML provides the training code for every trial run to help data scientists jump-start their development. Data scientists can use this to quickly assess the feasibility of using a data set for machine learning (ML) or to get a quick sanity check on the direction of an ML project.
+
+No ML problem too big: Leverage AutoML to tackle a variety of machine learning problems ranging from classification, regression, and forecasting. AutoML uses multiple algorithms from a variety of machine learning libraries for each problem type, and lets you pick the best for your problem.
+
+Automate the grind of machine learning: Automatically set up your machine learning project with the training libraries, MLflow integration for experiment tracking and built-in ML best practices such as training and testing split, normalizing of features and hyperparameter tuning.
+
+A glass box approach to AutoML: Use generated editable notebooks to easily customize baseline models with your domain expertise. You can also leverage these notebooks to explain how your AutoML models were trained to fulfill audit and compliance requirements.
+
+
+
+
+
+
+
+",https://www.databricks.com/product/automl,"AutoML, feature engineering, hyperparameter optimization, explainability, user-guided automation, deployment-ready models, model evaluation",12
+Artifical Intelligence,Mosaic AI Playground,Test new foundation models for your applications with a click,"AI playground presents the latest GenAI models for a side by side comparision for your prompts and your data. It provides summarization experiements, function calling experiments, Q&A experiements. It also provides integrated AI judges and synthetic question generation",null,"AI, GenAI, Experiments",13
+Artifical Intelligence,Lakehouse Monitoring,Intelligend data and model monitoring,"Intelligent data and model monitoring
+Databricks Lakehouse Monitoring allows teams to monitor their entire data pipelines — from data and features to ML models — without additional tools and complexity. Powered by Unity Catalog, it lets users uniquely ensure that their data and AI assets are high quality, accurate and reliable through deep insight into the lineage of their data and AI assets. The single, unified approach to monitoring enabled by lakehouse architecture makes it simple to diagnose errors, perform root cause analysis and find solutions.
+
+Proactive reporting: Proactive and simplified detection of anomalies in your data and models, reducing time to market and operational costs incurred due to inefficiencies.
+
+Unified tooling from data to ML: Gain complete visibility into all your data and models in a matter of minutes. The auto-generated metrics enable you to measure the impact of your data and ML products more effectively right out of the box.
+
+Automated root cause analysis: Seamlessly debug data and model quality issues by tracing root cause back to the anomalies. Capabilities such as automated root cause analysis mean less time to value and higher efficiencies in your production pipelines.
+
+
+
+",https://www.databricks.com/product/machine-learning/lakehouse-monitoring,"Monitoring, Drift, Bias, Alerting",14
+Artifical Intelligence,Mosaic AI Managed Mlflow,Build better models and generative AI apps,"Build better models and generative AI apps
+Managed MLflow extends the functionality of MLflow, an open source platform developed by Databricks for building better models and generative AI apps, focusing on enterprise reliability, security and scalability. The latest update to MLflow introduces innovative GenAI and LLMOps features that enhance its capability to manage and deploy large language models (LLMs). This expanded LLM support is achieved through new integrations with industry-standard LLM tools OpenAI and Hugging Face Transformers — as well as the MLflow Deployments Server. Additionally, MLflow’s integration with LLM frameworks (e.g., LangChain) enables simplified model development for creating generative AI applications for a variety of use cases, including chatbots, document summarization, text classification, sentiment analysis and beyond.
+
+Model development: Enhance and expedite machine learning lifecycle management with a standardized framework for production-ready models. Managed MLflow Recipes enable seamless ML project bootstrapping, rapid iteration and large-scale model deployment. Craft applications like chatbots, document summarization, sentiment analysis and classification effortlessly. Easily develop generative AI apps (e.g., chatbots, doc summarization) with MLflow’s LLM offerings, which seamlessly integrate with LangChain, Hugging Face and OpenAI.
+
+Experiment tracking: Run experiments with any ML library, framework or language, and automatically keep track of parameters, metrics, code and models from each experiment. By using MLflow on Databricks, you can securely share, manage and compare experiment results along with corresponding artifacts and code versions — thanks to built-in integrations with the Databricks workspace and notebooks. You will also be able to evaluate the results of GenAI experiments and improve quality with MLflow evaluation functionality.
+
+Model management: Use one central place to discover and sh are ML models, collaborate on moving them from experimentation to online testing and production, integrate with approval and governance workflows and CI/CD pipelines, and monitor ML deployments and their performance. The MLflow Model Registry facilitates sharing of expertise and knowledge, and helps you stay in control.
+
+Model deployment: Quickly deploy production models for batch inference on Apache Spark™ or as REST APIs using built-in integration with Docker containers, Azure ML or Amazon SageMaker. With Managed MLflow on Databricks, you can operationalize and monitor production models using Databricks jobs scheduler and auto-managed clusters to scale based on the business needs. The latest upgrades to MLflow seamlessly package GenAI applications for deployment. You can now deploy your chatbots and other GenAI applications such as document summarization, sentiment analysis and classification at scale, using Databricks Model Serving.
+
+Features in MLFlow Tracking:
+MLFLOW TRACKING: Automatically log parameters, code versions, metrics, and artifacts for each run using Python, REST, R API, and Java API
+GENERATIVE AI DEVELOPMENT: Simplify model development to build GenAI applications for a variety of use cases such as chatbots, document summarization, sentiment analysis and classification with MLflow’s Deployments Server and Evaluation UI, supported by native integration with LangChain, and seamless UI for fast prototyping and iteration.
+MLFLOW TRACKING SERVER: Get started quickly with a built-in tracking server to log all runs and experiments in one place. No configuration needed on Databricks.
+EXPERIMENT MANAGEMENT: Create, secure, organize, search and visualize experiments from within the workspace with access control and search queries.
+MLFLOW RUN SIDEBAR: Automatically track runs from within notebooks and capture a snapshot of your notebook for each run so that you can always go back to previous versions of your code.
+LOGGING DATA WITH RUNS: Log parameters, datasets, metrics, artifacts and more as runs to local files, to a SQLAlchemy compatible database, or remotely to a tracking server.
+DELTA LAKE INTEGRATION: Track large-scale datasets that fed your models with Delta Lake snapshots.
+ARTIFACT STORE: Store large files such as S3 buckets, shared NFS file system, and models in Amazon S3, Azure Blob Storage, Google Cloud Storage, SFTP server, NFS, and local file paths.
+
+
+Features in MLflow Models:
+MLFLOW MODELS: A standard format for packaging machine learning models that can be used in a variety of downstream tools — for example, real-time serving through a REST API or batch inference on Apache Spark.
+MODEL CUSTOMIZATION: Use Custom Python Models and Custom Flavors for models from an ML library that is not explicitly supported by MLflow’s built-in flavors.
+BUILT-IN MODEL FLAVORS: MLflow provides several standard flavors that might be useful in your applications, like Python and R functions, Hugging Face, OpenAI and LangChain, PyTorch, Spark MLlib, TensorFlow and ONNX.
+BUILT-IN DEPLOYMENT TOOLS: Quickly deploy on Databricks via Apache Spark UDF for a local machine, or several other production environments such as Microsoft Azure ML, Amazon SageMaker, and building Docker Images for Deployment.
+
+Features in MLflow Model Registry: 
+CENTRAL REPOSITORY: Register MLflow models with the MLflow Model Registry. A registered model has a unique name, version, stage and other metadata.
+MODEL VERSIONING: Automatically keep track of versions for registered models when updated.
+MODEL STAGE: Assign preset or custom stages to each model version, like “Staging” and “Production” to represent the lifecycle of a model.
+CI/CD WORKFLOW INTEGRATION: Record stage transitions, request, review and approve changes as part of CI/CD pipelines for better control and governance.
+MODEL STAGE TRANSITIONS: Record new registration events or changes as activities that automatically log users, changes, and additional metadata such as comments.
+
+Features in MLflow Deployment Server:
+GOVERN ACCESS TO LLMS: Manage SaaS LLM credentials.
+CONTROL COSTS: Set up rate limits.
+STANDARDIZE LLM INTERACTIONS: Experiment with different OSS/SaaS LLMs with standard input/output interfaces for different tasks: completions, chat, embeddings.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+",https://www.databricks.com/product/managed-mlflow,"Experiment tracking, model registry, ML deployment, cross-platform support, AutoML, reproducibility, collaboration, CI/CD integration",15
+Business Intelligence,AI/BI Genie,Intelligent analytics for real-world data - converse with your data in natural language,"AI-first BI, native to your data platform
+Databricks AI/BI is a new type of business intelligence product built to democratize analytics and insights for anyone in your organization. Powered by data intelligence, AI/BI understands your unique data and business concepts by capturing signals from across your Databricks estate, continuously learning and improving to accurately answer your questions.
+
+AI/BI features two complementary capabilities: Dashboards and Genie. Dashboards provide a low-code experience to help analysts quickly build highly interactive data visualizations for their business teams using natural language, and Genie allows business users to converse with their data to ask questions and self-serve their own analytics.
+
+Databricks AI/BI is native to the Databricks Data Intelligence Platform, providing instant insights at massive scale while ensuring unified governance and fine-grained security are maintained across the entire organization.
+
+1. Intelligent analytics: Powered by AI that understands your real-world data and business semantics, and continuously improves through real-time user feedback.
+2. Unified governance and security: With Unity Catalog integration, easily manage access controls and policies. Maintain a single, connected audit trail from source data to dashboard.
+3. Instant insights at scale: Experience maximum query efficiency with BI that lives on your data platform — no need to sacrifice performance for scale.
+
+Quickly generate elegant visualizations with Dashboards: AI/BI Dashboards make it easy to create and iterate on visualizations with natural language through AI-assisted authoring. Dashboards offer standard data visualization capabilities including sleek charts, interactions such as cross-filtering, periodic snapshots via email, embedding and more. And they live side by side with your data, delivering instant load and rapid interactive analysis — no matter the data or user scale.
+
+Use Genie to converse with your data: For every new question your dashboard inspires, there’s an AI-powered Genie that lets you drill deeper to understand the why Genie is a powerful conversational experience that lets business teams engage with their data through natural language. Leveraging generative AI tailored to your organization’s unique terminology and data, Genie continuously improves through user feedback, enabling quick, relevant, accurate answers directly from your enterprise data.
+
+Experience analytics built for real-world data: AI/BI is built on a compound AI system architecture, allowing it to automatically understand data structures, associated comments, usage patterns and lineage. AI/BI does not require perfect data or complete pre-modeling to work with messy real-world data. Instead, it adapts to your unique data through usage-based self-improvement and iterative human feedback.
+
+Maintain integrated governance and data lineage: Since AI/BI draws upon the centralized data governance policies established in Unity Catalog, it’s easy to manage access controls and maintain complete lineage from source data to final insight. That means users can easily understand the impact of upstream changes to data pipelines on dashboards while ensuring insights and visualizations are secure by default.
+
+Collaborate and share with ease: Dashboards are optimized for simple, secure sharing. Dashboard owners can securely share with anyone in the organization without providing full workspace access or procuring a license.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+",https://www.databricks.com/product/ai-bi,"Intelligent analytics, AI-powered BI, AI/BI Genie, conversational analytics, semantic analysis, low-code solutions",16
+Business Intelligence,AI/BI Dashboards,Intelligent analytics for real-world data build and converse with your dashboards in natural language,"AI-first BI, native to your data platform
+Databricks AI/BI is a new type of business intelligence product built to democratize analytics and insights for anyone in your organization. Powered by data intelligence, AI/BI understands your unique data and business concepts by capturing signals from across your Databricks estate, continuously learning and improving to accurately answer your questions.
+
+AI/BI features two complementary capabilities: Dashboards and Genie. Dashboards provide a low-code experience to help analysts quickly build highly interactive data visualizations for their business teams using natural language, and Genie allows business users to converse with their data to ask questions and self-serve their own analytics.
+
+Databricks AI/BI is native to the Databricks Data Intelligence Platform, providing instant insights at massive scale while ensuring unified governance and fine-grained security are maintained across the entire organization.
+
+1. Intelligent analytics: Powered by AI that understands your real-world data and business semantics, and continuously improves through real-time user feedback.
+2. Unified governance and security: With Unity Catalog integration, easily manage access controls and policies. Maintain a single, connected audit trail from source data to dashboard.
+3. Instant insights at scale: Experience maximum query efficiency with BI that lives on your data platform — no need to sacrifice performance for scale.
+
+Quickly generate elegant visualizations with Dashboards: AI/BI Dashboards make it easy to create and iterate on visualizations with natural language through AI-assisted authoring. Dashboards offer standard data visualization capabilities including sleek charts, interactions such as cross-filtering, periodic snapshots via email, embedding and more. And they live side by side with your data, delivering instant load and rapid interactive analysis — no matter the data or user scale.
+
+Use Genie to converse with your data: For every new question your dashboard inspires, there’s an AI-powered Genie that lets you drill deeper to understand the why Genie is a powerful conversational experience that lets business teams engage with their data through natural language. Leveraging generative AI tailored to your organization’s unique terminology and data, Genie continuously improves through user feedback, enabling quick, relevant, accurate answers directly from your enterprise data.
+
+Experience analytics built for real-world data: AI/BI is built on a compound AI system architecture, allowing it to automatically understand data structures, associated comments, usage patterns and lineage. AI/BI does not require perfect data or complete pre-modeling to work with messy real-world data. Instead, it adapts to your unique data through usage-based self-improvement and iterative human feedback.
+
+Maintain integrated governance and data lineage: Since AI/BI draws upon the centralized data governance policies established in Unity Catalog, it’s easy to manage access controls and maintain complete lineage from source data to final insight. That means users can easily understand the impact of upstream changes to data pipelines on dashboards while ensuring insights and visualizations are secure by default.
+
+Collaborate and share with ease: Dashboards are optimized for simple, secure sharing. Dashboard owners can securely share with anyone in the organization without providing full workspace access or procuring a license.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+",https://www.databricks.com/product/ai-bi,"Intelligent analytics, AI-powered BI, AI/BI Genie, conversational analytics, semantic analysis, low-code solutions",17
+Data Management,Delta Lake UniForm,"High-performance, format-agnostic storage for your open data lakehouse","Delta Lake UniForm unifies the data in your lakehouse, across all formats and types, for all your analytics and AI workloads.
+
+Open across formats: Use your existing analytics and AI tools, regardless of open data format. UniForm automatically and instantly translates across formats, so you can keep a single copy of source data and still use your favorite Iceberg or Hudi client to read your Delta tables through the Unity Catalog endpoint. With UniForm, your data stays portable, with no vendor lock-in.
+
+Connected across ecosystems: Delta Lake has a vast connector ecosystem and supports multiple frameworks and languages. Delta Sharing is the industry’s first open protocol for secure data sharing, making it simple to share data with other organizations regardless of where the data lives. Native integration with Unity Catalog allows you to centrally manage and audit shared data across organizations. This lets you confidently share data assets with suppliers and partners for better coordination of your business while meeting security and compliance needs. And through integrations with leading tools and platforms, you can visualize, query, enrich and govern shared data from your tools of choice.
+
+Fast and reliable performance: Delta Lake delivers massive scale and speed, with data loads and queries running up to 1.7x faster than with other storage formats. Used in production by over 10,000 customers, Delta Lake scales to process over 40 million events per second in a single pipeline. More than 5 exabytes/day are processed using Delta Lake.
+When UniForm is enabled on Delta Lake tables, writing other format metadata does not compromise on query performance. UniForm tables deliver read performance on par with proprietary formats in their native engines.
+
+AI-driven for best price/performance: The Databricks Data Intelligence Platform optimizes your data based on your usage patterns. AI-driven performance enhancements — powered by DatabricksIQ, the Data Intelligence Engine for Databricks — automatically administer, configure and tune your data.
+Liquid clustering delivers the performance of a well-tuned, well-partitioned table without the traditional headaches that come with partitioning, such as worrying about whether you can partition high-cardinality columns or expensive rewrites when changing partition columns. The result is lightning-fast, well-clustered tables with minimal configuration. Predictive optimization automatically optimizes your data for the best performance and price. It learns from your data usage patterns, builds a plan for the right optimizations to perform, and then runs those optimizations on hyper-optimized serverless infrastructure.
+
+Security and governance at scale: Delta Lake reduces risk by enabling fine-grained access controls for data governance, functionality typically not possible with data lakes. You can quickly and accurately update data in your data lake to comply with regulations like GDPR and maintain better data governance through audit logging. These capabilities are natively integrated and enhanced on Databricks as part of the Unity Catalog, the first multicloud data catalog for the lakehouse.
+
+Automated and trusted data engineering: Simplify data engineering with Delta Live Tables — an easy way to build and manage data pipelines for fresh, high-quality data on Delta Lake. It helps data engineering teams by simplifying ETL development and management with declarative pipeline development, improved data reliability and cloud-scale production operations to help build the lakehouse foundation.
+
+Use Cases are as follows:
+1. BI on your data: Make new, real-time data instantly available for querying by data analysts for immediate insights on your business by running business intelligence workloads directly on your data lake. Delta Lake allows you to operate a multicloud lakehouse architecture that provides data warehousing performance at data lake economics for up to 6x better price/performance for SQL workloads than traditional cloud data warehouses.
+2. Unify batch and streaming: Run both batch and streaming operations on one simplified architecture that avoids complex, redundant systems and operational challenges. In Delta Lake, a table is both a batch table and a streaming source and sink. Streaming data ingest, batch historic backfill and interactive queries all work out of the box and directly integrate with Spark Structured Streaming.
+3. Meet regulatory needs: Delta Lake removes the malformed data ingestion challenges, difficulty deleting data for compliance, and issues modifying data for change data capture. With support for ACID transactions on your data lake, Delta Lake ensures that every operation either fully succeeds or fully aborts for later retries — without requiring new data pipelines to be created. Additionally, Delta Lake records all past transactions on your data lake, so it’s easy to access and use previous versions of your data to meet compliance standards like GDPR and CCPA reliably.
+
+
+
+
+
+
+
+
+
+
+
+
+
+",https://www.databricks.com/product/delta-lake-on-databricks,"ACID compliance, data reliability, versioning, schema evolution, batch processing, real-time ingestion, ETL workflows, data streaming, scalable architecture, iceberg, hudi
+
+",18
+Data Management,DatabricksIQ (Data Intelligence),Out of the box semantic intelligence engine learning the nuances of your data and improving user productivity,"DatabricksIQ is the data intelligence engine powering the Databricks Platform. It is a compound AI system that combines the use of AI models, retrieval, ranking, and personalization systems to understand the semantics of your organization’s data and usage patterns.
+
+DatabricksIQ itself has no end-user UI, but it enables existing product experiences to be more accurate and provide more relevant results such as Databricks Assistant, AI-generated comments, and intelligent search.
+
+These DatabricksIQ-powered features enable everyone in an organization to be more productive using data and AI, while maintaining the governance and controls established in Unity Catalog. Use Databricks Assistant to develop code. Create dashboards with Databricks Assistant. AI-generated table comments in Catalog Explorer. Use Databricks Assistant for help",https://www.databricks.com/product/data-intelligence-platform,"Data Intelligence, Data Semantics, AI-Generated Comments, Intelligent Search",19
+Data Warehousing,Databricks SQL,The intelligent Data Warehouse,"Databricks SQL is the intelligent data warehouse. Built with DatabricksIQ, the Data Intelligence Engine that understands the uniqueness of your data, Databricks SQL democratizes analytics for technical and business users alike. Businesses are able to innovate faster with an intelligent and auto-optimizing platform that provides the best price/performance in the market. As part of the Databricks Data Intelligence Platform, Databricks SQL benefits from the simplicity, unified governance and openness of lakehouse architecture.
+
+The best data warehouse is a lakehouse: Databricks SQL is built on lakehouse architecture, which unifies data, analytics and AI, eliminating the cost and complexity of a stand-alone, legacy data warehouse and lowering TCO. Delta Lake UniForm serves as the open storage layer for all your data in one place, and Unity Catalog provides unified security and governance.
+
+Access for everyone to ask questions of their data: DatabricksIQ powers multiple intelligent experiences that give anyone a simple interface to ask questions and get insights from their data. Data engineers and data scientists who write code have an assistant inside the SQL editor, and analysts have an assistant to generate visualizations for their dashboards.
+
+Intelligent, automated management and tuning: Databricks applies machine learning, powered by DatabricksIQ, to all levels of our stack to automatically improve efficiency and performance for your workloads. This eliminates the need for admins to worry about the management minutia and improves savings through more efficient provisioning.
+
+World-class price/performance: Databricks SQL utilizes our next-generation vectorized query engine Photon and set the world-record 100TB TPC-DS benchmark. For BI workloads, the instant, elastic SQL compute — decoupled from storage — will automatically scale to provide unlimited concurrency.
+
+
+
+
+
+",https://www.databricks.com/product/databricks-sql,"SQL analytics, BI tools, dashboards, serverless compute, interactive queries, real-time insights, visualization, federated queries, Vectorized query processing, Photon, optimized analytics, low latency, cost optimization, data parallelism, hardware acceleration",20
+Data Warehousing,AI Functions,The power of GenAI for SQL users,"Databricks AI Functions, built-in SQL functions that allow you to apply AI on your data directly from SQL.
+
+SQL is crucial for data analysis due to its versatility, efficiency, and widespread use. Its simplicity enables swift retrieval, manipulation, and management of large datasets. Incorporating AI functions into SQL for data analysis enhances efficiency, which enables businesses to swiftly extract insights.
+
+Integrating AI into analysis workflows provides access to information previously inaccessible to analysts, and empowers them to make more informed decisions, manage risks, and sustain a competitive advantage through data-driven innovation and efficiency. These functions invoke a state-of-the-art generative AI model from Databricks Foundation Model APIs to perform tasks such as sentiment analysis, classification, and translation. See Analyze customer reviews using AI Functions like ai_analyze_sentiment, ai_classify ,ai_extract ,ai_fix_grammar ,ai_gen,ai_mask,ai_similarity,ai_summarize
+,ai_translate. The ai_query() function allows you to query machine learning models and large language models served using Mosaic AI Model Serving. The vector_search() function allows you to search and query a Mosaic AI Vector Search index using SQL.. The ai_forecast() function is a table-valued function designed to extrapolate time series data into the future. In its most general form, ai_forecast() accepts grouped, multivariate, or mixed-granularity data, and forecasts that data up to some horizon in the future.",https://docs.databricks.com/en/large-language-models/ai-functions.html,"sql functions, forecasting, translating, analyzing",21
+Real Time Analytics,Data Streaming,"Real-time analytics, ML and applications made simple
+Get started
+","The Databricks Data Intelligence Platform dramatically simplifies data streaming to deliver real-time analytics, machine learning and applications on one platform.
+Enable your data teams to build streaming data workloads with the languages and tools they already know. Simplify development and operations by automating the production aspects associated with building and maintaining real-time data workloads. Eliminate data silos with a single platform for streaming and batch data.
+
+1. Build streaming pipelines and applications faster: Use the languages and tools you already know with unified batch and streaming APIs in SQL and Python. Unlock real-time analytics, ML and applications for the entire organization.
+2. Simplify operations with automated tooling: Easily deploy and manage your real-time pipelines and applications in production. Automated tooling simplifies task orchestration, fault tolerance/recovery, automatic checkpointing, performance optimization, and autoscaling.
+3. Unify governance for all your real-time data across clouds: Unity Catalog delivers one consistent governance model for all your streaming and batch data, simplifying how you discover, access and share real-time data.
+
+How it works:
+1. Streaming data ingestion and transformation
+Simplify data ingestion and ETL for streaming data pipelines with Delta Live Tables. Leverage a simple declarative approach to data engineering that empowers your teams with the languages and tools they already know, like SQL and Python. Build and run your batch and streaming data pipelines in one place with controllable and automated refresh settings, saving time and reducing operational complexity. No matter where you plan to send your data, building streaming data pipelines on the Databricks Data Intelligence Platform ensures you don’t lose time between raw and cleaned data.
+2. Real-time analytics, ML and applications
+With streaming data, immediately improve the accuracy and actionability of your analytics and AI. Your business benefits from real-time insights as a downstream impact of streaming data pipelines. Whether you’re performing SQL analytics and BI reporting, training your ML models or building real-time operational applications, give your business the freshest data possible to unlock real-time insights, more accurate predictions and faster decision-making to stay ahead of the competition.
+3. Automated operational tooling
+As you build and deploy streaming data pipelines, Databricks automates many of the complex operational tasks required for production. This includes automatically scaling the underlying infrastructure, orchestrating pipeline dependencies, error handling and recovery, performance optimization and more. Enhanced Autoscaling optimizes cluster utilization by automatically allocating compute resources for each unique workload. These capabilities along with automatic data quality testing and exception management help you spend less time on building and maintaining operational tooling so you can focus on getting value from your data.
+4. Next-generation stream processing engine
+Spark Structured Streaming is the core technology that unlocks data streaming on the Databricks Data Intelligence Platform, providing a unified API for batch and stream processing. Databricks is the best place to run your Apache Spark workloads with a managed service that has a proven track record of 99.95% uptime. Your Spark workloads are further accelerated by Photon, the next-generation engine compatible with Apache Spark APIs delivering record-breaking performance-per-cost while automatically scaling to thousands of nodes.
+5. Unified governance and storage
+Data streaming on Databricks means you benefit from the foundational components of the Databricks Data Intelligence Platform — Unity Catalog and Delta Lake. Your raw data is optimized with Delta Lake, the only open source storage framework designed from the ground up for both streaming and batch data. Unity Catalog gives you fine-grained, integrated governance for all your data and AI assets with one consistent model to discover, access and share data across clouds. Unity Catalog also provides native support for Delta Sharing, the industry’s first open protocol for simple and secure data sharing with other organizations.
+
+
+
+
+",https://www.databricks.com/product/data-streaming,"real time analytics, streaming, near real time, observability ",22
+Data Engineering,Data Engineering,Production Ready Data Pipelines for analytics and AI,"Easily ingest and transform batch and streaming data on the Databricks Data Intelligence Platform. Orchestrate reliable production workflows while Databricks automatically manages your infrastructure at scale and provides you with unified governance. Accelerate innovation by increasing your team’s productivity with a built-in, AI-powered intelligence engine that understands your data and your pipelines.
+1. Trustworthy data from reliable pipelines: Built-in data quality validation and proven platform reliability help data teams ensure data is correct, complete and fresh for downstream use cases.
+2. Optimized cost/performance: Serverless lakehouse architecture with data intelligence automates the complex operations behind building and running pipelines, taking the guesswork and manual overhead out of optimizations.
+3. Democratized access to data: Designed to empower data practitioners to manage batch or streaming pipelines — ingesting, transforming and orchestrating data according to their technical aptitude, preferred interface and need for fine-tuning — all on a unified platform.
+4. Build on the Data Intelligence Platform: The Data Intelligence Platform provides the best foundation for building and sharing trusted data assets that are centrally governed, reliable and lightning fast
+
+Managed data pipelines: Data needs to be ingested and transformed so it’s ready for analytics and AI. Databricks provides powerful data pipelining capabilities for data engineers, data scientists and analysts with Delta Live Tables. DLT is the first framework that uses a simple declarative approach to build data pipelines on batch or streaming data while automating operational complexities such as infrastructure management, task orchestration, error handling and recovery, and performance optimization. With DLT, engineers can also treat their data as code and apply software engineering best practices like testing, monitoring and documentation to deploy reliable pipelines at scale.
+
+Unified workflow orchestration: Databricks Workflows offers a simple, reliable orchestration solution for data and AI on the Data Intelligence Platform. Databricks Workflows lets you define multistep workflows to implement ETL pipelines, ML training workflows and more. It offers enhanced control flow capabilities and supports different task types and triggering options. As the platform-native orchestrator, Databricks Workflows also provides advanced observability to monitor and visualize workflow execution along with alerting capabilities for when issues arise. Serverless compute options allow you to leverage smart scaling and efficient task execution.
+
+Powered by data intelligence: DatabricksIQ is the Data Intelligence Engine that brings AI into every part of the Data Intelligence Platform to boost data engineers’ productivity through tools such as Databricks Assistant. Utilizing generative AI and a comprehensive understanding of your Databricks environment, Databricks Assistant can generate or explain SQL or Python code, detect issues, and suggest fixes. DatabricksIQ also understands your pipelines and can optimize them using intelligent orchestration and flow management, providing you with serverless compute.
+
+Next-generation data streaming engine: Apache Spark™ Structured Streaming is the most popular open source streaming engine in the world. It is widely adopted across organizations in open source and is the core technology that powers streaming data pipelines on Databricks, the best place to run Spark workloads. Spark Structured Streaming provides a single, unified API for batch and stream processing, making it easy to implement streaming data workloads without changing code or learning new skills. Easily switch between continuous and triggered processing to optimize for latency or cost.
+
+State-of-the-art data governance, reliability and performance: Data engineering on Databricks means you benefit from the foundational components of the Data Intelligence Platform — Unity Catalog and Delta Lake. Your raw data is optimized with Delta Lake, an open source storage format providing reliability through ACID transactions, and scalable metadata handling with lightning-fast performance. This combines with Unity Catalog, which gives you fine-grained governance for all your data and AI assets, simplifying how you govern, with one consistent model to discover, access and share data across clouds. Unity Catalog also provides native support for Delta Sharing, the industry’s first open protocol for simple and secure data sharing with other organizations.
+
+
+
+
+
+
+
+
+",https://www.databricks.com/solutions/data-engineering,"Data pipelines, Data Engineering, automated quality checks, monitoring, production-ready pipelines, ETL, data governance, lineage tracking",23
+Data Engineering,Delta Live Tables,Reliable Data Pipelines made easy,"Reliable data pipelines made easy
+Delta Live Tables (DLT) is a declarative ETL framework for the Databricks Data Intelligence Platform that helps data teams simplify streaming and batch ETL cost-effectively. Simply define the transformations to perform on your data and let DLT pipelines automatically manage task orchestration, cluster management, monitoring, data quality and error handling.
+
+Efficient data ingestion:
+Building production-ready ETL pipelines begins with ingestion. DLT powers easy, efficient ingestion for your entire team — from data engineers and Python developers to data scientists and SQL analysts. With DLT, load data from any data source supported by Apache Spark™ on Databricks. 
+Use Auto Loader and streaming tables to incrementally land data into the Bronze layer for DLT pipelines or Databricks SQL queries
+Ingest from cloud storage, message buses and external systems
+Use change data capture (CDC) in DLT to update tables based on changes in source data
+
+Intelligent, cost-effective data transformation
+From just a few lines of code, DLT determines the most efficient way to build and execute your streaming or batch data pipelines, optimizing for price/performance (nearly 4x Databricks baseline) while minimizing complexity.
+Instantly implement a streamlined medallion architecture with streaming tables and materialized views
+Optimize data quality for maximum business value with features like expectations
+Refresh pipelines in continuous or triggered mode to fit your data freshness needs
+
+Simple pipeline setup and maintenance:
+DLT pipelines simplify ETL development by automating away virtually all the inherent operational complexity. With DLT pipelines, engineers can focus on delivering high-quality data rather than operating and maintaining pipelines. DLT automatically handles:
+Task orchestration
+CI/CD and version control
+Autoscaling compute infrastructure for cost savings
+Monitoring via metrics in the event log
+Error handling and failure recovery
+
+Next-gen stream processing engine:
+Spark Structured Streaming is the core technology that unlocks streaming DLT pipelines, providing a unified API for batch and stream processing. DLT pipelines leverage the inherent subsecond latency of Spark Structured Streaming, and record-breaking price/performance. Although you can manually build your own performant streaming pipelines with Spark Structured Streaming, DLT pipelines may provide faster time to value, better ongoing development velocity, and lower TCO because of the operational overhead they automatically manage.
+
+Unified data governance and storage:
+Running DLT pipelines on Databricks means you benefit from the foundational components of the Data Intelligence Platform built on lakehouse architecture — Unity Catalog and Delta Lake. Your raw data is optimized with Delta Lake, the only open source storage framework designed from the ground up for both streaming and batch data. Unity Catalog gives you fine-grained, integrated governance for all your data and AI assets with one consistent model to discover, access and share data across clouds. Unity Catalog also provides native support for Delta Sharing, the industry’s first open protocol for simple and secure data sharing with other organizations.
+
+DLT pipelines are made of the two fundamental building blocks of Streaming Tables and Materialized Views. They are built on the reliable standards of Delta Tables and Spark Structured Streaming. 
+ETL workloads are the foundation of analytics and AI initiatives and typically account for 50% or more of an organization’s overall data costs. The rapid rise of LLMs and other AI applications is forcing companies to take a closer look at how to scale in a cost-efficient manner. Customers overwhelmingly report significant return on their investment in DLT for several reasons: 
+
+Inherent cost-effectiveness of Delta Lake with a purpose-built storage format for batch and streaming data
+Intelligent and efficient serverless autoscaling designed to handle all ETL workloads and minimize compute cost
+Significantly reduced overhead due to minimal time and effort required for pipeline creation, management and data team synchronization
+Operational efficiencies like automatic performance optimization, automatic recovery on failure, automatic data quality testing, out-of-the-box monitoring and observability
+
+
+
+
+
+
+
+
+
+
+",https://www.databricks.com/product/delta-live-tables,"Data pipelines, Data Engineering, automated quality checks, monitoring, production-ready pipelines, ETL, data governance, lineage tracking",24
+Data Engineering,Databricks Workflows,"Unified orchestration for data, analytics and AI on the Data Intelligence Platform","Unified orchestration for data, analytics and AI on the Data Intelligence Platform. Databricks Workflows is a managed orchestration service, fully integrated with the Databricks Data Intelligence Platform. Workflows lets you easily define, manage and monitor multitask workflows for ETL, analytics and machine learning pipelines. With a wide range of supported task types, deep observability capabilities and high reliability, your data teams are empowered to better automate and orchestrate any pipeline and become more productive.
+
+1. Simple Authoring: Whether you’re a data engineer, a data analyst or a data scientist, easily define workflows with just a few clicks or use your favorite IDE.
+2. Actionable Insights: Get full visibility into each task running in every workflow and get notified immediately on issues that require troubleshooting.
+3. Proven Reliability: Having a fully managed orchestration service means having the peace of mind that your production workflows are up and running. With 99.95% uptime, Databricks Workflows is trusted by thousands of organizations.
+
+How it works:
+1. Unified with the Databricks Data Intelligence Platform: Unlike external orchestration tools, Databricks Workflows is fully integrated with the Databricks Data Intelligence Platform. This means you get native workflow authoring in your workspace and the ability to automate any platform capability including Delta Live Tables pipelines, Databricks notebooks and Databricks SQL queries. With Unity Catalog, you get automated data lineage for every workflow so you stay in control of all your data assets across the organization.  
+2. Reliability at scale: Every day, thousands of organizations trust Databricks Workflows to run millions of production workloads across AWS, Azure and GCP with 99.95% uptime. Having a fully managed orchestration tool built into the Data Intelligence Platform means you don’t need to maintain, update or troubleshoot another separate tool for orchestration.
+3. Deep monitoring and observability: Full integration with the Data Intelligence Platform means Databricks Workflows provides you with better observability than any external orchestration tool. Stay in control by getting a full view of every workflow run and set notifications for failures to alert your team via email, Slack, PagerDuty or a custom webhook so you can get ahead of issues quickly and troubleshoot before data consumers are impacted.
+4. Batch and streaming: Databricks Workflows provides you with a single solution to orchestrate tasks in any scenario on the Data Intelligence Platform. Use a scheduled workflow run for recurring jobs that do batch ingestion on preset times or implement real-time data pipelines that run continuously. You can also set a workflow to run when new data is made available using file arrival triggers.
+5. Efficient compute: Orchestrating with Databricks Workflows gives you better price/performance for your automated, production workloads. Get significant cost savings when utilizing automated job clusters that have a lower cost and are only running when a job is scheduled so you don’t pay for unused resources. In addition, shared job clusters let you reuse compute resources for multiple tasks so you can optimize resource utilization.
+6. Seamless user experience: Define workflows in your preferred environment — easily create workflows right in the Databricks workspace UI or using your favorite IDE. Define tasks that use a version-controlled notebook in a Databricks Repo or in a remote Git repository and adhere to DevOps best practices such as CI/CD.
+
+Databricks Workflows provides seamless integration with leading industry partners to provide you the flexibility to define workflows that meet your needs with your data solution of choice.
+Databricks Workflows provides a wide range of task types including notebooks, JAR files, Python scripts, Databricks SQL queries and dashboards, Delta Live Tables pipelines, dbt tasks and more. 
+Creating a workflow in Databricks is an easy process that only takes a few minutes. The fastest way to create your first workflow is to create a workflow that runs a Databricks notebook on a schedule. 
+",https://www.databricks.com/product/workflows,"Orchestration, automation, task scheduling, fault recovery, event-driven pipelines, ETL processes, job dependencies",25
+Data Engineering,Databricks Lakeflow,"Low code ingestion, transformation and orchestration for end to end data pipelines","A unified solution for data pipeline orchestration and governance, offering serverless compute for ingestion and transformation tasks.",https://docs.databricks.com/en/ingestion/lakeflow-connect/index.html,"Data pipelines, orchestration, serverless compute, data freshness, real-time ingestion, transformation workflows",26
+Data Engineering,Databricks AutoLoader,One click event driven ingestions,A managed event driven solution to ingesting new data assets with inbuilt checkpoint and fault tolerance,https://docs.databricks.com/en/ingestion/cloud-object-storage/auto-loader/index.html,"Data pipelines, event driven ingestion, checkpointing",27
+Data Engineering,Databricks AI Assistant,Build data and AI projects faster with AI,"Build data and AI projects faster with AI
+Databricks Assistant lets you query data through a conversational interface, making you more productive inside Databricks. The Assistant is powered by the Databricks Intelligence Platform, helping to ensure your data is secured and your responses are accurate and personalized to you. Describe your task in natural language and let the Assistant generate SQL queries, explain complex code and automatically fix errors.
+
+Generate SQL or Python code:
+""Databricks Assistant is natively integrated into each of the editing surfaces in Databricks. Depending on the editing surface (Notebooks, SQL editor or file editor), it will return the relevant SQL query or Python code. It can help you accelerate projects by writing boilerplate code or providing initial code for you to start with. You can then run the code, copy it or add it into a new cell for further development.""
+
+Explain code or queries:
+""Databricks Assistant can describe complex pieces of code or queries in clear, concise language. It can help you better understand certain projects you may be unfamiliar with to ramp up faster.""
+
+Fix issues:
+""Databricks Assistant can identify errors in your code and recommend fixes. When you encounter issues like syntax errors, the Assistant will explain the problem and create a code snippet with a proposed fix. You can add the modified code directly into your editor and rerun it.""
+
+Get contextual responses, personalized for you""
+""Databricks Assistant is powered by the Databricks Intelligence Engine, which uses signals across your entire Databricks environment to provide highly relevant results. Databricks Intelligent Engine gives the Assistant knowledge of your popular tables, schemas, comments and tags managed in Unity Catalog. It also uses context from your notebook code cells and libraries to map your natural language questions into accurate queries and code. ""
+
+",https://www.databricks.com/product/databricks-assistant,"copilot, context aware, data intelligence",28
+Data Engineering,Databricks Lakehouse Federation,Access your data where it lives,"Lakehouse Federation is the query federation platform for Databricks. The term query federation describes a collection of features that enable users and systems to run queries against multiple data sources without needing to migrate all data to a unified system.
+
+Databricks uses Unity Catalog to manage query federation. You configure read-only connections to popular database solutions using drivers that are included on pro SQL warehouses, serverless SQL warehouses, and Databricks Runtime clusters. Unity Catalog’s data governance and data lineage tools ensure that data access is managed and audited for all federated queries made by the users in your Databricks workspaces.  The lakehouse emphasizes central storage of data to reduce data redundancy and isolation. Your organization might have numerous data systems in production, and you might want to query data in connected systems for a number of reasons:
+
+Ad hoc reporting.
+
+Proof-of-concept work.
+
+The exploratory phase of new ETL pipelines or reports.
+
+Supporting workloads during incremental migration.
+
+In each of these scenarios, query federation gets you to insights faster, because you can query the data in place and avoid complex and time-consuming ETL processing.
+
+Lakehouse Federation is meant for use cases when:
+
+You don’t want to ingest data into Databricks.
+
+You want your queries to take advantage of compute in the external database system.
+
+You want the advantages of Unity Catalog interfaces and data governance, including fine-grained access control, data lineage, and search.",https://docs.databricks.com/en/query-federation/index.html,"federation, virtualization",29
+Data Engineering,Unity Catalog - Iceberg Rest Catalog,True Iceberg rest catalog for interoperability,"Use the Iceberg REST catalog to read Unity Catalog-registered tables on Databricks from supported Iceberg clients, including Apache Spark, Apache Flink, Trino, and Snowflake.
+Unity Catalog provides a read-only implementation of the Iceberg REST catalog API for tables with Iceberg reads enabled.",https://docs.databricks.com/en/external-access/iceberg.html,"iceberg rest catalog, interoperability",30
+DevOps,Databricks Asset Bundles,Seamless integration to DevOps,"Databricks Asset Bundles (DABs) are a tool to facilitate the adoption of software engineering best practices, including source control, code review, testing, and continuous integration and delivery (CI/CD), for your data and AI projects. Bundles make it possible to describe Databricks resources such as jobs, pipelines, and notebooks as source files. These source files provide an end-to-end definition of a project, including how it should be structured, tested, and deployed, which makes it easier to collaborate on projects during active development.
+
+Bundles provide a way to include metadata alongside your project’s source files. When you deploy a project using bundles, this metadata is used to provision infrastructure and other resources. Your project’s collection of source files and metadata is then deployed as a single bundle to your target environment. A bundle includes the following parts:
+
+Required cloud infrastructure and workspace configurations
+
+Source files, such as notebooks and Python files, that include the business logic
+
+Definitions and settings for Databricks resources, such as Databricks jobs, Delta Live Tables pipelines, Model Serving endpoints, MLflow Experiments, and MLflow registered models
+
+Unit tests and integration tests",https://docs.databricks.com/en/dev-tools/bundles/index.html,"devops, cicd, devsecops,mlops",31
+Data Science,Data Science,Collaborative data science at scale,"Streamline the end-to-end data science workflow — from data prep to modeling to sharing insights — with a collaborative and unified data science environment built on an open lakehouse foundation. Get quick access to clean and reliable data, preconfigured compute resources, IDE integration, multi-language support, and built-in advanced visualization tools for maximum flexibility for data analytics teams.
+
+Collaboration across the entire data science workflow: ""Write code in Python, R, Scala and SQL, explore data with interactive visualizations and discover new insights with Databricks Notebooks. Confidently and securely share code with coauthoring, commenting, automatic versioning, Git integrations, and role-based access controls.""
+Focus on the data science, not the infrastructure: ""You don’t have to be limited by how much data fits on your laptop anymore or how much compute is available to you. Quickly migrate your local environment to the cloud and connect notebooks to your own personal compute and auto-managed clusters.""
+Use your favorite local IDE with scalable compute: ""The choice of an IDE is very personal and affects productivity significantly. Connect your favorite IDE to Databricks, so that you can still benefit from limitless data storage and compute. Or simply use RStudio or JupyterLab directly from within Databricks for a seamless experience.""
+Get data ready for data science: ""Clean and catalog all your data — batch, streaming, structured or unstructured — in one place with Delta Lake and make it discoverable to your entire organization via a centralized data store. As data comes in, automatic quality checks ensure data meets expectations and is ready for analytics. As data evolves with new data and further transformations, data versioning ensures you can meet compliance needs.""
+Low-code, visual tools for data exploration: ""Use visual tools natively from within Databricks notebooks to prepare, transform and analyze your data, enabling teams across expertise levels to work with data. Once done with your data transformations and visualizations, you can generate the code that’s running in the background — saving you time from writing boilerplate code so you can spend more time on high-value work.""
+Discover and share new insights: ""Easily share and export results by quickly turning your analysis into a dynamic dashboard. The dashboards are always up to date and can also run interactive queries. Cells, visualizations or notebooks can be shared with role-based access control and exported in multiple formats, including HTML and IPython Notebook.""
+
+
+
+
+",https://www.databricks.com/product/data-science,"data science, machine learning, artifical intelligence, responsible AI, MLOPs",32
+Data Science,Databricks Apps,Quickly build and secure data and AI products,"Quickly build secure data and AI apps
+Empowering data and AI teams to build and deploy applications with ease: ""Introducing Databricks Apps, the fastest and most secure way to build data and AI applications on the Databricks Data Intelligence Platform. Developers can create applications using popular frameworks, serverless deployment and built-in governance. This allows developers to focus on delivering impactful solutions to users without the complexities of infrastructure management.""
+Simple to build: ""Databricks Apps helps you build apps that run directly within your Databricks environment or with tools, such as Visual Studio Code and PyCharm, ensuring seamless access to your data and AI models. With Databricks Apps, data scientists and engineers can rapidly build and iterate on apps using familiar Python frameworks such as Dash, Gradio and Streamlit. You can also choose from pre-built Python templates that allow you to quickly build flexible apps.""
+Production-ready: ""Databricks Apps does not require developers to build additional infrastructure. Apps runs on automatically provisioned serverless compute, allowing deployment with ease. Databricks Apps also embraces industry-leading development practices, offering seamless integration with your preferred workflow. Whether you choose to work directly within the Databricks workspace or leverage your favorite IDE, you’ll benefit from support for Git version control and CI/CD pipelines, ensuring your internal apps are production-ready.""
+Built-in governance: ""With Databricks Apps, data never leaves your organization unless you choose to share it. Each app is fortified with robust security measures, including granular access controls to ensure precise data permissions, automatically managed service principals for secure application-to-application communication, and automatic user authentication leveraging OIDC/OAuth 2.0 and SSO for seamless and secure user access. Furthermore, the integration with Unity Catalog provides comprehensive data governance and management capabilities, while the apps inherit the networking protections of your workspace, ensuring a multi-layered security approach for your sensitive data and applications.""
+
+Use Cases:
+1. Interactive Data Apps: Build dynamic, user-friendly interfaces that allow business users to explore and visualize complex datasets in real time. These apps can include interactive dashboards, data exploration tools and customized reporting interfaces, empowering nontechnical users to derive insights directly from Databricks.
+2. Predictive Analytics: Develop sophisticated applications that leverage machine learning models for forecasting and decision support. These apps can range from demand forecasting tools for supply chain optimization to risk assessment models for financial services, all running seamlessly within your secure Databricks environment.
+3. GenAI Apps: Create cutting-edge applications that harness the power of generative AI models. These can include natural language interfaces for data querying, content generation tools for marketing teams or even AI-powered chatbots for internal knowledge management. By integrating these applications directly with the Databricks Data Intelligence Platform, you ensure they have access to the most up-to-date and relevant data while maintaining strict governance and security controls.
+
+
+
+
+",https://www.databricks.com/product/databricks-apps,"data applications, streamlit, gradio",33
+Data Science,Databricks Notebooks,Unified developer experience to build data and AI projects,"Unified developer experience to build data and AI projects
+Databricks Notebooks simplify building data and AI projects through a fully managed and highly automated developer experience. Notebooks work natively with the Databricks Data Intelligence Platform to help data practitioners start quickly, develop with context-aware tools and easily share results.
+1. Seamless integration: ""Start your work without needing to set up and configure your workspace. Notebooks come with native features for the entire data journey in one place. You can access data, compute and visualization tools without additional setup so you can focus on analyzing your data.""
+2. Data Intelligence tools: ""Spend time on insights, not on boilerplate code. Notebooks tap into information about your data including lineage, related tables and popularity to surface suggestions relevant to your work. Notebooks include Databricks Assistant, a context-aware AI assistant that lets you query data through a conversational interface to make you more productive.""
+3. Collaborative workspace: ""Work together to create and share projects in one place with the whole data team. Store markdown comments and code in multiple languages in Notebooks to share important context with others. See usage logs and forks on reports to understand how the analysis is being consumed.""",https://www.databricks.com/product/collaborative-notebooks,"notebook, version control, collaboration, mlflow integration",34
+Data Science,IDE Integrations,Build on the lakehouse with your favorite IDE,"Build on the Lakehouse in your favorite IDE
+Databricks is building a complete development experience for developers and teams who prefer IDEs, and have existing software engineering workflows. Our official IDE integrations bring all of the core capabilities of Databricks into your IDE, including securely connecting to workspaces, clusters and data. They are uniquely designed for IDE workflows, with support for your favorite editor features, full access to Git tools, local unit testing, and debugging of code running in your cluster.
+1. The full power of Databricks, in your IDE: ""Get the capabilities of the Databricks Lakehouse in your IDE. You can build your data and AI apps with the performance of Databricks. Connect to your workspaces to collaborate with your team. Run on clusters to get access to scale for large data applications. And access all your data in the lakehouse from the comfort of your IDE.""
+2. Use unique IDE capabilities: ""The Databricks integrations are built to take advantage of the capabilities of IDEs such as source control, unit testing and debugging. You can do all your familiar work in your IDE like refactoring, code navigation, code assistants and more while iterating rapidly with local unit testing.""
+3. PyCharm Databricks integration: ""The integration allows you to build your data and AI apps on the Databricks Intelligence Platform directly within PyCharm Professional, enhancing the data intelligence platform with the powerful Python IDE by JetBrains.
+Write code quickly and easily and run it in the cloud without extra configurations. Connect to your Databricks workflows via PyCharm and monitor the process within the IDE. Run Python scripts on a remote cluster. Execute notebooks or Python scripts as Databricks workflows. Synchronize project files to the Databricks workspace.""",https://www.databricks.com/product/data-science/ide-integrations,"pycharm, visual code, IntelliJ, IDE, local development",35
+Data Science,Repos,Ship code faster with repository level Git operations in Databricks,"Ship code faster with repository-level Git operations in Databricks
+Standardize development across data projects: ""Git workflows and operations in Databricks help integrate data projects into larger software operations at your company. Pull changes, commit, compare and more, from the Databricks Git Folders UI or API.""
+Automate Git workflows: ""The Repos REST API enables you to integrate data projects into CI/CD pipelines. You can use popular CI/CD tools to call the Repos API and update a Git Folder to the latest version of a specific Git branch.""
+Use your existing Git provider: ""Native integration with your preferred Git provider. Clone remote repositories, manage branches, pull and push changes, and visually compare differences in Databricks.""
+Repo-level access control: ""In addition to platform-level encryption, Git folders features allow lists to control access to critical Git repositories, and secrets detection to scan for access key leaks.""
+",https://www.databricks.com/product/repos,"version control, DevOps, DevSecOps, MLOPs, LLMOPs",36
+Data Science,Industry Solutions,Delver the data and AI driven outcomes that matter the most - faster,"Deliver the data and AI-driven outcomes that matter most — faster. Save hours of discovery, design, development and testing with Databricks Solution Accelerators. Our purpose-built guides — fully functional notebooks and best practices — speed up results across your most common and high-impact use cases. Go from idea to proof of concept (PoC) in as little as two weeks.
+
+Solution Accelerators are available to any Databricks customer free of charge.
+
+You can implement Solution Accelerators with a free Databricks trial or with your existing Databricks account.
+
+Solution Accelerators are designed to help you save hours of discovery, design, development and testing. Our goal is to jump-start your data and AI use cases by providing the right resources (notebooks, proven patterns and best practices). You can expect to go from idea to proof of concept (PoC) in as little as two weeks.
+",https://www.databricks.com/solutions/accelerators,pre built solutions,37
+Marketplace,Databricks Marketplace,"Open marketplace for data, analytics and AI","Databricks Marketplace is an open marketplace for all your data, analytics and AI, powered by open source Delta Sharing standard. The Databricks Marketplace expands your opportunity to deliver innovation, and advance all your analytics and AI initiatives. 
+
+Obtain data sets as well as AI and analytics assets — such as ML models, notebooks, applications and dashboards — without proprietary platform dependencies, complicated ETL or expensive replication. This open approach allows you to put data to work more quickly in every cloud with your tools of choice.
+
+1. Discover more than just data: ""Unlock innovation and advance your organization’s AI, ML and analytics initiatives. Access more than just data sets, including ML models, notebooks, applications and solutions.""
+2. Evaluate data products faster: ""Prebuilt notebooks and sample data help you quickly evaluate and have much greater confidence that a data product is right for your AI, ML or analytics initiatives.""
+3. Avoid vendor lock-in: ""Substantially reduce the time to deliver insights and avoid lock-in with open and seamless sharing and collaboration across clouds, regions or platforms. Directly integrate with your tools of choice and right where you work.""
+",https://www.databricks.com/product/marketplace,"open marketplace, exchange",38
+Partner Connect,Databricks Partner Connect,"Easily discover and integrate data, analytics and AI solutions with your lakehouse","
+Partner Connect makes it easy for you to discover data, analytics and AI tools directly within the Databricks platform — and quickly integrate the tools you already use today. With Partner Connect, you can simplify tool integration to just a few clicks and rapidly expand the capabilities of your lakehouse.
+
+1. Connect your data and AI tools to the lakehouse: ""Easily connect your preferred data and AI tools to the lakehouse and power any analytics use case""
+2. Discover validated data and AI solutions for new use cases: ""A one-stop portal for validated partner solutions so you can build your next data application faster""
+3. Set up in a few clicks with pre-built integrations: ""Partner Connect simplifies your integrations by automatically configuring resources — including clusters, tokens and connection files — to connect with partner solutions""",https://www.databricks.com/partnerconnect,"Data exchange, dataset discovery, Delta Sharing, collaboration, partner ecosystems, secure transactions, API integration",39
+Operational Database,Databricks Lakebase,Lakebase is Databricks' serverless PostgreSQL-based operational database that seamlessly integrates w/ the Data Intelligence Platform.,"Lakebase is Databricks' fully managed operational database service built on PostgreSQL, designed to bridge transactional & analytical workloads in a unified platform. Following the acquisition of Neon, Lakebase delivers serverless, scalable Postgres w/ modern cloud architecture & deep integration w/ the Databricks Data Intelligence Platform.
+
+Key features:
+1. Serverless architecture w/ disaggregated compute/storage for elastic scaling & cost efficiency
+2. PostgreSQL compatibility providing familiar developer experience & ecosystem access
+3. Seamless integration w/ Delta Lake via pg_mooncake extension, enabling:
+4. Analytics on Postgres data
+5. Time Series & Log Analytics
+6. Exporting tables to your lakehouse
+7. Querying/updating lakehouse tables directly in Postgres
+8. Reading/writing Delta Lake tables from Postgres
+
+Lakebase enables true HTAP (Hybrid Transactional/Analytical Processing) capabilities by combining OLTP performance w/ lakehouse analytics. This eliminates traditional data lag from ETL processes & allows analytical queries over live operational data using Photon engine performance. 
+
+For developers, Lakebase offers:
+1. Transactional SQL operations (INSERT, SELECT, UPDATE, DELETE)
+2. Joins between regular Postgres & columnstore tables
+3. Loading data from Parquet, CSV & JSON files
+4. Integration w/ Hugging Face datasets
+5. Reading existing Iceberg & Delta Lake tables
+
+Lakebase is designed to simplify operations while providing unified governance through integration w/ Unity Catalog. This makes it the ideal solution for building intelligent, data-driven applications that require both transactional processing & advanced analytics/AI capabilities.",https://www.databricks.com/product/lakebase,"OLTP, PostgreSQL, Serverless Postgres, Operational Database, Transactional Database, Lakebase, Neon, Database as a Service, Cloud Database, Operational Analytics, HTAP, Transaction Processing, Database Federation, Postgres Extension, pg_mooncake, Iceberg Compatibility, Real-time Data Processing, Disaggregated Compute/Storage, Low Latency Database, Operational Workloads, Data Serving, Key-value Lookups, Row-level Operations, ACID Transactions, Database Governance, Unified Data Architecture, Operational Data Store, Online Tables, Materialized Views, Query Federation, Data Replication, Streaming Data, Change Data Capture",40
+Artifical Intelligence,Agent Bricks,"Agent Bricks is a solution for building high-quality, auto-optimized AI agents on your enterprise data w/ minimal effort.","Agent Bricks revolutionizes how organizations build & deploy AI agents. It simplifies agent creation by requiring just a high-level description of the agent's task & connection to your enterprise data - Agent Bricks handles all the complexity automatically. The solution auto-optimizes agents on your specific data, ensuring high-quality performance tailored to your business context.
+
+Agent Bricks excels in four key use cases: structured information extraction (pulling specific data points from unstructured content), reliable knowledge assistance (creating trustworthy information retrieval systems), custom text transformation (standardizing & processing text data), & building multi-agent systems (coordinating multiple specialized agents for complex workflows).
+
+What sets Agent Bricks apart is its foundation in cutting-edge agentic research from the Databricks Mosaic AI team. The platform automatically builds evaluations & continuously optimizes agent quality, eliminating the need for extensive prompt engineering or agent development expertise. This makes sophisticated AI agent capabilities accessible to organizations regardless of their AI maturity level, allowing them to quickly implement practical AI solutions that deliver business value.",https://www.databricks.com/product/artificial-intelligence/agent-bricks,"AI agents, auto-optimization, enterprise data integration, structured information extraction, knowledge assistance, text transformation, multi-agent systems, agentic AI, RAG applications, conversational AI, task automation, data intelligence, natural language processing, LLM applications, agent orchestration, business process automation, intelligent assistants, data-aware agents, enterprise AI, Mosaic AI, agent evaluation, prompt engineering alternative, AI workflow automation, custom AI solutions",41
+Data Engineering,Databricks Lakeflow Connect,"Lakeflow Connect is a native, point-and-click data ingestion solution for seamlessly connecting databases & enterprise applications to the Databricks Data Intelligence Platform.","Lakeflow Connect is a fully managed data ingestion solution that enables simple & efficient data movement from databases & enterprise applications into the Databricks Data Intelligence Platform. It currently supports SQL Server, Salesforce, & Workday, w/ plans to expand to MySQL, Postgres, Oracle, NetSuite, Dynamics 365, & Google Ads.
+As part of the broader Lakeflow solution, Lakeflow Connect addresses common data ingestion challenges by providing a simple configuration interface that requires minimal specialized knowledge, making data democratization possible across organizations. The solution leverages incremental data processing & smart optimizations under the hood to ensure efficient data transfer.
+Lakeflow Connect is fully integrated w/ the Databricks ecosystem - governed by Unity Catalog, powered by Delta Live Tables using serverless compute, & orchestrated w/ Databricks Workflows. This integration enables unified monitoring across ingestion pipelines & seamless connection to other Databricks tools like Databricks SQL, AI/BI & Mosaic AI.
+Key benefits include:
+Simplified setup & maintenance requiring just a few steps
+Fully managed by Databricks, reducing operational overhead
+Democratized data access requiring no specialized knowledge
+Efficient data transfer through incremental processing
+Native integration w/ Databricks governance & monitoring tools
+Reduced costs by eliminating third-party CDC solutions
+Faster time-to-insight by streamlining the data pipeline
+Lakeflow Connect helps organizations spend less time moving data & more time deriving value from it, supporting the broader vision of unified data engineering on the Databricks platform.",https://www.databricks.com/product/data-engineering/lakeflow-connect,"Data ingestion, ETL, ELT, CDC, Change Data Capture, data pipeline, data integration, data connector, SQL Server connector, Salesforce connector, Workday connector, enterprise application integration, database integration, serverless data ingestion, incremental data processing, data synchronization, real-time data ingestion, batch data ingestion, data pipeline automation, data engineering, data movement, data replication, data migration, data democratization, low-code data integration, point-and-click data ingestion, managed data pipeline",42

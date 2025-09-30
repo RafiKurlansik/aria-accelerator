@@ -1,0 +1,35 @@
+# === DATABRICKS APPS - WEB APPLICATION DEPENDENCIES ===
+# Core dependencies for the ARIA web application
+# Focused on web app functionality only (no notebook dependencies)
+
+# Core API dependencies
+fastapi==0.115.0
+uvicorn[standard]==0.30.6
+python-multipart>=0.0.6
+
+# Data processing  
+pandas>=2.0.0
+pydantic>=2.0.0
+pydantic-settings>=2.0.0,<3.0.0
+
+# Databricks integration
+databricks-sdk==0.33.0
+
+# HTTP and API libraries
+requests>=2.31.0
+tenacity>=8.2.0
+
+# Environment and configuration
+python-dotenv>=1.0.0
+PyYAML>=6.0.0
+
+# HTML parsing - REQUIRED for question extraction
+beautifulsoup4>=4.12.0
+lxml>=4.9.0
+
+# Document processing - for web app file handling
+python-docx>=0.8.11
+openpyxl>=3.0.0
+
+# Note: This file contains only web application dependencies.
+# Notebook dependencies are in the root requirements.txt file.

@@ -1,0 +1,151 @@
+# ARIA Backend Services Configuration
+# This file centralizes configuration for all backend services used by ARIA
+# Configuration should match DABs variables for consistency across environments
+
+question_extraction:
+  model: "databricks-claude-sonnet-4"  # Matches DABs variable: question_extraction_model
+  prompt: |
+    You are an expert assistant for rewriting complex forms into structured, numbered survey questions.
+    Your task is to convert a set of interrelated subquestions into clearly numbered and grouped questions 
+    using hierarchical numbering (e.g., 1.0, 1.1) and topic-based organization.
+
+    Step 1: Thematic Categorization
+    Before rewriting, analyze the set of subquestions and identify logical groupings or capabilities 
+    (e.g., "Synthetic Data Generation", "AI-Based Recommendations"). Categorize each sub-question into 
+    the most appropriate group. Use context clues and key phrases to determine what the question is about. 
+    If a question starts discussing a new feature or capability, always start a new topic.
+
+    Step 2: Structured Rewriting
+    Once categorized, rewrite the questions for each capability following these rules:
+    1. Each capability becomes a new numbered section (e.g., Section 2: Synthetic Data Generation).
+    2. Number the questions in order:
+       • 1: Main question, often preceded by a number 
+       • 1.1, 1.2, 1.3, etc.: Follow-up questions (e.g., how it's supported, documentation, expected delivery date, etc.)
+    3. Disambiguate vague references: Replace pronouns like "this" or "it" with clear references to the capability.
+       • ❌ "How is this supported?"
+       • ✅ "How is synthetic data generation supported in your platform?"
+    4. Preserve the original intent and detail of each question. Only rewrite to clarify or resolve ambiguity.
+    5. If the question expects a specific type of answer (e.g., "Options:", "max 500 characters"), include
+       that instruction at the end of the question.
+    6. Any answer options listed after the question should be included as part of the question.
+    7. OUTPUT ONLY valid JSON. No extra text, no markdown, no preambles, no explanations.
+    8. IMPORTANT: 
+       - ONLY extract questions that actually exist in the provided document
+       - If no questions are found, return an empty JSON array: []
+       - NEVER invent or hallucinate questions that aren't in the original text
+       - Do not use the example above as a template for content, only for format
+    9. Example output structure:
+    [
+      {
+        "question": "1",
+        "sub_topics": [
+          {
+            "topic": "Synthetic Data Generation",
+            "sub_questions": [
+              {
+                "sub_question": "1.01",
+                "text": "Does your platform support synthetic data generation?"
+              },
+              {
+                "sub_question": "1.02",
+                "text": "How is synthetic data generation supported in your platform?"
+              },
+              {
+                "sub_question": "1.03",
+                "text": "Please provide any further detail on how synthetic data generation is supported. (Maximum 1000 characters)"
+              }
+            ]
+          },
+          {
+            "topic": "AI-Based Recommendation",
+            "sub_questions": [
+              {
+                "sub_question": "1.04",
+                "text": "Does your platform support AI-based recommendations?"
+              },
+              {
+                "sub_question": "1.05",
+                "text": "How are AI-based recommendations supported in your platform?"
+              },
+              {
+                "sub_question": "1.06",
+                "text": "Please provide any further detail on how AI-based recommendations are supported. (Maximum 1000 characters)"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "question": "2",
+        "sub_topics": [
+          {
+            "topic": "Data Augmentation",
+            "sub_questions": [
+              {
+                "sub_question": "2.01",
+                "text": "Does your platform support data augmentation?"
+              },
+              {
+                "sub_question": "2.02",
+                "text": "How is data augmentation supported in your platform?"
+              },
+              {
+                "sub_question": "2.03",
+                "text": "Please provide any further detail on how data augmentation is supported. (Maximum 1000 characters)"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+
+answer_generation:
+  model: "agents_users-rafi_kurlansik-auto_rfi"  # Matches DABs variable: answer_generation_model
+
+document_checker:
+  model: "agents_users-rafi_kurlansik-audit_agent"  # Matches DABs variable: audit_agent_model
+
+chat:
+  model: "agents_users-rafi_kurlansik-auto_rfi"  # Matches DABs variable: answer_generation_model  
+
+# Vector Search Configuration - matches DABs variable: vector_search_endpoint
+vector_search:
+  endpoint: "one-env-shared-endpoint-2"  # Default from DABs, varies by environment
+
+# Model Serving Endpoints - matches DABs endpoint configurations
+model_serving_endpoints:
+  question_extraction: "aria-question-extraction-endpoint"  # Matches DABs variable: question_extraction_endpoint
+  answer_generation: "aria-answer-generation-endpoint"      # Matches DABs variable: answer_generation_endpoint  
+  document_audit: "aria-document-audit-endpoint"            # Matches DABs variable: document_audit_endpoint
+
+# Analytics configuration for comprehensive usage tracking
+# Unity Catalog configuration matches DABs variables: catalog_name, schema_name
+analytics:
+  enabled: true  # ✅ ENABLED - SDK compatibility issue resolved with statement_execution API
+  unity_catalog:
+    # Instance format: catalog.schema (no table prefix needed)
+    # Note: In DABs, these values vary by environment:
+    # - development: users.rafi_kurlansik  
+    # - staging: users.${workspace.current_user.userName}_staging
+    # - production: users.${workspace.current_user.userName}_prod
+    instance: "users.rafi_kurlansik"  # Default for development
+    catalog: "users"  # Matches DABs variable: catalog_name
+    schema: "rafi_kurlansik"  # Matches DABs variable: schema_name (development default)
+  tables:
+    # Analytics tracking tables
+    rfi_uploads: "rfi_uploads"
+    rfi_extractions: "rfi_extractions"
+    rfi_exports: "rfi_exports"
+    chat_sessions: "chat_sessions"
+    chat_questions: "chat_questions"
+    rfi_generation_batches: "rfi_generation_batches"
+    
+    # ETL data tables (created by ETL notebooks)
+    rfi_qa_bronze: "rfi_qa_bronze"
+    rfi_qa_gold: "rfi_qa_gold"
+    product_keyword_mappings: "product_keyword_mappings"
+    db_docs_delta: "dbdocs_rag_chunks"
+    db_blogs_delta: "dbblogs_rag_chunks"
+  connection:
+    timeout_seconds: 30
+    retry_attempts: 3

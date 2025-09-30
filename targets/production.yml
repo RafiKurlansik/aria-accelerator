@@ -1,0 +1,99 @@
+# Production Target Configuration for ARIA DAB
+
+variables:
+  catalog_name: "users"
+  schema_name: "${workspace.current_user.userName}_prod"
+  vector_search_endpoint: "production-vector-search-endpoint"
+  
+  # Production models
+  question_extraction_model: "databricks-claude-sonnet-4"
+  answer_generation_model: "agents_production-auto_rfi"
+  audit_agent_model: "agents_production-audit_agent"
+
+# Production-specific resource overrides
+resources:
+  jobs:
+    lakeflow-etl-pipeline:
+      # Use default schedule (Daily at 2 AM)
+      timeout_seconds: 14400  # 4 hours timeout for production
+      max_concurrent_runs: 1
+      
+      tasks:
+        - task_key: responses_etl
+          cluster:
+            node_type_id: "i3.2xlarge"  # Larger instances for production
+            num_workers: 4
+            
+        - task_key: docs_etl
+          cluster:
+            node_type_id: "i3.2xlarge"
+            num_workers: 4
+            
+    batch-inference-job:
+      # Use default schedule (Sundays at 6 AM)
+      timeout_seconds: 21600  # 6 hours timeout
+      max_concurrent_runs: 1
+      
+      tasks:
+        - task_key: batch_inference
+          cluster:
+            node_type_id: "i3.4xlarge"  # Larger for production batch processing
+            num_workers: 8
+            
+    model-evaluation-job:
+      # Use default schedule (Monthly)
+      timeout_seconds: 7200  # 2 hours timeout
+      
+  clusters:
+    aria-development-cluster:
+      cluster_name: "aria-production-cluster"
+      autotermination_minutes: 120  # Longer for production workloads
+      num_workers: 4  # Production sizing
+      
+      # Production-optimized configuration
+      spark_conf:
+        "spark.databricks.delta.preview.enabled": "true"
+        "spark.databricks.delta.retentionDurationCheck.enabled": "false"
+        "spark.sql.adaptive.enabled": "true"
+        "spark.sql.adaptive.coalescePartitions.enabled": "true"
+        
+      custom_tags:
+        environment: "production"
+        cost_center: "aria"
+        
+  model_serving_endpoints:
+    aria-answer-generation:
+      name: "aria-answer-generation-prod"
+      config:
+        served_entities:
+          - entity_name: "agents_production-auto_rfi"
+            entity_version: "1"
+            workload_size: "Large"  # Large workload for production
+            scale_to_zero_enabled: false  # Always warm for production
+            workload_type: "GPU_MEDIUM"  # GPU for better performance
+            
+        traffic_config:
+          routes:
+            - served_model_name: "agents_production-auto_rfi"
+              traffic_percentage: 100
+              
+    aria-question-extraction:
+      name: "aria-question-extraction-prod"
+      config:
+        served_entities:
+          - workload_size: "Medium"  # Medium for production question extraction
+            
+    aria-document-audit:
+      name: "aria-document-audit-prod"
+      config:
+        served_entities:
+          - workload_size: "Medium"  # Medium for production auditing
+
+# Production-specific permissions
+permissions:
+  - level: CAN_MANAGE
+    service_principal_name: "aria-production-sp"
+  - level: CAN_VIEW
+    group_name: "aria-production-users"
+  - level: CAN_RUN
+    group_name: "aria-operators"

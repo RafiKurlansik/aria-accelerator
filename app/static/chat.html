@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat - ARIA</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/static/images/icons/databricks-ARIA-icon-full-color.svg">
+    <link rel="alternate icon" href="/static/images/icons/databricks-ARIA-icon-full-color.svg">
+    <link rel="mask-icon" href="/static/images/icons/databricks-ARIA-icon-full-color.svg" color="#FF3621">
+    
+    <link rel="stylesheet" href="/static/css/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Enhanced styling for markdown content */
+        .message-content h1, .message-content h2, .message-content h3, 
+        .message-content h4, .message-content h5, .message-content h6 {
+            margin: 12px 0 8px 0;
+            color: #333;
+            line-height: 1.3;
+        }
+        
+        .message-content h1 { font-size: 1.2em; font-weight: 600; }
+        .message-content h2 { font-size: 1.1em; font-weight: 600; }
+        .message-content h3 { font-size: 1.05em; font-weight: 600; }
+        .message-content h4, .message-content h5, .message-content h6 { font-size: 1em; font-weight: 600; }
+        
+        .message-content p {
+            margin: 8px 0;
+            line-height: 1.6;
+        }
+        
+        .message-content ul, .message-content ol {
+            margin: 8px 0;
+            padding-left: 20px;
+        }
+        
+        .message-content li {
+            margin: 4px 0;
+            line-height: 1.5;
+        }
+        
+        .message-content code {
+            background: #f5f5f5;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 0.9em;
+        }
+        
+        .message-content pre {
+            background: #f5f5f5;
+            padding: 12px;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin: 8px 0;
+        }
+        
+        .message-content pre code {
+            background: none;
+            padding: 0;
+        }
+        
+        .message-content blockquote {
+            border-left: 3px solid #ddd;
+            padding-left: 12px;
+            margin: 8px 0;
+            color: #666;
+            font-style: italic;
+        }
+        
+        .message-content strong {
+            font-weight: 600;
+        }
+        
+        .message-content em {
+            font-style: italic;
+        }
+        
+        .message-content a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        .message-content a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <img src="/static/images/logos/databricks-ARIA-lockup-full-color-stacked.svg" alt="ARIA Logo" style="height: 50px;">
+                <h1>Analyst Relations Intelligent Assistant</h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Mode Navigation -->
+        <div class="nav-tabs">
+            <a href="/" class="nav-tab">📄 RFI Processor</a>
+            <a href="/chat" class="nav-tab active">💬 Chat</a>
+            <a href="/audit" class="nav-tab">🔍 Document Audit</a>
+        </div>
+
+        <div class="main-content">
+            <div class="content-area" style="height: 100%;">
+                <h2>💬 Ad-hoc Questions</h2>
+                <p>Ask specific questions and get AI-powered answers based on your knowledge base.</p>
+
+                <!-- Chat Interface -->
+                <div class="chat-container" style="border: 1px solid #e0e0e0; border-radius: 8px; height: 100%; display: flex; flex-direction: column;">
+                    <div id="chatMessages" class="chat-messages" style="flex: 1; padding: 20px; overflow-y: auto; background: white;">
+                    </div>
+                    
+                    <div class="chat-input" style="border-top: 1px solid #e0e0e0; padding: 20px; background: #f8f9fa;">
+                        <form id="chatForm" style="display: flex; gap: 10px; align-items: flex-end;">
+                            <div style="flex: 1;">
+                                <textarea 
+                                    id="chatInput"
+                                    class="form-input" 
+                                    placeholder="What would you like to know?"
+                                    rows="2"
+                                    style="resize: vertical; min-height: 60px; max-height: 200px; line-height: 1.4; font-family: inherit;"
+                                    autocomplete="off"
+                                ></textarea>
+                            </div>
+                            <button type="submit" id="sendButton" class="btn btn-primary" style="height: fit-content;">
+                                Send
+                            </button>
+                        </form>
+                        <div style="font-size: 12px; color: #666; margin-top: 8px;">
+                            💡 Try asking: "What is Databricks?" or "How does machine learning work?"<br>
+                            <span style="color: #999;">Press <strong>Shift+Enter</strong> for new line, <strong>Enter</strong> to send</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <div id="sidebarContent">
+                    <!-- Dynamic content: Chat history when active, features when empty -->
+                    <div id="chatFeatures">
+                        <h3>💬 Chat Features</h3>
+                        <p>The chat interface allows you to:</p>
+                        <ul>
+                            <li><strong>Ask questions</strong> about Databricks and data analysis</li>
+                            <li><strong>Get instant answers</strong> from AI experts</li>
+                            <li><strong>Copy responses</strong> to clipboard</li>
+                            <li><strong>View conversation history</strong> in real-time</li>
+                        </ul>
+                        
+                        <h4>💡 Tips</h4>
+                        <ul>
+                            <li>Ask specific questions for better responses</li>
+                            <li>Use technical terms when discussing data topics</li>
+                            <li>Click "Copy" to save useful responses</li>
+                            <li>Previous conversations are saved automatically</li>
+                        </ul>
+                    </div>
+                    
+                    <div id="sidebarChatHistory" style="display: none;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                            <h3>📚 Recent History</h3>
+                            <button id="sidebarClearHistory" class="btn btn-secondary" style="font-size: 11px; padding: 4px 8px;">
+                                Clear
+                            </button>
+                        </div>
+                        <div id="sidebarHistoryContent" style="max-height: 400px; overflow-y: auto;">
+                            <!-- Chat history will be populated here -->
+                        </div>
+                        
+                        <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #e0e0e0;">
+                            <h4>📊 Stats</h4>
+                            <div style="font-size: 12px; color: #666;">
+                                <div>Messages: <span id="messageCount">0</span></div>
+                                <div>Last active: <span id="lastActive">Never</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/app.js"></script>
+    <script src="/static/js/analytics.js"></script>
+    <!-- Add marked.js for markdown parsing -->
+    <script src="https://cdn.jsdelivr.net/npm/marked@12.0.0/marked.min.js"></script>
+    <script>
+        // Chat functionality
+        let chatHistory = [];
+        
+        function getFilteredContext() {
+            // Filter out error messages and limit total context size
+            const maxContextChars = 1000; // Conservative limit for vector search
+            const maxMessages = 3; // Reduced from 5
+            
+            // Filter out error messages and keep only successful exchanges
+            const filteredHistory = chatHistory.filter(msg => {
+                const content = msg.content || '';
+                // Skip error messages
+                if (content.includes('❌') || content.includes('Sorry, I encountered')) {
+                    return false;
+                }
+                // Skip very short messages (like "ok", "thanks")
+                if (content.trim().length < 10) {
+                    return false;
+                }
+                return true;
+            });
+            
+            // Take last N messages and check total character count
+            let context = [];
+            let totalChars = 0;
+            
+            for (let i = Math.max(0, filteredHistory.length - maxMessages); i < filteredHistory.length; i++) {
+                const msg = filteredHistory[i];
+                const msgChars = (msg.content || '').length;
+                
+                // Stop if adding this message would exceed limit
+                if (totalChars + msgChars > maxContextChars) {
+                    break;
+                }
+                
+                context.push(msg);
+                totalChars += msgChars;
+            }
+            
+            console.log(`DEBUG: Context filtered - Original: ${chatHistory.length}, Filtered: ${filteredHistory.length}, Sent: ${context.length}, Chars: ${totalChars}`);
+            return context;
+        }
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            // Ensure sessionId is available - fallback if app.js hasn't loaded yet
+            if (typeof sessionId === 'undefined') {
+                console.warn('sessionId not defined, creating fallback using getOrCreateSessionId');
+                // Try to use the function from app.js if available
+                if (typeof getOrCreateSessionId === 'function') {
+                    window.sessionId = getOrCreateSessionId();
+                } else {
+                    // Ultimate fallback - replicate the logic from app.js
+                    let storedSessionId = localStorage.getItem('aria-session-id');
+                    if (!storedSessionId) {
+                        storedSessionId = 'session-' + Math.random().toString(36).substr(2, 9);
+                        localStorage.setItem('aria-session-id', storedSessionId);
+                    }
+                    window.sessionId = storedSessionId;
+                }
+                console.log('Chat sessionId set to:', window.sessionId);
+            }
+            
+            const chatForm = document.getElementById('chatForm');
+            const chatInput = document.getElementById('chatInput');
+            const chatMessages = document.getElementById('chatMessages');
+            const chatHistoryDiv = document.getElementById('sidebarChatHistory');
+            
+            // Load chat history from localStorage
+            loadChatHistory();
+            updateSidebarHistory();
+            
+            // Handle Shift+Enter for new lines and Enter for submission
+            chatInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    if (e.shiftKey) {
+                        // Shift+Enter: Allow new line (default behavior)
+                        return;
+                    } else {
+                        // Plain Enter: Submit form
+                        e.preventDefault();
+                        chatForm.dispatchEvent(new Event('submit'));
+                    }
+                }
+            });
+
+            // Auto-resize textarea functionality
+            chatInput.addEventListener('input', () => {
+                // Reset height to auto to get correct scrollHeight
+                chatInput.style.height = 'auto';
+                
+                // Set height based on content, with min/max constraints
+                const newHeight = Math.min(Math.max(chatInput.scrollHeight, 60), 200);
+                chatInput.style.height = newHeight + 'px';
+            });
+
+            // Retry function for handling cold starts and timeouts
+            async function retryChatRequest(question, contextToSend, retryCount = 0) {
+                const maxRetries = 3;
+                const baseDelay = 20000; // 20 seconds base delay
+
+                if (retryCount >= maxRetries) {
+                    addMessage('bot', '❌ Sorry, I\'m having trouble connecting right now. Please try again later.');
+                    return;
+                }
+
+                // Calculate exponential backoff delay
+                const delay = baseDelay * Math.pow(2, retryCount);
+
+                // Update loading message to show retry status
+                const retryMessage = retryCount === 0 ?
+                    '🌅 The model is waking up... (this usually takes 30-60 seconds)' :
+                    `🌅 Still waiting for the model... retry ${retryCount + 1}/${maxRetries}`;
+
+                const loadingId = addMessage('bot', retryMessage, true);
+
+                // Show countdown timer
+                let countdown = Math.floor(delay / 1000);
+                const countdownInterval = setInterval(() => {
+                    countdown--;
+                    if (countdown > 0) {
+                        updateMessage(loadingId, `${retryMessage} (${countdown}s)`);
+                    } else {
+                        clearInterval(countdownInterval);
+                    }
+                }, 1000);
+
+                // Wait for the delay
+                await new Promise(resolve => setTimeout(resolve, delay));
+                clearInterval(countdownInterval);
+
+                // Remove the loading message
+                removeMessage(loadingId);
+
+                // Show retry attempt
+                const retryId = addMessage('bot', `🔄 Retrying your question...`, true);
+
+                try {
+                    // Make the API call again
+                    const response = await fetch('/api/chat', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-Session-Id': sessionId || window.sessionId || 'chat-unknown'
+                        },
+                        body: JSON.stringify({
+                            question: question,
+                            context: contextToSend
+                        })
+                    });
+
+                    // Remove retry message
+                    removeMessage(retryId);
+
+                    if (!response.ok) {
+                        const errorText = await response.text();
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+
+                    // Get response text first to debug potential JSON issues
+                    const responseText = await response.text();
+                    console.log('DEBUG: Retry successful, raw response:', responseText);
+
+                    let result;
+                    try {
+                        result = JSON.parse(responseText);
+                    } catch (jsonError) {
+                        console.error('JSON parsing error on retry:', jsonError);
+                        throw new Error('Invalid response format from server');
+                    }
+
+                    if (result.success) {
+                        addMessage('bot', result.answer);
+                    } else {
+                        console.error('Backend returned error on retry:', result);
+                        addMessage('bot', '❌ Sorry, I encountered an error: ' + (result.error || 'Unknown error'));
+                    }
+
+                } catch (error) {
+                    console.error('Retry failed:', error);
+                    removeMessage(retryId);
+
+                    // Check if this is a 504 or timeout error that should trigger another retry
+                    if (error.message.includes('504') || error.message.includes('timeout') || error.name === 'AbortError') {
+                        console.log(`Retry ${retryCount + 1} failed with 504/timeout, trying again...`);
+                        // Recursively retry with incremented count
+                        await retryChatRequest(question, contextToSend, retryCount + 1);
+                    } else {
+                        // Other error types - don't retry
+                        addMessage('bot', '❌ Sorry, I couldn\'t process your question right now. Please try again.');
+                    }
+                }
+            }
+
+            // Handle form submission
+            chatForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                const question = chatInput.value.trim();
+                if (!question) return;
+                
+                // Debug logging
+                const contextToSend = getFilteredContext();
+                console.log('DEBUG: Sending question:', question);
+                console.log('DEBUG: Question length:', question.length);
+                console.log('DEBUG: Chat history length:', chatHistory.length);
+                console.log('DEBUG: Context being sent:', contextToSend);
+                console.log('DEBUG: Session ID being sent:', sessionId || window.sessionId || 'UNDEFINED');
+                
+                // Add user message
+                addMessage('user', question);
+                chatInput.value = '';
+                
+                // Reset textarea height after sending
+                chatInput.style.height = '60px';
+                
+                // Show loading
+                const loadingId = addMessage('bot', '🤔 Thinking...', true);
+                
+                try {
+                    // Call chat API
+                    const response = await fetch('/api/chat', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-Session-Id': sessionId || window.sessionId || 'chat-unknown'
+                        },
+                        body: JSON.stringify({
+                            question: question,
+                            context: contextToSend // Smart context filtering
+                        })
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    
+                    // Get response text first to debug potential JSON issues
+                    const responseText = await response.text();
+                    console.log('DEBUG: Raw chat response:', responseText);
+                    
+                    let result;
+                    try {
+                        result = JSON.parse(responseText);
+                    } catch (jsonError) {
+                        console.error('JSON parsing error:', jsonError);
+                        console.error('Response text that failed to parse:', responseText);
+                        throw new Error('Invalid response format from server');
+                    }
+                    
+                    // Remove loading message
+                    removeMessage(loadingId);
+                    
+                    if (result.success) {
+                        addMessage('bot', result.answer);
+                    } else {
+                        console.error('Backend returned error:', result);
+                        const errorMsg = result.error || result.info?.error || 'Unknown error';
+                        addMessage('bot', '❌ Sorry, I encountered an error: ' + errorMsg);
+                        
+                        // Check for consecutive failures and offer to clear context
+                        const recentErrors = chatHistory.slice(-3).filter(msg => 
+                            msg.content && (msg.content.includes('❌') || msg.content.includes('Sorry, I encountered'))
+                        ).length;
+                        
+                        if (recentErrors >= 2) {
+                            setTimeout(() => {
+                                if (confirm('I\'ve had trouble with the last few questions. Would you like me to clear the conversation history to start fresh? This might help resolve the issue.')) {
+                                    clearChatHistory();
+                                    addMessage('bot', '🔄 Conversation cleared. Please try your question again.');
+                                }
+                            }, 1000);
+                        }
+                    }
+                } catch (error) {
+                    console.error('Chat error:', error);
+                    removeMessage(loadingId);
+
+                    // Check if this is a 504 timeout error or network error that should trigger retry
+                    if (error.message.includes('504') || error.message.includes('timeout') || error.name === 'AbortError' || error.message.includes('Failed to fetch')) {
+                        console.log('Detected 504/timeout error, triggering retry mechanism...');
+                        // Start the retry process
+                        await retryChatRequest(question, contextToSend, 0);
+                    } else {
+                        // Other types of errors - show generic error message
+                        addMessage('bot', '❌ Sorry, I couldn\'t process your question right now. Please try again.');
+                    }
+                }
+                
+                // Save to history
+                saveChatHistory();
+                updateChatHistoryDisplay();
+                updateSidebarHistory();
+            });
+            
+            // Clear history functionality removed - element doesn't exist in HTML
+            
+            // Auto-focus input
+            chatInput.focus();
+        });
+        
+        function addMessage(sender, content, isTemporary = false, messageType = 'normal') {
+            const chatMessages = document.getElementById('chatMessages');
+            const messageId = 'msg_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+            
+            const isUser = sender === 'user';
+            const bgColor = isUser ? '#e3f2fd' : '#f0f8ff';
+            const borderColor = isUser ? '#2196f3' : 'var(--primary-color)';
+            const name = isUser ? '👤 You' : '<img src="/static/images/icons/databricks-ARIA-icon-full-color.svg" alt="ARIA" style="width: 20px; height: 20px; margin-right: 5px;">ARIA';
+            
+            // Format content based on sender and type
+            let formattedContent = content;
+            if (!isUser && messageType === 'normal' && typeof marked !== 'undefined') {
+                // Parse markdown for bot responses
+                try {
+                    formattedContent = marked.parse(content);
+                } catch (e) {
+                    console.warn('Markdown parsing failed:', e);
+                    formattedContent = content.replace(/\n/g, '<br>');
+                }
+            } else if (!isUser) {
+                // Simple line break conversion for non-markdown content
+                formattedContent = content.replace(/\n/g, '<br>');
+            } else {
+                // Escape HTML for user messages
+                formattedContent = content.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br>');
+            }
+            
+            const messageDiv = document.createElement('div');
+            messageDiv.id = messageId;
+            messageDiv.className = `message ${sender}-message`;
+            messageDiv.style.cssText = `
+                margin-bottom: 15px; 
+                padding: 12px; 
+                background: ${bgColor}; 
+                border-radius: 8px; 
+                border-left: 4px solid ${borderColor};
+                ${messageType === 'sources' ? 'font-size: 12px; opacity: 0.8;' : ''}
+                position: relative;
+            `;
+            
+            const timestamp = new Date().toLocaleTimeString();
+            
+            // Add copy button for bot messages (except sources and temporary)
+            const copyButton = (!isUser && !isTemporary && messageType === 'normal') ? `
+                <div style="margin-top: 10px; text-align: right;">
+                    <button onclick="copyMessageContent('${messageId}')" 
+                            class="copy-btn" 
+                            data-content="${content.replace(/"/g, '&quot;').replace(/'/g, '&#39;')}"
+                            style="background: var(--primary-color); color: white; border: none; border-radius: 4px; padding: 6px 12px; font-size: 12px; cursor: pointer; opacity: 0.8; transition: opacity 0.2s;"
+                            onmouseover="this.style.opacity='1'" 
+                            onmouseout="this.style.opacity='0.8'"
+                            title="Copy response to clipboard">
+                        📋 Copy Response
+                    </button>
+                </div>
+            ` : '';
+            
+            messageDiv.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                    <span style="font-weight: 600; color: ${borderColor};">${name}</span>
+                    <span style="font-size: 12px; color: #666;">${timestamp}</span>
+                </div>
+                <div class="message-content" style="line-height: 1.5;">${formattedContent}</div>
+                ${copyButton}
+            `;
+            
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            
+            // Add to history (except temporary messages)
+            if (!isTemporary) {
+                chatHistory.push({
+                    sender,
+                    content,
+                    timestamp: new Date().toISOString(),
+                    type: messageType
+                });
+                
+                // Update sidebar after adding to history
+                updateSidebarHistory();
+            }
+            
+            return messageId;
+        }
+        
+        function removeMessage(messageId) {
+            const message = document.getElementById(messageId);
+            if (message) {
+                message.remove();
+            }
+        }
+
+        function updateMessage(messageId, newContent) {
+            const message = document.getElementById(messageId);
+            if (message) {
+                const contentDiv = message.querySelector('.message-content');
+                if (contentDiv) {
+                    // Update text content while preserving HTML structure
+                    contentDiv.innerHTML = newContent.replace(/\n/g, '<br>');
+                }
+            }
+        }
+
+        function saveChatHistory() {
+            try {
+                localStorage.setItem('aria_chat_history', JSON.stringify(chatHistory));
+            } catch (e) {
+                console.warn('Could not save chat history:', e);
+            }
+        }
+        
+        function loadChatHistory() {
+            try {
+                const saved = localStorage.getItem('aria_chat_history');
+                if (saved) {
+                    chatHistory = JSON.parse(saved);
+                    updateChatHistoryDisplay();
+                    updateSidebarHistory();
+                }
+            } catch (e) {
+                console.warn('Could not load chat history:', e);
+                chatHistory = [];
+            }
+        }
+        
+        function clearChatHistory() {
+            chatHistory = [];
+            localStorage.removeItem('aria_chat_history');
+            const chatMessages = document.getElementById('chatMessages');
+            if (chatMessages) {
+                chatMessages.innerHTML = '';
+            }
+            updateSidebarHistory();
+        }
+        
+        function updateChatHistoryDisplay() {
+            const chatHistoryDiv = document.getElementById('sidebarChatHistory');
+            
+            // Skip if element doesn't exist
+            if (!chatHistoryDiv) {
+                console.warn('chatHistory element not found - skipping update');
+                return;
+            }
+            
+            if (chatHistory.length === 0) {
+                chatHistoryDiv.innerHTML = '<p style="color: #666; font-style: italic; margin: 0;">No chat history yet. Start a conversation above!</p>';
+                return;
+            }
+            
+            const recentChats = chatHistory.slice(-10).filter(msg => msg.type !== 'sources').reverse(); // Show last 10 non-source messages, newest first
+            
+            const historyHTML = recentChats.map(msg => {
+                const time = new Date(msg.timestamp).toLocaleString();
+                const icon = msg.sender === 'user' ? '👤' : '<img src="/static/images/icons/databricks-ARIA-icon-full-color.svg" alt="ARIA" style="width: 12px; height: 12px; margin-right: 3px;">';
+                const preview = msg.content.length > 100 ? msg.content.substring(0, 100) + '...' : msg.content;
+                
+                return `
+                    <div style="margin-bottom: 10px; padding: 8px; background: white; border-radius: 4px; font-size: 12px;">
+                        <div style="font-weight: 600; color: #333; margin-bottom: 3px;">
+                            ${icon} ${msg.sender === 'user' ? 'You' : 'ARIA'} - ${time}
+                        </div>
+                        <div style="color: #666;">${preview}</div>
+                    </div>
+                `;
+            }).join('');
+            
+            chatHistoryDiv.innerHTML = historyHTML;
+        }
+        
+        // Clipboard functionality
+        async function copyToClipboard(messageId, content) {
+            try {
+                await navigator.clipboard.writeText(content);
+                
+                // Find the corresponding question for analytics tracking (non-blocking)
+                try {
+                    const correspondingQuestion = findCorrespondingQuestion(messageId);
+                    
+                    // Track the copy event (don't let analytics errors break copy functionality)
+                    if (correspondingQuestion) {
+                        trackChatCopy(
+                            correspondingQuestion, 
+                            content, 
+                            analytics.getCurrentModel() || 'chat-model'
+                        );
+                    }
+                } catch (analyticsError) {
+                    console.warn('Analytics tracking failed for copy event:', analyticsError);
+                }
+                
+                // Visual feedback
+                const button = document.querySelector(`#${messageId} .copy-btn`);
+                if (button) {
+                    const originalText = button.innerHTML;
+                    button.innerHTML = '✅ Copied!';
+                    button.style.background = '#d4edda';
+                    button.style.borderColor = '#c3e6cb';
+                    button.style.color = '#155724';
+                    
+                    setTimeout(() => {
+                        button.innerHTML = originalText;
+                        button.style.background = 'none';
+                        button.style.borderColor = '#ccc';
+                        button.style.color = 'inherit';
+                    }, 2000);
+                }
+                
+                // Show success message
+                ARIA.showAlert('Response copied to clipboard!', 'success');
+            } catch (err) {
+                console.error('Failed to copy:', err);
+                
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = content;
+                textArea.style.position = 'fixed';
+                textArea.style.left = '-999999px';
+                textArea.style.top = '-999999px';
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+                
+                try {
+                    document.execCommand('copy');
+                    ARIA.showAlert('Response copied to clipboard!', 'success');
+                } catch (err) {
+                    console.error('Fallback copy failed:', err);
+                    ARIA.showAlert('Copy failed. Please select and copy manually.', 'error');
+                }
+                
+                document.body.removeChild(textArea);
+            }
+        }
+        
+        // Improved copy function that gets content from data attribute (more reliable)
+        async function copyMessageContent(messageId) {
+            const button = document.querySelector(`#${messageId} .copy-btn`);
+            if (!button) {
+                console.error('Copy button not found for message:', messageId);
+                return;
+            }
+            
+            const content = button.getAttribute('data-content');
+            if (!content) {
+                console.error('No content found for message:', messageId);
+                ARIA.showAlert('Copy failed: No content available', 'error');
+                return;
+            }
+            
+            // Decode HTML entities
+            const decodedContent = content.replace(/&quot;/g, '"').replace(/&#39;/g, "'");
+            
+            // Use the existing copyToClipboard function with the decoded content
+            await copyToClipboard(messageId, decodedContent);
+        }
+        
+        // Helper function to find the question that corresponds to a response message
+        function findCorrespondingQuestion(responseMessageId) {
+            try {
+                // Find the response message element to get its timestamp
+                const responseElement = document.getElementById(responseMessageId);
+                if (!responseElement) return null;
+                
+                // Extract timestamp from messageId (format: msg_timestamp_random)
+                const parts = responseMessageId.split('_');
+                if (parts.length < 2) return null;
+                
+                const responseTimestamp = parseInt(parts[1]);
+                
+                // Find the most recent user message before this response
+                // Walk backwards through chat history to find the user question
+                for (let i = chatHistory.length - 1; i >= 0; i--) {
+                    const msg = chatHistory[i];
+                    if (msg.sender === 'user' && msg.timestamp) {
+                        const msgTimestamp = new Date(msg.timestamp).getTime();
+                        // If this user message is before the response, it's likely the question
+                        if (msgTimestamp < responseTimestamp) {
+                            return msg.content || 'Unknown question';
+                        }
+                    }
+                }
+                
+                // Fallback: find the last user message
+                for (let i = chatHistory.length - 1; i >= 0; i--) {
+                    if (chatHistory[i].sender === 'user') {
+                        return chatHistory[i].content || 'Unknown question';
+                    }
+                }
+                
+                return 'Question not found';
+            } catch (error) {
+                console.warn('Could not find corresponding question:', error);
+                return 'Question lookup error';
+            }
+        }
+        
+        // Enhanced sidebar history management
+        function updateSidebarHistory() {
+            const sidebarHistoryDiv = document.getElementById('sidebarChatHistory');
+            const sidebarFeaturesDiv = document.getElementById('chatFeatures');
+            const sidebarHistoryContent = document.getElementById('sidebarHistoryContent');
+            const messageCountSpan = document.getElementById('messageCount');
+            const lastActiveSpan = document.getElementById('lastActive');
+            
+            // Check if required elements exist
+            if (!sidebarHistoryDiv || !sidebarFeaturesDiv) {
+                console.warn('Sidebar elements not found - skipping sidebar history update');
+                return;
+            }
+            
+            // Show history sidebar if we have conversations
+            if (chatHistory.length > 0) {
+                sidebarFeaturesDiv.style.display = 'none';
+                sidebarHistoryDiv.style.display = 'block';
+                
+                // Update stats (with null checks)
+                const nonSourceMessages = chatHistory.filter(msg => msg.type !== 'sources');
+                if (messageCountSpan) {
+                    messageCountSpan.textContent = nonSourceMessages.length;
+                }
+                
+                const lastMessage = chatHistory[chatHistory.length - 1];
+                if (lastMessage && lastActiveSpan) {
+                    const lastTime = new Date(lastMessage.timestamp);
+                    lastActiveSpan.textContent = lastTime.toLocaleString();
+                }
+                
+                // Generate recent history
+                const recentChats = chatHistory.slice(-15).filter(msg => msg.type !== 'sources').reverse(); // Show newest first
+                
+                const historyHTML = recentChats.map((msg, index) => {
+                    const time = new Date(msg.timestamp).toLocaleTimeString();
+                    const icon = msg.sender === 'user' ? '👤' : '<img src="/static/images/icons/databricks-ARIA-icon-full-color.svg" alt="ARIA" style="width: 12px; height: 12px; margin-right: 3px;">';
+                    let preview = msg.content.length > 80 ? msg.content.substring(0, 80) + '...' : msg.content;
+                    
+                    // Remove markdown formatting for preview
+                    preview = preview.replace(/[*_`#\[\]]/g, '').replace(/\n/g, ' ');
+                    
+                    const isLatest = index === 0; // Since we reversed the array, first item is now the latest
+                    
+                    return `
+                        <div style="margin-bottom: 8px; padding: 8px; background: ${isLatest ? '#f0f8ff' : 'white'}; border-radius: 4px; font-size: 11px; ${isLatest ? 'border-left: 3px solid var(--primary-color);' : ''}">
+                            <div style="font-weight: 600; color: #333; margin-bottom: 3px; font-size: 10px;">
+                                ${icon} ${msg.sender === 'user' ? 'You' : 'ARIA'} • ${time}
+                            </div>
+                            <div style="color: #666; line-height: 1.3;">${preview}</div>
+                        </div>
+                    `;
+                }).join('');
+                
+                if (sidebarHistoryContent) {
+                    sidebarHistoryContent.innerHTML = historyHTML || '<p style="color: #666; font-style: italic; margin: 0; font-size: 11px;">No messages yet</p>';
+                }
+            } else {
+                if (sidebarFeaturesDiv) sidebarFeaturesDiv.style.display = 'block';
+                if (sidebarHistoryDiv) sidebarHistoryDiv.style.display = 'none';
+            }
+        }
+        
+        // Enhanced history management
+        document.addEventListener('DOMContentLoaded', () => {
+            // Additional event listeners for sidebar clear button
+            const sidebarClearBtn = document.getElementById('sidebarClearHistory');
+            if (sidebarClearBtn) {
+                sidebarClearBtn.addEventListener('click', () => {
+                    if (confirm('Clear all chat history?')) {
+                        chatHistory = [];
+                        localStorage.removeItem('aria_chat_history');
+                        
+                        // Reset chat messages to initial state
+                        const chatMessages = document.getElementById('chatMessages');
+                        chatMessages.innerHTML = `
+                            <div class="message bot-message" style="margin-bottom: 15px; padding: 12px; background: #f0f8ff; border-radius: 8px; border-left: 4px solid var(--primary-color);">
+                                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 5px;">
+                                    <img src="/static/images/icons/databricks-ARIA-icon-full-color.svg" alt="ARIA" style="width: 20px; height: 20px; margin-right: 5px;">
+                                <span style="font-weight: 600; color: var(--primary-color);">ARIA</span>
+                                    <span style="font-size: 12px; color: #666;">${new Date().toLocaleTimeString()}</span>
+                                </div>
+                                <div>Hello! I'm ready to help answer your questions about documents, data analysis, or Databricks. What would you like to know?</div>
+                            </div>
+                        `;
+                        
+                        updateChatHistoryDisplay();
+                        updateSidebarHistory();
+                        ARIA.showAlert('Chat history cleared!', 'success');
+                    }
+                });
+            }
+            
+            // Initialize sidebar on load
+            updateSidebarHistory();
+        });
+    </script>
+</body>
+</html>

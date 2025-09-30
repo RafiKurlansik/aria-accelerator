@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARIA - Analyst Relations Intelligent Assistant</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/static/images/icons/databricks-ARIA-icon-full-color.svg">
+    <link rel="alternate icon" href="/static/images/icons/databricks-ARIA-icon-full-color.svg">
+    <link rel="mask-icon" href="/static/images/icons/databricks-ARIA-icon-full-color.svg" color="#FF3621">
+    
+    <link rel="stylesheet" href="/static/css/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <img src="/static/images/logos/databricks-ARIA-lockup-full-color-stacked.svg" alt="ARIA Logo" style="height: 50px;">
+                <h1>Analyst Relations Intelligent Assistant</h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Mode Navigation -->
+        <div class="nav-tabs">
+            <a href="/" class="nav-tab active">📄 RFI Processor</a>
+            <a href="/chat" class="nav-tab">💬 Chat</a>
+            <a href="/audit" class="nav-tab">🔍 Document Audit</a>
+        </div>
+
+        <div class="main-content">
+            <div class="content-area">
+                <!-- Progress Stepper -->
+                <div class="stepper">
+                    <div class="step active">
+                        <div class="step-circle">1</div>
+                        <div class="step-label">Upload</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-circle">2</div>
+                        <div class="step-label">Extract</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-circle">3</div>
+                        <div class="step-label">Generate</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-circle">4</div>
+                        <div class="step-label">Download</div>
+                    </div>
+                </div>
+
+                <!-- Upload Form -->
+                <div class="form-section">
+                    <div id="uploadBanner" class="alert alert-info">
+                        Upload your document in CSV or HTML format to begin processing.
+                    </div>
+
+                    <form id="uploadForm">
+                        <div class="form-group">
+                            <label for="documentName" class="form-label">Document Name:</label>
+                            <input 
+                                type="text" 
+                                id="documentName" 
+                                class="form-input" 
+                                placeholder="Will auto-populate when you select a file"
+                                required
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Choose File:</label>
+                            <div id="dropZone" class="file-upload-zone">
+                                <div>
+                                    📁 Click to select or drag and drop your file here
+                                </div>
+                                <div style="margin-top: 8px; font-size: 14px; color: #666;">
+                                    Supported: CSV, HTML, HTM files (max 50MB)
+                                </div>
+                            </div>
+                            <input type="file" id="fileInput" accept=".csv,.html,.htm" style="display: none;">
+                            <div id="fileInfo" style="display: none; margin-top: 10px; color: #28a745; font-weight: 500;"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">
+                                Next Step →
+                            </button>
+                        </div>
+                    </form>
+
+                    <!-- File Preview Section (hidden by default) -->
+                    <div id="filePreviewSection" class="form-section" style="display: none;">
+                        <h3>📄 Document Preview & Validation</h3>
+                        <div id="fileInfoPreview" class="alert alert-info">
+                            <!-- File information will be populated here -->
+                        </div>
+                        
+                                            <div class="preview-container" style="background: #f8f9fa; border: 1px solid #e0e0e0; border-radius: 6px; padding: 15px; margin: 15px 0;">
+                        <div style="margin-bottom: 10px;">
+                            <h4 style="margin: 0;">Document Preview:</h4>
+                            <small style="color: #666;">Rendered HTML document with original formatting</small>
+                        </div>
+                        <div id="contentPreview" style="height: 400px; overflow-y: auto; background: white; border: 2px solid #e0e0e0; border-radius: 4px;">
+                            <!-- Content preview will be populated here -->
+                        </div>
+                    </div>
+                        
+                        <div style="margin-top: 20px; display: flex; justify-content: center; gap: 15px;">
+                            <button id="goBackToUpload" class="btn btn-secondary" style="padding: 12px 24px;">
+                                ← Go Back
+                            </button>
+                            <button id="continueToExtract" class="btn btn-primary" style="padding: 12px 24px;">
+                                Continue to Question Extraction →
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <h3>📋 Instructions</h3>
+                <p>Welcome to ARIA's RFI Processor. This tool helps you:</p>
+                <ul>
+                    <li><strong>Upload</strong> your RFI document</li>
+                    <li><strong>Extract</strong> questions automatically</li>
+                    <li><strong>Generate</strong> AI-powered answers</li>
+                    <li><strong>Download</strong> the completed response</li>
+                </ul>
+                
+                <h4>📝 Supported Formats</h4>
+                <ul>
+                    <li>CSV files with questions</li>
+                    <li>HTML documents</li>
+                    <li>HTM web pages</li>
+                </ul>
+
+                <h4>⚡ Quick Tips</h4>
+                <ul>
+                    <li>Maximum file size: 50MB</li>
+                    <li>Use descriptive document names</li>
+                    <li>Ensure files are well-formatted</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/app.js"></script>
+    <script>
+        // Upload form handling
+        document.getElementById('uploadForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const documentName = document.getElementById('documentName').value.trim();
+            const fileInput = document.getElementById('fileInput');
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            
+            if (!documentName) {
+                ARIA.showAlert('Please enter a document name.', 'error');
+                return;
+            }
+            
+            if (!fileInput.selectedFile) {
+                ARIA.showAlert('Please select a file to upload.', 'error');
+                return;
+            }
+            
+            // Show loading
+            const originalText = submitBtn.textContent;
+            submitBtn.innerHTML = '<span class="loading"></span> Processing...';
+            submitBtn.disabled = true;
+            
+            try {
+                // First upload and process the file
+                const formData = new FormData();
+                formData.append('file', fileInput.selectedFile);
+                formData.append('documentName', documentName);
+                
+                const uploadResponse = await fetch('/api/upload', {
+                    method: 'POST',
+                    headers: {
+                        'X-Session-Id': sessionId
+                    },
+                    body: formData
+                });
+                
+                const uploadResult = await uploadResponse.json();
+                
+                if (!uploadResult.success) {
+                    ARIA.showAlert(uploadResult.error || 'Upload failed', 'error');
+                    return;
+                }
+                
+                // Backend already updated session with complete file info
+                // Only update the current step to stay on upload page for preview
+                await updateSession({
+                    currentStep: 'upload'  // Stay on upload step to show preview
+                });
+                
+                ARIA.showAlert('File processed successfully!', 'success');
+                
+                // Show the file preview and continue button
+                showFilePreview(uploadResult);
+                
+            } catch (error) {
+                console.error('Upload error:', error);
+                ARIA.showAlert('Failed to process file', 'error');
+            } finally {
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }
+        });
+
+        // Function to show file preview
+        async function showFilePreview(uploadResult) {
+            const previewSection = document.getElementById('filePreviewSection');
+            const fileInfoPreview = document.getElementById('fileInfoPreview');
+            const contentPreview = document.getElementById('contentPreview');
+            const uploadForm = document.getElementById('uploadForm');
+            const continueBtn = document.getElementById('continueToExtract');
+            const goBackBtn = document.getElementById('goBackToUpload');
+            const uploadBanner = document.getElementById('uploadBanner');
+            
+            // Hide upload form and banner
+            uploadForm.style.display = 'none';
+            uploadBanner.style.display = 'none';
+            
+            // Show file information
+            const fileSizeKB = Math.round((uploadResult.content?.length || 0) * 1.5 / 1024); // Rough estimate
+            fileInfoPreview.innerHTML = `
+                <strong>📄 ${uploadResult.fileName}</strong><br>
+                <small>✅ File processed successfully and ready for question extraction.</small><br>
+                <small>📊 Content size: ~${fileSizeKB} KB | Type: ${uploadResult.fileName.split('.').pop().toUpperCase()}</small>
+            `;
+            
+            // Get and render HTML content properly
+            let htmlContent = 'No preview available';
+            
+            if (uploadResult.fileName.toLowerCase().endsWith('.html') || uploadResult.fileName.toLowerCase().endsWith('.htm')) {
+                try {
+                    const rawResponse = await fetch(`/uploads/${uploadResult.filePath.split('/').pop()}`);
+                    if (rawResponse.ok) {
+                        htmlContent = await rawResponse.text();
+                        
+                        // Create a safe iframe for HTML rendering
+                        const iframe = document.createElement('iframe');
+                        iframe.style.width = '100%';
+                        iframe.style.height = '100%';
+                        iframe.style.border = 'none';
+                        iframe.style.background = 'white';
+                        iframe.sandbox = 'allow-same-origin allow-scripts'; // Allow scripts for proper HTML rendering
+                        
+                        contentPreview.innerHTML = '';
+                        contentPreview.appendChild(iframe);
+                        
+                        // Write HTML content to iframe
+                        const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                        iframeDoc.open();
+                        iframeDoc.write(htmlContent);
+                        iframeDoc.close();
+                    }
+                } catch (e) {
+                    console.warn('Could not fetch HTML content:', e);
+                    contentPreview.innerHTML = `<div style="padding: 20px; text-align: center; color: #666;">
+                        <p>Preview not available</p>
+                        <small>Error loading HTML content</small>
+                    </div>`;
+                }
+            } else if (uploadResult.fileName.toLowerCase().endsWith('.csv')) {
+                // For CSV files, try to display as table
+                try {
+                    await displayCSVAsTable(contentPreview, uploadResult);
+                } catch (e) {
+                    console.warn('Could not display CSV as table:', e);
+                    // Fallback to text display
+                    const cleanContent = uploadResult.content || 'No content available';
+                    contentPreview.innerHTML = `<div style="padding: 15px; white-space: pre-wrap; font-family: 'DM Sans', system-ui, sans-serif; line-height: 1.5;">${cleanContent}</div>`;
+                }
+            } else {
+                // For other files, show clean text content
+                const cleanContent = uploadResult.content || 'No content available';
+                contentPreview.innerHTML = `<div style="padding: 15px; white-space: pre-wrap; font-family: 'DM Sans', system-ui, sans-serif; line-height: 1.5;">${cleanContent}</div>`;
+            }
+            
+            // Show preview section
+            previewSection.style.display = 'block';
+            
+            // Add go back button handler
+            goBackBtn.addEventListener('click', () => {
+                // Show upload form and banner, hide preview
+                uploadForm.style.display = 'block';
+                uploadBanner.style.display = 'block';
+                previewSection.style.display = 'none';
+                
+                // Reset form
+                document.getElementById('documentName').value = '';
+                document.getElementById('fileInput').value = '';
+                document.getElementById('fileInfo').style.display = 'none';
+            });
+            
+            // Add continue button handler
+            continueBtn.addEventListener('click', () => {
+                // Update session to extraction step and navigate
+                updateSession({ currentStep: 'extract' }).then(() => {
+                    window.location.href = '/extract';
+                });
+            });
+        }
+
+        // Function to display CSV as table
+        async function displayCSVAsTable(contentPreview, uploadResult) {
+            // Fetch the raw CSV file content
+            const csvResponse = await fetch(`/uploads/${uploadResult.filePath.split('/').pop()}`);
+            if (!csvResponse.ok) {
+                throw new Error('Could not fetch CSV file');
+            }
+            
+            const csvText = await csvResponse.text();
+            
+            // Parse CSV manually (simple parsing for preview)
+            const lines = csvText.trim().split('\n');
+            if (lines.length === 0) {
+                throw new Error('CSV file is empty');
+            }
+            
+            // Parse CSV rows (handle basic quoting)
+            const parseCSVLine = (line) => {
+                const result = [];
+                let current = '';
+                let inQuotes = false;
+                let i = 0;
+                
+                while (i < line.length) {
+                    const char = line[i];
+                    const nextChar = line[i + 1];
+                    
+                    if (char === '"') {
+                        if (inQuotes && nextChar === '"') {
+                            // Escaped quote
+                            current += '"';
+                            i += 2;
+                        } else {
+                            // Toggle quote state
+                            inQuotes = !inQuotes;
+                            i += 1;
+                        }
+                    } else if (char === ',' && !inQuotes) {
+                        // Field separator
+                        result.push(current.trim());
+                        current = '';
+                        i += 1;
+                    } else {
+                        current += char;
+                        i += 1;
+                    }
+                }
+                
+                result.push(current.trim());
+                return result;
+            };
+            
+            const rows = lines.map(parseCSVLine);
+            const headers = rows[0];
+            const dataRows = rows.slice(1);
+            
+            // Limit display to first 100 rows for performance
+            const displayRows = dataRows.slice(0, 100);
+            const hasMoreRows = dataRows.length > 100;
+            
+            // Build HTML table
+            let tableHTML = `
+                <div style="padding: 15px;">
+                    <div style="margin-bottom: 10px;">
+                        <h4 style="margin: 0; color: #333;">CSV Preview</h4>
+                        <small style="color: #666;">
+                            ${headers.length} columns, ${dataRows.length} rows${hasMoreRows ? ' (showing first 100)' : ''}
+                        </small>
+                    </div>
+                    <div style="overflow-x: auto; max-height: 350px; overflow-y: auto; border: 1px solid #ddd; border-radius: 4px;">
+                        <table style="width: 100%; border-collapse: collapse; font-size: 14px; background: white;">
+                            <thead style="background: #f8f9fa; position: sticky; top: 0; z-index: 10;">
+                                <tr>`;
+            
+            // Add headers
+            headers.forEach(header => {
+                tableHTML += `<th style="padding: 8px 12px; text-align: left; border-bottom: 2px solid #dee2e6; border-right: 1px solid #dee2e6; font-weight: 600; white-space: nowrap;">${escapeHtml(header)}</th>`;
+            });
+            
+            tableHTML += `</tr></thead><tbody>`;
+            
+            // Add data rows
+            displayRows.forEach((row, rowIndex) => {
+                const isEvenRow = rowIndex % 2 === 0;
+                tableHTML += `<tr style="background: ${isEvenRow ? 'white' : '#f9f9f9'};">`;
+                
+                headers.forEach((header, colIndex) => {
+                    const cellValue = row[colIndex] || '';
+                    const truncatedValue = cellValue.length > 100 ? cellValue.substring(0, 100) + '...' : cellValue;
+                    tableHTML += `<td style="padding: 6px 12px; border-bottom: 1px solid #dee2e6; border-right: 1px solid #dee2e6; vertical-align: top; max-width: 200px; word-wrap: break-word;" title="${escapeHtml(cellValue)}">${escapeHtml(truncatedValue)}</td>`;
+                });
+                
+                tableHTML += `</tr>`;
+            });
+            
+            tableHTML += `</tbody></table></div>`;
+            
+            if (hasMoreRows) {
+                tableHTML += `<div style="padding: 10px; text-align: center; color: #666; font-size: 12px;">...and ${dataRows.length - 100} more rows</div>`;
+            }
+            
+            tableHTML += `</div>`;
+            
+            contentPreview.innerHTML = tableHTML;
+        }
+        
+        // Helper function to escape HTML
+        function escapeHtml(unsafe) {
+            if (typeof unsafe !== 'string') return '';
+            return unsafe
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+# Staging Target Configuration for ARIA DAB
+
+variables:
+  catalog_name: "users"
+  schema_name: "${workspace.current_user.userName}_staging"
+  vector_search_endpoint: "staging-vector-search-endpoint"
+  
+  # Staging models (production-like but separate)
+  question_extraction_model: "databricks-claude-sonnet-4"
+  answer_generation_model: "agents_staging-auto_rfi"
+  audit_agent_model: "agents_staging-audit_agent"
+
+# Staging-specific resource overrides
+resources:
+  jobs:
+    lakeflow-etl-pipeline:
+      schedule:
+        quartz_cron_expression: "0 0 3 * * ?"  # Daily at 3 AM (offset from prod)
+        pause_status: "UNPAUSED"
+        
+    batch-inference-job:
+      schedule:
+        quartz_cron_expression: "0 0 7 ? * SAT"  # Saturdays at 7 AM (offset from prod)
+        pause_status: "UNPAUSED"
+        
+    model-evaluation-job:
+      schedule:
+        quartz_cron_expression: "0 0 9 2 * ?"  # Second day of month at 9 AM
+        pause_status: "UNPAUSED"
+        
+  clusters:
+    aria-development-cluster:
+      cluster_name: "aria-staging-cluster"
+      autotermination_minutes: 60  # Longer runtime for staging tests
+      num_workers: 2  # Production-like sizing
+      
+  model_serving_endpoints:
+    aria-answer-generation:
+      name: "aria-answer-generation-staging"
+      config:
+        served_entities:
+          - entity_name: "agents_staging-auto_rfi"
+            entity_version: "1"
+            workload_size: "Medium"
+            scale_to_zero_enabled: false  # Keep warm for staging tests
+            
+    aria-question-extraction:
+      name: "aria-question-extraction-staging"
+      
+    aria-document-audit:
+      name: "aria-document-audit-staging"

@@ -1,0 +1,12 @@
+command: ["node", "app.js"]
+env:
+  - name: PYTHONPATH
+    value: /app/python/source_code/src
+  - name: NODE_ENV
+    value: production
+  - name: BACKEND_PORT
+    value: "8080"
+  - name: PYTHON_EXECUTABLE
+    value: python
+  - name: DATABRICKS_WAREHOUSE_ID
+    value: "75fd8278393d07eb"
