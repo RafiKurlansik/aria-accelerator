@@ -1,4 +1,4 @@
-# 🎯 ARIA: Analyst Relations Intelligent Assistant
+# <img src="app/static/images/icons/databricks-ARIA-icon-full-color.svg" width="32" height="32" alt="ARIA Icon"> ARIA: Analyst Relations Intelligent Assistant
 
 ![Python](https://img.shields.io/badge/Python-3.9+-blue.svg)
 ![Node.js](https://img.shields.io/badge/Node.js-18+-green.svg)
