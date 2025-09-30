@@ -6,6 +6,7 @@
 ![Databricks](https://img.shields.io/badge/Databricks-Asset%20Bundle-FF3621.svg)
 
 **AI-powered RFP response generation and document analysis platform built on Databricks**
+_Brought to you by the PM Technical team at Databricks_
 
 ARIA streamlines analyst relations workflows by leveraging large language models to extract questions from RFP documents, generate contextual responses, and provide intelligent document auditing capabilities. Built on Databricks with Unity Catalog, Vector Search, and Model Serving, ARIA provides a complete end-to-end solution for automating analyst relations processes while maintaining quality and brand consistency.
 
