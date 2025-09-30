@@ -573,4 +573,4 @@ This project is licensed under the MIT License. Contributions are welcome! Pleas
 
 ---
 
-**Built with ❤️ on Databricks**
+**Built with ❤️ by the PM Technical team at Databricks**
