@@ -17,14 +17,14 @@ _Brought to you by the PM Technical team at Databricks_
 
 ## Table of Contents
 
-- [Features & Use Cases](#features--use-cases)
-- [How to Deploy and Test ARIA](#how-to-deploy-and-test-aria)
-- [How to Customize ARIA to Your Data](#how-to-customize-aria-to-your-data)
-- [System Architecture & Dependencies](#system-architecture--dependencies)
-- [Configuration Details](#configuration-details)
-- [Analytics & Monitoring](#analytics--monitoring)
-- [Advanced Configuration](#advanced-configuration)
-- [Additional Resources](#additional-resources)
+- [Features & Use Cases](#-features--use-cases)
+- [How to Deploy and Test ARIA](#-how-to-deploy-and-test-aria)
+- [How to Customize ARIA to Your Data](#-how-to-customize-aria-to-your-data)
+- [System Architecture & Dependencies](#️-system-architecture--dependencies)
+- [Configuration Details](#️-configuration-details)
+- [Analytics & Monitoring](#-analytics--monitoring)
+- [Advanced Configuration](#-advanced-configuration)
+- [Additional Resources](#-additional-resources)
 
 ---
 
