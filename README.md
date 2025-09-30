@@ -102,6 +102,7 @@ databricks apps status aria-web-app --target development
 ```
 
 **Resources:**
+- **📚 [Detailed Deployment Guide](docs/deployment.md)** - Comprehensive deployment instructions including Docker and Databricks Apps
 - [Databricks CLI Documentation](https://docs.databricks.com/dev-tools/cli/index.html)
 - [Databricks Asset Bundles Guide](https://docs.databricks.com/dev-tools/bundles/index.html)
 - [Model Serving Documentation](https://docs.databricks.com/machine-learning/model-serving/index.html)
@@ -462,6 +463,10 @@ SELECT * FROM users.your_schema.rfi_generation_batches;
 SELECT * FROM users.your_schema.chat_sessions;
 ```
 
+**📊 [Complete Analytics Documentation](docs/analytics.md)** - Detailed table schemas, sample queries, and business KPIs
+
+**📈 [Analytics Quick Start](docs/analytics-overview.md)** - Get started with ARIA analytics in minutes
+
 ### Model Evaluation
 
 For comprehensive model evaluation and quality assessment, see the detailed evaluation framework:
@@ -542,7 +547,17 @@ custom_model_config = {
 
 ## 📚 **Additional Resources**
 
-### Documentation
+### ARIA Documentation
+
+Comprehensive guides for deploying, developing, and monitoring ARIA:
+
+- **📊 [Analytics & Monitoring](docs/analytics.md)** - Complete analytics system with table schemas, sample queries, and business KPIs
+- **📈 [Analytics Overview](docs/analytics-overview.md)** - Quick start guide for analytics and key metrics
+- **🚀 [Deployment Guide](docs/deployment.md)** - Local development, Databricks Apps, and Docker deployment options
+- **🛠️ [Development Guide](docs/development.md)** - Architecture, project structure, and development workflow
+- **🔍 [ARIA Evaluation Framework](docs/ARIA_evaluation.md)** - Model evaluation and quality assessment methodology
+
+### External Documentation
 - [Databricks Asset Bundles](https://docs.databricks.com/dev-tools/bundles/index.html)
 - [Model Serving Guide](https://docs.databricks.com/machine-learning/model-serving/index.html)
 - [Vector Search Documentation](https://docs.databricks.com/generative-ai/vector-search.html)
