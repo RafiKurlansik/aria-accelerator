@@ -15,9 +15,11 @@ ARIA uses a hybrid architecture:
 aria-accelerator/
 ├── app.py                    # Python FastAPI backend launcher
 ├── app.js                    # Node.js Express frontend server
+├── app.yaml                  # Databricks Apps configuration
+├── start.sh                  # Startup script for both services
+├── test_imports.py           # Python import validation
 ├── package.json              # Node.js dependencies
 ├── requirements.txt          # Python dependencies
-├── pyproject.toml           # Python project configuration
 ├── static/                  # Frontend static assets
 │   ├── css/main.css         # Main stylesheet
 │   ├── js/app.js           # Frontend JavaScript utilities
@@ -40,14 +42,15 @@ aria-accelerator/
 │   │   ├── logging_config.py # Logging configuration
 │   │   └── types.py        # Type definitions
 │   ├── services/           # Business logic services
+│   │   ├── analytics_service.py    # Usage tracking and analytics
 │   │   ├── answer_generation.py    # AI answer generation
 │   │   ├── chat_service.py         # Chat functionality
 │   │   ├── document_checker.py     # Document auditing
 │   │   ├── document_processor.py   # Document processing
-│   │   ├── lakebase_service.py     # Databricks integration
 │   │   └── question_extraction.py  # AI question extraction
 │   └── utils/              # Utility functions
 ├── uploads/                # Temporary file storage (created at runtime)
+├── tests/                  # Unit and integration tests
 └── tmp/                   # Processing artifacts (created at runtime)
 ```
 
@@ -158,7 +161,7 @@ answer_generation:
 python -m pytest src/tests/
 
 # Run with coverage
-python -m pytest src/tests/ --cov=src.aria --cov-report=html
+python -m pytest tests/ --cov=src.aria --cov-report=html
 
 # Run specific test module
 python -m pytest src/tests/unit/test_services/

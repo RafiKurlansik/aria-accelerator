@@ -15,9 +15,10 @@ ARIA uses a hybrid architecture:
 
 #### Prerequisites
 - Python 3.9+
-- Node.js 16+
+- Node.js 18+ (required for ES modules)
 - Databricks workspace access
 - Personal Access Token
+- SQL Warehouse ID (for analytics)
 
 #### Setup
 1. **Install dependencies**
@@ -33,11 +34,16 @@ DATABRICKS_HOST=https://your-workspace.cloud.databricks.com
 DATABRICKS_TOKEN=your_personal_access_token
    NODE_ENV=development
    PORT=8000
+   BACKEND_PORT=8080
    DEBUG=true
    ```
 
 3. **Start both services**
    ```bash
+   # Option 1: Use the startup script (recommended)
+   ./start.sh
+   
+   # Option 2: Start services manually
    # Terminal 1: Python FastAPI backend
    python app.py
    
@@ -46,7 +52,9 @@ DATABRICKS_TOKEN=your_personal_access_token
    ```
 
 4. **Access application**
-   Open `http://localhost:8000`
+   - Frontend: `http://localhost:8000`
+   - Backend API: `http://localhost:8080`
+   - API Documentation: `http://localhost:8080/docs`
 
 ### 2. Databricks Apps Deployment
 

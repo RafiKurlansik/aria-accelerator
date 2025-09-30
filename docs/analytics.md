@@ -92,7 +92,7 @@ CREATE TABLE rfi_extractions (
     extraction_method STRING,
     questions_extracted INT,
     model_used STRING,
-    custom_prompt_used BOOLEAN,
+    custom_prompt STRING,
     processing_time_seconds DOUBLE,
     questions ARRAY<STRUCT<
         question: STRING,
@@ -124,7 +124,7 @@ CREATE TABLE rfi_generation_batches (
     batch_status STRING,
     batch_processing_time_seconds DOUBLE,
     model_used STRING,
-    custom_prompt_used BOOLEAN,
+    custom_prompt STRING,
     questions_in_batch ARRAY<STRUCT<
         question_id: STRING,
         text: STRING,
