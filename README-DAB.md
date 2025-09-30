@@ -153,15 +153,15 @@ Key configurable variables:
 ## File Structure
 
 ```
-aria/
+aria-accelerator/
 ├── databricks.yml           # Main DAB configuration
 ├── README-DAB.md            # This documentation
-├── src/aria/notebooks/      # Databricks notebooks
+├── src/aria-accelerator/notebooks/      # Databricks notebooks
 │   ├── etl/                 # ETL workflows (Lakeflow)
 │   ├── agents/              # Model and agent notebooks
 │   ├── batch/               # Batch processing
 │   └── evaluation/          # Model evaluation
-├── src/aria/               # Python application code
+├── src/aria-accelerator/               # Python application code
 ├── static/                 # Frontend assets
 └── app.yaml               # Databricks Apps config
 ```

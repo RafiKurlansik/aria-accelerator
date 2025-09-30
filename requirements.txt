@@ -1,5 +1,5 @@
 # === DATABRICKS NOTEBOOKS DEPENDENCIES ===
-# Dependencies for ARIA Jupyter notebooks in /src/aria/notebooks/
+# Dependencies for ARIA Jupyter notebooks in /aria-accelerator/src/aria/notebooks/
 # Web application dependencies are in app/requirements.txt
 
 # Core data processing (shared by notebooks)

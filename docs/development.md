@@ -12,7 +12,7 @@ ARIA uses a hybrid architecture:
 ## Project Structure
 
 ```
-aria/
+aria-accelerator/
 ├── app.py                    # Python FastAPI backend launcher
 ├── app.js                    # Node.js Express frontend server
 ├── package.json              # Node.js dependencies
@@ -115,7 +115,7 @@ The application will be available at `http://localhost:8000`
 
 ### API Development
 
-The FastAPI backend is located in `src/aria/api/app.py`. Key endpoints:
+The FastAPI backend is located in `aria-accelerator/src/aria/api/app.py`. Key endpoints:
 
 - `POST /api/upload` - Upload and process documents
 - `POST /api/extract-questions` - Extract questions from documents
@@ -135,7 +135,7 @@ The frontend uses vanilla JavaScript with static HTML pages. Key files:
 
 ### Configuration Management
 
-AI model configurations are managed in `src/aria/config/backend_services.yaml`:
+AI model configurations are managed in `aria-accelerator/src/aria/config/backend_services.yaml`:
 
 ```yaml
 question_extraction:
@@ -158,7 +158,7 @@ answer_generation:
 python -m pytest src/tests/
 
 # Run with coverage
-python -m pytest src/tests/ --cov=src/aria --cov-report=html
+python -m pytest src/tests/ --cov=src.aria --cov-report=html
 
 # Run specific test module
 python -m pytest src/tests/unit/test_services/
@@ -206,7 +206,7 @@ The project uses vanilla JavaScript. Consider adding:
 
 2. **View logs**
    - FastAPI logs appear in terminal
-   - Application logs are configured in `src/aria/core/logging_config.py`
+   - Application logs are configured in `aria-accelerator/src/aria/core/logging_config.py`
 
 3. **API documentation**
    - Visit `http://localhost:8080/docs` for interactive API docs

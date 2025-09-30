@@ -43,7 +43,7 @@ These notebooks are designed to run in Databricks environments and contain:
 
 ## Relationship to Main Application
 
-While the main ARIA application (`/src/aria/services/`) provides production services, these notebooks contain:
+While the main ARIA application (`/aria-accelerator/src/aria/services/`) provides production services, these notebooks contain:
 - Research and development experiments
 - Model training and evaluation workflows
 - Data preparation and analysis

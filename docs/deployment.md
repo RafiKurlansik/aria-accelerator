@@ -238,7 +238,7 @@ databricks apps logs aria --follow
 
 4. **Model serving errors**
    - Verify model endpoints are active in Databricks
-   - Check `src/aria/config/backend_services.yaml` model names
+   - Check `aria-accelerator/src/aria/config/backend_services.yaml` model names
 
 ### Performance Tuning
 
@@ -272,7 +272,7 @@ databricks apps logs aria --follow
 ## Backup and Recovery
 
 ### Critical Data
-- Configuration: `src/aria/config/backend_services.yaml`
+- Configuration: `aria-accelerator/src/aria/config/backend_services.yaml`
 - Static assets: `static/` directory
 - Application code: Full repository
 

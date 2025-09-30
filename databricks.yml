@@ -4,7 +4,7 @@
 bundle:
   name: aria-assistant
   git:
-    origin_url: https://github.com/company/aria
+    origin_url: https://github.com/RafiKurlansik/aria-accelerator
 
 # Workspace configuration
 workspace:

@@ -59,10 +59,10 @@ dev = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/company/aria"
-Documentation = "https://github.com/company/aria/docs"
-Repository = "https://github.com/company/aria"
-"Bug Tracker" = "https://github.com/company/aria/issues"
+Homepage = "https://github.com/RafiKurlansik/aria-accelerator"
+Documentation = "https://github.com/RafiKurlansik/aria-accelerator/docs"
+Repository = "https://github.com/RafiKurlansik/aria-accelerator"
+"Bug Tracker" = "https://github.com/RafiKurlansik/aria-accelerator/issues"
 
 [project.scripts]
 aria-api = "aria.api.app:main"
