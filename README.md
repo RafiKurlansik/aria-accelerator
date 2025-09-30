@@ -72,7 +72,7 @@ databricks configure
 
 # 3. Clone and navigate to ARIA
 git clone <repository-url>
-cd aria
+cd aria-accelerator
 
 # 4. Validate configuration
 databricks bundle validate --target development
@@ -250,7 +250,7 @@ graph TB
 ### Codebase Organization
 
 ```
-aria/
+aria-accelerator/
 ├── app/                          # Web Application
 │   ├── src/aria/                # Python backend
 │   │   ├── api/                 # FastAPI endpoints
@@ -305,7 +305,7 @@ python -m pytest tests/unit/ -v
 python -m pytest tests/integration/ -v
 
 # Test coverage
-python -m pytest --cov=aria tests/ --cov-report=html
+python -m pytest --cov=src.aria tests/ --cov-report=html
 ```
 
 **Test Organization:**
@@ -339,7 +339,7 @@ MAX_FILE_SIZE_MB=10
 
 ### Backend Services Configuration
 
-**File:** `app/src/aria/config/backend_services.yaml`
+**File:** `aria-accelerator/app/src/aria/config/backend_services.yaml`
 
 ```yaml
 # Model Endpoints
@@ -366,7 +366,7 @@ analytics:
 
 ### DAB Parameters
 
-**File:** `databricks.yml` - Variables section
+**File:** `aria-accelerator/databricks.yml` - Variables section
 
 ```yaml
 variables:
@@ -385,7 +385,7 @@ variables:
 
 ### Application Constants
 
-**File:** `app/src/aria/config/constants.py`
+**File:** `aria-accelerator/app/src/aria/config/constants.py`
 
 ```python
 # File Processing
@@ -415,14 +415,14 @@ AUDIT_CATEGORIES = [
 - Timeout values: Configure request timeout limits
 
 **Prompt Engineering:**
-- **RFI Processor**: `src/aria/notebooks/agents/rfi_processor.py`
-- **Audit Agent**: `src/aria/notebooks/agents/audit_agent.py`
+- **RFI Processor**: `aria-accelerator/src/aria/notebooks/agents/rfi_processor.py`
+- **Audit Agent**: `aria-accelerator/src/aria/notebooks/agents/audit_agent.py`
 - **Product Messaging**: Update `product_messaging` variable
 - **Brand Guidelines**: Update `brand_guidelines` variable
 
 **Data Processing:**
-- **ETL Parameters**: Modify notebook widgets in `src/aria/notebooks/etl/`
-- **Vector Index Settings**: Configure in `src/aria/notebooks/agents/rag/01_create_vs_idx.py`
+- **ETL Parameters**: Modify notebook widgets in `aria-accelerator/src/aria/notebooks/etl/`
+- **Vector Index Settings**: Configure in `aria-accelerator/src/aria/notebooks/agents/rag/01_create_vs_idx.py`
 - **Schema Mappings**: Update table schemas in ETL notebooks
 
 ---
@@ -497,7 +497,7 @@ This document covers:
 **Adding New Models:**
 1. Register model in Unity Catalog
 2. Update `backend_services.yaml` configuration
-3. Modify service classes in `app/src/aria/services/`
+3. Modify service classes in `aria-accelerator/app/src/aria/services/`
 4. Deploy via DAB or manual endpoint creation
 
 **Model Serving Configuration:**
@@ -514,7 +514,7 @@ custom_model_config = {
 ### Data Source Integration
 
 **Adding New Data Sources:**
-1. Create ETL notebook in `src/aria/notebooks/etl/`
+1. Create ETL notebook in `aria-accelerator/src/aria/notebooks/etl/`
 2. Define Unity Catalog table schema
 3. Add vector search index configuration
 4. Update agent retrieval logic
