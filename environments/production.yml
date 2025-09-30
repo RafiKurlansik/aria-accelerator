@@ -1,5 +1,0 @@
-# Production environment variables
-# Note: Use 'databricks configure --profile production' to set workspace host
-variables:
-  catalog_name: "production"
-  schema_name: "aria_prod"

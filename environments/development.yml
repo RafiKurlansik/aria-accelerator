@@ -1,5 +1,0 @@
-# Development environment variables
-# Note: Databricks host is configured via CLI profile
-variables:
-  catalog_name: "users"
-  schema_name: "${workspace.current_user.userName}"

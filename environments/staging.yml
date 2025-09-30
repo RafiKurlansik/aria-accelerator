@@ -1,5 +1,0 @@
-# Staging environment variables
-# Note: Use 'databricks configure --profile staging' to set workspace host
-variables:
-  catalog_name: "staging"
-  schema_name: "${workspace.current_user.userName}"
