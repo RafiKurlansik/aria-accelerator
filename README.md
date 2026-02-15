@@ -56,6 +56,7 @@ _Brought to you by the PM Technical team at Databricks_
 
 - **Databricks CLI** installed and configured ([Installation Guide](https://docs.databricks.com/dev-tools/cli/install.html))
 - **Databricks Asset Bundle (DAB)** permissions ([Learn about DABs](https://docs.databricks.com/dev-tools/bundles/index.html))
+- create a group named: mlops-templates-sp
 - Access to Databricks workspace with permissions for:
   - Model Serving
   - Jobs
